@@ -8,5 +8,8 @@ declare module 'styled-components' {
       tabletMax: string
       laptop: string
     }
+    colors: {
+      background: string
+    }
   }
 }
