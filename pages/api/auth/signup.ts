@@ -1,17 +1,17 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { connectToDatabase } from '@/utils/db/db'
 import { getHashedPassword } from '@/utils/passwordUtils'
+
 const createUserApi = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const client = await connectToDatabase()
-    const db = client.db('moyagi')
+    const db = await connectToDatabase()
 
     const { name, email, password } = req.body
 
     const checkExisting = await db.collection('users').findOne({ email })
 
     if (checkExisting) {
-      throw new Error('중복된 이메일입니다.')
+      return res.status(409).json({ message: '중복된 이메일입니다.' })
     }
 
     const hashedPassword = await getHashedPassword(password)
@@ -23,10 +23,10 @@ const createUserApi = async (req: NextApiRequest, res: NextApiResponse) => {
     })
 
     res.status(201).json({ message: '가입이 완료되었습니다.' })
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      res.status(400).json({ message: error.message })
-    }
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: '서버가 불안정합니다. 잠시후 다시 시도해주세요.' })
   }
 }
 
