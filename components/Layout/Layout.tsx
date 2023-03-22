@@ -9,7 +9,7 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
   const { asPath } = useRouter()
-  const isLoginPage = asPath === '/login'
+  const isLoginPage = asPath === '/login' || asPath === '/signup'
 
   return (
     <BaseLayout>

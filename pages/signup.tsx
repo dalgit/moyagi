@@ -1,20 +1,20 @@
 import Image from 'next/image'
 import styled from 'styled-components'
 import bg from '/public/assets/login_page_background.png'
-import LoginForm from '@/components/LoginForm/LoginForm'
+import SignUpForm from '@/components/SignUpForm/SignUpForm'
 
-const LoginPage = () => {
+const SignUpPage = () => {
   return (
     <LoginPageLayout>
       <BackgroundWrapper>
         <Image src={bg} alt="background" fill />
       </BackgroundWrapper>
-      <LoginForm />
+      <SignUpForm />
     </LoginPageLayout>
   )
 }
 
-export default LoginPage
+export default SignUpPage
 
 const LoginPageLayout = styled.div`
   display: flex;
