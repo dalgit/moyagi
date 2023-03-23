@@ -1,24 +1,10 @@
 import 'react-quill/dist/quill.snow.css'
-import AWS from 'aws-sdk'
+import axios from 'axios'
 import dynamic from 'next/dynamic'
 import styled from 'styled-components'
-
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false })
 
 const PostCreateForm = () => {
-  const REGION = process.env.NEXT_PUBLIC_REGION
-  const ACESS_KEY = process.env.NEXT_PUBLIC_ACESS_KEY
-  const SECRET_ACESS_KEY = process.env.NEXT_PUBLIC_SECRET_ACESS_KEY
-  const BUCKET = process.env.NEXT_PUBLIC_BUCKET
-
-  AWS.config.update({
-    region: REGION,
-    accessKeyId: ACESS_KEY,
-    secretAccessKey: SECRET_ACESS_KEY,
-  })
-
-  const s3 = new AWS.S3()
-
   const imageHandler = () => {
     const input = document.createElement('input')
     input.setAttribute('type', 'file')
@@ -30,21 +16,12 @@ const PostCreateForm = () => {
       const [file] = input.files
       const fileName = file.name
 
-      const params = {
-        Bucket: BUCKET,
-        Key: 'post-images/' + fileName,
-        Body: file,
-        ACL: 'public-read',
-        ContentType: file.type,
-      }
-
-      s3.putObject(params, (err) => {
-        if (err) {
-          console.error(err)
-        } else {
-          console.log(`Image uploaded successfully`)
-        }
-      })
+      await axios
+        .post('/api/awsS3/getS3SignedUrl', { fileName })
+        .then((res) => {
+          const url = res.data
+          axios.put(url, file)
+        })
     }
   }
 
