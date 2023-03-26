@@ -22,6 +22,7 @@ const CustomReactQuill = dynamic(
 
 const PostCreateForm = () => {
   const quillRef = useRef<ReactQuill>(null)
+
   const imageHandler = () => {
     const input = document.createElement('input')
     input.setAttribute('type', 'file')
@@ -33,11 +34,18 @@ const PostCreateForm = () => {
       if (!input.files) return
       const [file] = input.files
       const fileName = file.name
-      const editorSelection = quillRef.current?.getEditorSelection()
 
-      await axios.post('/api/awsS3/getSignedUrl', { fileName }).then((res) => {
-        const url = res.data
-        axios.put(url, file)
+      await axios
+        .post('/api/awsS3/getSignedUrl', { fileName })
+        .then(async (res) => {
+          const { signedUrl, imageUrl } = res.data
+          await axios.put(signedUrl, file)
+
+          const editor = quillRef.current?.getEditor()
+          const index = editor?.getSelection()?.index || 0
+          editor?.insertEmbed(index, 'image', imageUrl)
+          editor?.setSelection({ index: index + 1, length: 0 })
+          editor?.insertText(index + 1, '\n')
       })
     }
   }
