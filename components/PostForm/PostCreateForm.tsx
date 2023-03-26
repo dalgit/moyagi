@@ -46,7 +46,7 @@ const PostCreateForm = () => {
           editor?.insertEmbed(index, 'image', imageUrl)
           editor?.setSelection({ index: index + 1, length: 0 })
           editor?.insertText(index + 1, '\n')
-      })
+        })
     }
   }
 
@@ -83,6 +83,12 @@ const PostCreateForm = () => {
     },
   }
 
+  const handleSubmit = async () => {
+    const content = quillRef.current?.getEditorContents()
+
+    await axios.post('/api/createPost', { content })
+  }
+
   return (
     <QuillRayout>
       <CustomReactQuill
@@ -90,6 +96,7 @@ const PostCreateForm = () => {
         modules={modules}
         theme="snow"
       />
+      <button onClick={handleSubmit}>작성하기</button>
     </QuillRayout>
   )
 }
