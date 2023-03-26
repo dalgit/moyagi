@@ -21,14 +21,18 @@ const getSignedUrl = async (req: NextApiRequest, res: NextApiResponse) => {
   const s3 = new AWS.S3()
   const params = {
     Bucket: BUCKET,
-    Key: 'post-images/' + uniqueKey + fileName,
+    Key: 'post-images/' + uniqueKey + '_' + fileName,
     Expires: 120,
     ContentType: 'image/*',
   }
 
+  const encodedFileName = encodeURIComponent(fileName)
+
+  const imageUrl = `https://${BUCKET}.s3.${REGION}.amazonaws.com/post-images/${uniqueKey}_${encodedFileName}`
+
   try {
-    const url = await s3.getSignedUrlPromise('putObject', params)
-    return res.status(200).json(url)
+    const signedUrl = await s3.getSignedUrlPromise('putObject', params)
+    return res.status(200).json({ signedUrl, imageUrl })
   } catch (err) {
     console.log(err)
   }
