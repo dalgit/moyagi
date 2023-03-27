@@ -15,13 +15,14 @@ const createChannel = async (req: NextApiRequest, res: NextApiResponse) => {
       process.env.SECRET_KEY as string,
     ) as JwtPayload
 
-    const manager = new ObjectId(decodedToken.user.id)
+    const userId = new ObjectId(decodedToken.user.id)
 
-    await db.collection('channel').insertOne({
+    await db.collection('channels').insertOne({
       name,
       description,
       publicStatus,
-      manager,
+      manager: userId,
+      members: [userId],
     })
 
     res.status(200).json({ message: '채널이 개설되었습니다.' })
