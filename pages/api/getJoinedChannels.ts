@@ -3,30 +3,31 @@ import { ObjectId } from 'mongodb'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { connectToDatabase } from '@/utils/db/db'
 
-const createChannel = async (req: NextApiRequest, res: NextApiResponse) => {
+const getJoinedChannels = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const db = await connectToDatabase()
-
-    const { name, address, description, publicStatus } = req.body
-
     const accessToken = req.cookies.access_token
+
     const decodedToken = jwt.verify(
       accessToken as string,
       process.env.SECRET_KEY as string,
     ) as JwtPayload
 
     const userId = new ObjectId(decodedToken.user.id)
+    const db = await connectToDatabase()
+    const channelsCollection = db.collection('channels')
 
-    await db.collection('channels').insertOne({
-      name,
-      address,
-      description,
-      publicStatus,
-      manager: userId,
-      members: [userId],
-    })
+    const joinedChannels = await channelsCollection
+      .find({
+        members: userId,
+      })
+      .project({
+        name: true,
+        address: true,
+        memberCount: { $size: '$members' },
+      })
+      .toArray()
 
-    res.status(200).json({ message: '채널이 개설되었습니다.' })
+    res.status(200).json({ joinedChannels })
   } catch (error) {
     console.log(error)
     res
@@ -35,10 +36,4 @@ const createChannel = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 }
 
-export const config = {
-  api: {
-    bodyParser: true,
-  },
-}
-
-export default createChannel
+export default getJoinedChannels
