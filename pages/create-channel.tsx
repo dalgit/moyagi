@@ -4,6 +4,7 @@ import useForm from '@/hooks/useForm'
 const CreateChannelPage = () => {
   const { form, updateForm } = useForm<{ [key: string]: string }>({
     name: '',
+    address: '',
     description: '',
     publicStatus: 'public',
   })
@@ -16,6 +17,7 @@ const CreateChannelPage = () => {
     try {
       await axios.post('/api/createChannel', {
         name: form.name,
+        address: form.address,
         description: form.description,
         publicStatus: form.publicStatus,
       })
@@ -36,6 +38,16 @@ const CreateChannelPage = () => {
           onChange={updateForm}
         />
       </div>
+      <div>
+        <label htmlFor="name">채널 주소</label>
+        <input
+          type="text"
+          name="address"
+          value={form.address}
+          onChange={updateForm}
+        />
+      </div>
+
       <div>
         <label htmlFor="description">채널 설명</label>
         <input
