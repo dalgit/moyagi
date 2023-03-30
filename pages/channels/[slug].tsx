@@ -23,6 +23,14 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     })
     .then((res) => res.data.channel)
 
+  const posts = await axios
+    .get('http://localhost:3000/api/getChannelPosts', {
+      params: {
+        channelId: channel._id,
+      },
+    })
+    .then((res) => res.data)
+
   return {
     props: { channel },
   }
