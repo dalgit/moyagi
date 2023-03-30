@@ -1,13 +1,13 @@
 import { ParsedUrlQuery } from 'querystring'
 import axios from 'axios'
 import { GetServerSideProps } from 'next/types'
+import PostCreateForm from '@/components/PostForm/PostCreateForm'
 
 export interface IParams extends ParsedUrlQuery {
   slug: string
 }
 
-const ChannelPage = ({ channel }) => {
-  return <div>sss</div>
+      <PostCreateForm channelId={channel._id} />
 }
 
 export default ChannelPage

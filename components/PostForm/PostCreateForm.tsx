@@ -20,7 +20,7 @@ const CustomReactQuill = dynamic(
   { ssr: false },
 )
 
-const PostCreateForm = () => {
+const PostCreateForm = ({ channelId }: { channelId: string }) => {
   const quillRef = useRef<ReactQuill>(null)
 
   const imageHandler = () => {
@@ -86,7 +86,7 @@ const PostCreateForm = () => {
   const handleSubmit = async () => {
     const content = quillRef.current?.getEditorContents()
 
-    await axios.post('/api/createPost', { content })
+    await axios.post('/api/createPost', { channelId, content })
   }
 
   return (

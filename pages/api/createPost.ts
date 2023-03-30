@@ -1,3 +1,5 @@
+import jwt, { JwtPayload } from 'jsonwebtoken'
+import { ObjectId } from 'mongodb'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { connectToDatabase } from '@/utils/db/db'
 
@@ -5,9 +7,20 @@ const createPost = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const db = await connectToDatabase()
 
-    const { content } = req.body
+    const { channelId: channel, content } = req.body
+    const accessToken = req.cookies.access_token
+
+    const decodedToken = jwt.verify(
+      accessToken as string,
+      process.env.SECRET_KEY as string,
+    ) as JwtPayload
+
+    const channelId = new ObjectId(channel)
+    const userId = new ObjectId(decodedToken.user.id)
 
     await db.collection('posts').insertOne({
+      channel: channelId,
+      author: userId,
       content,
     })
 
