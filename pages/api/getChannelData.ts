@@ -35,7 +35,7 @@ const getChannelData = async (req: NextApiRequest, res: NextApiResponse) => {
             name: true,
             address: true,
             description: true,
-            publicStatus: true,
+            isPublic: true,
             manager: { _id: true, name: true },
             members: { _id: true, name: true },
           },

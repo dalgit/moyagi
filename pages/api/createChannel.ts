@@ -7,7 +7,7 @@ const createChannel = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const db = await connectToDatabase()
 
-    const { name, address, description, publicStatus } = req.body
+    const { name, address, description, isPublic } = req.body
 
     const accessToken = req.cookies.access_token
     const decodedToken = jwt.verify(
@@ -21,7 +21,7 @@ const createChannel = async (req: NextApiRequest, res: NextApiResponse) => {
       name,
       address,
       description,
-      publicStatus,
+      isPublic,
       manager: userId,
       members: [userId],
     })

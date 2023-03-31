@@ -6,7 +6,7 @@ const CreateChannelPage = () => {
     name: '',
     address: '',
     description: '',
-    publicStatus: 'public',
+    isPublic: 'true',
   })
 
   const handleCreateChannel = async (
@@ -19,7 +19,7 @@ const CreateChannelPage = () => {
         name: form.name,
         address: form.address,
         description: form.description,
-        publicStatus: form.publicStatus,
+        isPublic: JSON.parse(form.isPublic),
       })
     } catch (err) {
       console.log(err)
@@ -33,15 +33,17 @@ const CreateChannelPage = () => {
         <label htmlFor="name">채널 이름</label>
         <input
           type="text"
+          id="name"
           name="name"
           value={form.name}
           onChange={updateForm}
         />
       </div>
       <div>
-        <label htmlFor="name">채널 주소</label>
+        <label htmlFor="address">채널 주소</label>
         <input
           type="text"
+          id="address"
           name="address"
           value={form.address}
           onChange={updateForm}
@@ -65,18 +67,18 @@ const CreateChannelPage = () => {
         <input
           type="radio"
           id="public"
-          name="publicStatus"
-          value="public"
-          checked={form.publicStatus === 'public'}
+          name="isPublic"
+          value="true"
+          checked={form.isPublic === 'true'}
           onChange={updateForm}
         />
         <label htmlFor="private">비공개</label>
         <input
           type="radio"
           id="private"
-          name="publicStatus"
-          value="private"
-          checked={form.publicStatus === 'private'}
+          name="isPublic"
+          value="false"
+          checked={form.isPublic === 'false'}
           onChange={updateForm}
         />
       </div>
