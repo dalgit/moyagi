@@ -19,7 +19,29 @@ const getChannelPosts = async (
 
     const postsCollection = db.collection('posts')
 
-    const posts = await postsCollection.find({ channel: channelOid }).toArray()
+    const posts = await postsCollection
+      .aggregate([
+        {
+          $match: {
+            channel: channelOid,
+          },
+        },
+        {
+          $lookup: {
+            localField: 'author',
+            from: 'users',
+            foreignField: '_id',
+            as: 'author',
+            pipeline: [{ $project: { _id: false, password: false } }],
+          },
+        },
+        {
+          $unwind: {
+            path: '$author',
+          },
+        },
+      ])
+      .toArray()
 
     res.status(200).json(posts)
   } catch (e) {

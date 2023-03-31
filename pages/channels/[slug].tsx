@@ -7,21 +7,46 @@ export interface IParams extends ParsedUrlQuery {
   slug: string
 }
 
+const ChannelPage = ({ channel, posts, isMember }: any) => {
+  return (
+    <div>
+      <div>{channel.name}</div>
+      <div>{channel.description}</div>
+      <div>매니저 : {channel.manager.name}</div>
       <PostCreateForm channelId={channel._id} />
+
+      {posts?.map((post) => (
+        <>
+          <div>{post.author.name}</div>
+          <div>{post.content}</div>
+        </>
+      ))}
+    </div>
+  )
 }
 
 export default ChannelPage
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { params, req } = context
+
   const { slug } = params as IParams
 
-  const channel = await axios
+  axios.defaults.headers.Cookie = req.headers.cookie || ''
+
+  const { channel, isMember } = await axios
     .get('http://localhost:3000/api/getChannelData', {
       params: {
         channelAddress: slug,
       },
     })
-    .then((res) => res.data.channel)
+    .then((res) => res.data)
+
+  if (!channel.isPublic && !isMember) {
+    return {
+      props: { channel, isMember },
+    }
+  }
 
   const posts = await axios
     .get('http://localhost:3000/api/getChannelPosts', {
@@ -32,6 +57,6 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     .then((res) => res.data)
 
   return {
-    props: { channel },
+    props: { channel, isMember, posts },
   }
 }
