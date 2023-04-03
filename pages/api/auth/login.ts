@@ -31,10 +31,14 @@ const loginApi = async (req: NextApiRequest, res: NextApiResponse) => {
       expiresIn: '30m',
     })
 
-    res.setHeader(
-      'Set-Cookie',
-      `access_token=${accessToken}; Path=/; HttpOnly; Secure; SameSite=None`,
-    )
+    const refreshToken = jwt.sign(payload, process.env.SECRET_KEY as string, {
+      expiresIn: '3d',
+    })
+
+    res.setHeader('Set-Cookie', [
+      `refresh_token=${refreshToken}; Path=/; HttpOnly; Secure; SameSite=None;`,
+      `access_token=${accessToken}; Path=/; HttpOnly; Secure; SameSite=None;`,
+    ])
 
     return res.status(200).json({ message: '로그인이 완료되었습니다.' })
   } catch (error) {
