@@ -1,4 +1,8 @@
-import jwt, { JwtPayload } from 'jsonwebtoken'
+import jwt, {
+  JwtPayload,
+  JsonWebTokenError,
+  TokenExpiredError,
+} from 'jsonwebtoken'
 import { ObjectId } from 'mongodb'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { connectToDatabase } from '@/utils/db/db'
@@ -26,10 +30,18 @@ const createPost = async (req: NextApiRequest, res: NextApiResponse) => {
 
     res.status(200).json({ message: '작성이 완료되었습니다.' })
   } catch (error) {
+    if (error instanceof TokenExpiredError) {
+      return res.status(401).json({ errorType: 'TokenExpiredError' })
+    }
+
+    if (error instanceof JsonWebTokenError) {
+      return res.status(401).json({ errorType: 'JsonWebTokenError' })
+    }
+
     res
       .status(500)
       .json({ message: '서버가 불안정합니다. 잠시후 다시 시도해주세요.' })
   }
 }
 
-export default createPost
+export default withAtuh(createPost)
