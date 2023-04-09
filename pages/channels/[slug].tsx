@@ -1,13 +1,40 @@
 import { ParsedUrlQuery } from 'querystring'
-import axios from 'axios'
 import { GetServerSideProps } from 'next/types'
+import { useState, useEffect } from 'react'
 import PostCreateForm from '@/components/PostForm/PostCreateForm'
+import client from '@/utils/axios/axios'
+import createServerInstance from '@/utils/axios/server'
 
 export interface IParams extends ParsedUrlQuery {
   slug: string
 }
 
-const ChannelPage = ({ channel, posts, isMember }: any) => {
+const ChannelPage = ({ channel, userInfo }: any) => {
+  const [posts, setPosts] = useState([])
+
+  const getIsMember = () => {
+    if (userInfo) {
+      return channel?.members.some((member: any) => {
+        return member._id.toString() === userInfo?._id?.toString()
+      })
+    }
+    return false
+  }
+
+  const isMember = getIsMember()
+
+  useEffect(() => {
+    if (channel.isPublic || isMember) {
+      client
+        .get('/getChannelPosts', {
+          params: {
+            channelId: channel._id,
+          },
+        })
+        .then((res) => setPosts(res.data))
+    }
+  }, [channel._id, channel.isPublic, isMember])
+
   return (
     <div>
       <div>{channel.name}</div>
@@ -28,35 +55,33 @@ const ChannelPage = ({ channel, posts, isMember }: any) => {
 export default ChannelPage
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { params, req } = context
-
+  const { params } = context
   const { slug } = params as IParams
 
-  axios.defaults.headers.Cookie = req.headers.cookie || ''
+  const server = createServerInstance(context)
 
-  const { channel, isMember } = await axios
+  const channel = await server
     .get('http://localhost:3000/api/getChannelData', {
       params: {
         channelAddress: slug,
       },
     })
-    .then((res) => res.data)
+    .then((res) => res.data.channel)
 
-  if (!channel.isPublic && !isMember) {
-    return {
-      props: { channel, isMember },
-    }
-  }
-
-  const posts = await axios
-    .get('http://localhost:3000/api/getChannelPosts', {
+  const userInfo = await server
+    .get('http://localhost:3000/api/getUserInfo', {
       params: {
-        channelId: channel._id,
+        channelAddress: slug,
       },
     })
-    .then((res) => res.data)
+    .then((res) => {
+      return res.data
+    })
+    .catch(() => {
+      return null
+    })
 
   return {
-    props: { channel, isMember, posts },
+    props: { channel, userInfo },
   }
 }
