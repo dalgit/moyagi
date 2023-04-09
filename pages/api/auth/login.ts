@@ -40,7 +40,9 @@ const loginApi = async (req: NextApiRequest, res: NextApiResponse) => {
       `access_token=${accessToken}; Path=/; HttpOnly; Secure; SameSite=None;`,
     ])
 
-    return res.status(200).json({ message: '로그인이 완료되었습니다.' })
+    return res
+      .status(200)
+      .json({ message: '로그인이 완료되었습니다.', userName: user.name })
   } catch (error) {
     res
       .status(500)
