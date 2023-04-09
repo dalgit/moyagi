@@ -33,21 +33,13 @@ client.interceptors.response.use(
   async (res: AxiosResponse) => {
     return res
   },
+
   async (error: AxiosError<ErrorResponse>) => {
     if (error.response?.status === 401 && 'errorType' in error.response.data) {
-      const originalRequest = error.config as AxiosRequestConfig
-
-      if (error.response.data.errorType === 'JsonWebTokenError') {
-        return (window.location.href = '/login')
-      }
-
       if (error.response.data.errorType === 'TokenExpiredError') {
-        try {
-          await axios.post('http://localhost:3000/api/auth/refresh')
-          return axios(originalRequest)
-        } catch (e) {
-          return (window.location.href = '/login')
-        }
+        const originalRequest = error.config as AxiosRequestConfig
+        await axios.post('http://localhost:3000/api/auth/refresh')
+        return axios(originalRequest)
       }
     }
 
