@@ -1,22 +1,15 @@
-import jwt, {
-  JwtPayload,
-  JsonWebTokenError,
-  TokenExpiredError,
-} from 'jsonwebtoken'
-import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
+import { JsonWebTokenError, TokenExpiredError } from 'jsonwebtoken'
+import { NextApiHandler, NextApiResponse } from 'next'
+import { NextApiRequestWithUser } from '@/types/types'
+import { jwtVerify } from './jwtVerify'
 
 const authMiddleware =
   (handler: NextApiHandler) =>
-  async (req: NextApiRequest, res: NextApiResponse) => {
-    const accessToken = req.cookies.access_token
-
+  async (req: NextApiRequestWithUser, res: NextApiResponse) => {
+    const accessToken = req.cookies.access_token as string
     try {
-      const decodedToken = jwt.verify(
-        accessToken as string,
-        process.env.SECRET_KEY as string,
-      ) as JwtPayload
-
-      req.body.user = decodedToken.user
+      const decodedToken = jwtVerify(accessToken)
+      req.user = decodedToken.user
 
       return handler(req, res)
     } catch (error) {
