@@ -22,6 +22,8 @@ const getJoinedChannels = async (
       .project({
         name: true,
         address: true,
+        description: true,
+        manager: true,
         memberCount: { $size: '$members' },
       })
       .toArray()
