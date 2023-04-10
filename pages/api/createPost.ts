@@ -1,16 +1,20 @@
 import { ObjectId } from 'mongodb'
-import { NextApiRequest, NextApiResponse } from 'next'
+import { NextApiResponse } from 'next'
+import { NextApiRequestWithUser } from '@/types/types'
 import authMiddleware from '@/utils/authMiddleware'
 import { connectToDatabase } from '@/utils/db/db'
 
-const createPost = async (req: NextApiRequest, res: NextApiResponse) => {
+const createPost = async (
+  req: NextApiRequestWithUser,
+  res: NextApiResponse,
+) => {
   try {
     const db = await connectToDatabase()
 
-    const { channelId: channel, content, user } = req.body
-
+    const { channelId: channel, content } = req.body
+    const { user } = req
     const channelId = new ObjectId(channel)
-    const userId = new ObjectId(user.id)
+    const userId = new ObjectId(user?.id)
 
     await db.collection('posts').insertOne({
       channel: channelId,

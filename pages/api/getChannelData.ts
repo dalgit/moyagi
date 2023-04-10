@@ -1,25 +1,16 @@
-import jwt, { JwtPayload } from 'jsonwebtoken'
-import { ObjectId } from 'mongodb'
-import { NextApiRequest, NextApiResponse } from 'next'
+import { NextApiResponse } from 'next'
+import { NextApiRequestWithUser } from '@/types/types'
 import { connectToDatabase } from '@/utils/db/db'
 
-const getChannelData = async (req: NextApiRequest, res: NextApiResponse) => {
+const getChannelData = async (
+  req: NextApiRequestWithUser,
+  res: NextApiResponse,
+) => {
   try {
     const db = await connectToDatabase()
     const channelsCollection = db.collection('channels')
     const { channelAddress } = req.query
 
-    const cookiesStr = req.headers.cookie?.split('; ') || []
-    const accessToken = cookiesStr
-      .find((cookie) => cookie.startsWith('access_token='))
-      ?.split('=')[1]
-
-    const decodedToken = jwt.verify(
-      accessToken as string,
-      process.env.SECRET_KEY as string,
-    ) as JwtPayload
-
-    const userId = new ObjectId(decodedToken.user.id)
     const channel = await channelsCollection
       .aggregate([
         {
@@ -56,12 +47,7 @@ const getChannelData = async (req: NextApiRequest, res: NextApiResponse) => {
         },
       ])
       .next()
-
-    const isMember = channel?.members.some((member) => {
-      return member._id.toString() === userId.toString()
-    })
-
-    return res.status(200).json({ channel, isMember })
+    return res.status(200).json({ channel })
   } catch (error) {
     res
       .status(500)

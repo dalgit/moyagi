@@ -1,21 +1,19 @@
-import jwt, { JwtPayload } from 'jsonwebtoken'
 import { ObjectId } from 'mongodb'
-import { NextApiRequest, NextApiResponse } from 'next'
+import { NextApiResponse } from 'next'
+import { NextApiRequestWithUser } from '@/types/types'
+import authMiddleware from '@/utils/authMiddleware'
 import { connectToDatabase } from '@/utils/db/db'
 
-const createChannel = async (req: NextApiRequest, res: NextApiResponse) => {
+const createChannel = async (
+  req: NextApiRequestWithUser,
+  res: NextApiResponse,
+) => {
   try {
     const db = await connectToDatabase()
-
     const { name, address, description, isPublic } = req.body
+    const { user } = req
 
-    const accessToken = req.cookies.access_token
-    const decodedToken = jwt.verify(
-      accessToken as string,
-      process.env.SECRET_KEY as string,
-    ) as JwtPayload
-
-    const userId = new ObjectId(decodedToken.user.id)
+    const userId = new ObjectId(user?.id)
 
     await db.collection('channels').insertOne({
       name,
@@ -41,4 +39,4 @@ export const config = {
   },
 }
 
-export default createChannel
+export default authMiddleware(createChannel)

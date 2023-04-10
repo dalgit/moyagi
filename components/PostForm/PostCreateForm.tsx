@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic'
 import { useRef, RefObject } from 'react'
 import ReactQuill, { ReactQuillProps } from 'react-quill'
 import styled from 'styled-components'
+import client from '@/utils/axios/axios'
 
 interface CustomQuillProps extends ReactQuillProps {
   forwardedRef: RefObject<ReactQuill>
@@ -36,10 +37,10 @@ const PostCreateForm = ({ channelId }: { channelId: string }) => {
       const fileName = file.name
 
       await axios
-        .post('/api/awsS3/getSignedUrl', { fileName })
+        .post('/awsS3/getSignedUrl', { fileName })
         .then(async (res) => {
           const { signedUrl, imageUrl } = res.data
-          await axios.put(signedUrl, file)
+          await client.put(signedUrl, file)
 
           const editor = quillRef.current?.getEditor()
           const index = editor?.getSelection()?.index || 0
@@ -86,7 +87,7 @@ const PostCreateForm = ({ channelId }: { channelId: string }) => {
   const handleSubmit = async () => {
     const content = quillRef.current?.getEditorContents()
 
-    await axios.post('/api/createPost', { channelId, content })
+    await client.post('/createPost', { channelId, content })
   }
 
   return (

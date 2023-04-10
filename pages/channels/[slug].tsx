@@ -14,9 +14,9 @@ const ChannelPage = ({ channel, userInfo }: any) => {
 
   const getIsMember = () => {
     if (userInfo) {
-      return channel?.members.some((member: any) => {
-        return member._id.toString() === userInfo?._id?.toString()
-      })
+      return channel?.members.some(
+        (member: any) => member._id === userInfo?._id,
+      )
     }
     return false
   }

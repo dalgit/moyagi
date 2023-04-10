@@ -1,5 +1,5 @@
-import axios from 'axios'
 import useForm from '@/hooks/useForm'
+import client from '@/utils/axios/axios'
 
 const CreateChannelPage = () => {
   const { form, updateForm } = useForm<{ [key: string]: string }>({
@@ -15,7 +15,7 @@ const CreateChannelPage = () => {
     e.preventDefault()
 
     try {
-      await axios.post('/api/createChannel', {
+      await client.post('/createChannel', {
         name: form.name,
         address: form.address,
         description: form.description,

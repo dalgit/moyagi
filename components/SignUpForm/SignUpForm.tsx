@@ -1,9 +1,11 @@
-import axios from 'axios'
+import { isAxiosError } from 'axios'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import styled from 'styled-components'
 import useForm from '@/hooks/useForm'
+import client from '@/utils/axios/axios'
+
 const SignUpForm = () => {
   const [error, setError] = useState<string>('')
   const { form, updateForm } = useForm<{ [key: string]: string }>({
@@ -20,7 +22,7 @@ const SignUpForm = () => {
     e.preventDefault()
 
     try {
-      await axios.post('/api/auth/signup', {
+      await client.post('/auth/signup', {
         name: form.name,
         email: form.email,
         password: form.password,
@@ -28,7 +30,7 @@ const SignUpForm = () => {
       })
       router.push('/login')
     } catch (err) {
-      if (axios.isAxiosError(err)) {
+      if (isAxiosError(err)) {
         setError(err.response?.data.message)
       }
     }

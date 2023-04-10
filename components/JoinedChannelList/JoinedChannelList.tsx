@@ -1,12 +1,12 @@
-import axios from 'axios'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import client from '@/utils/axios/axios'
 
 const JoinedChannelList = () => {
   const [channels, setChannels] = useState([])
   useEffect(() => {
-    axios
-      .get('/api/getJoinedChannels')
+    client
+      .get('/getJoinedChannels')
       .then((res) => setChannels(res.data.joinedChannels))
   }, [])
 

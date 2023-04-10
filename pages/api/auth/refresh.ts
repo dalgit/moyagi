@@ -1,14 +1,12 @@
-import jwt, { JwtPayload } from 'jsonwebtoken'
+import jwt from 'jsonwebtoken'
 import { NextApiRequest, NextApiResponse } from 'next'
+import { jwtVerify } from '@/utils/jwtVerify'
 
 const refresh = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const refreshToken = req.cookies.refresh_token
+    const refreshToken = req.cookies.refresh_token as string
 
-    const decodedToken = jwt.verify(
-      refreshToken as string,
-      process.env.SECRET_KEY as string,
-    ) as JwtPayload
+    const decodedToken = jwtVerify(refreshToken)
 
     const payload = {
       user: {
@@ -21,11 +19,11 @@ const refresh = async (req: NextApiRequest, res: NextApiResponse) => {
     })
 
     res.setHeader(
-      'Set-Cookie',
+      'set-cookie',
       `access_token=${accessToken}; Path=/; HttpOnly; Secure; SameSite=None;`,
     )
 
-    res.status(200).json({ message: 'ok' })
+    return res.status(200).json({ message: 'ok' })
   } catch (error) {
     res
       .status(500)
