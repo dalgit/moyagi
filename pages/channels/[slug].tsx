@@ -1,7 +1,10 @@
 import { ParsedUrlQuery } from 'querystring'
+import { useRouter } from 'next/router'
 import { GetServerSideProps } from 'next/types'
 import { useState, useEffect } from 'react'
+import JoinRequestForm from '@/components/JoInRequestForm/JoinRequestForm'
 import PostCreateForm from '@/components/PostForm/PostCreateForm'
+import useToggle from '@/hooks/useToggle'
 import client from '@/utils/axios/axios'
 import createServerInstance from '@/utils/axios/server'
 
@@ -11,6 +14,9 @@ export interface IParams extends ParsedUrlQuery {
 
 const ChannelPage = ({ channel, userInfo }: any) => {
   const [posts, setPosts] = useState([])
+  const { isActive, toggle: handleModal } = useToggle()
+
+  const { push } = useRouter()
 
   const getIsMember = () => {
     if (userInfo) {
@@ -20,7 +26,6 @@ const ChannelPage = ({ channel, userInfo }: any) => {
     }
     return false
   }
-
   const isMember = getIsMember()
 
   useEffect(() => {
@@ -35,13 +40,26 @@ const ChannelPage = ({ channel, userInfo }: any) => {
     }
   }, [channel._id, channel.isPublic, isMember])
 
+  const handleJoinRequestClick = () => {
+    if (!userInfo) {
+      push('/login')
+    } else {
+      handleModal()
+    }
+  }
   return (
     <div>
+      <JoinRequestForm
+        isModalOpen={isActive}
+        closeModal={handleModal}
+        channelId={channel._id}
+        isPublic={channel.isPublic}
+      />
       <div>{channel.name}</div>
       <div>{channel.description}</div>
       <div>매니저 : {channel.manager.name}</div>
       <PostCreateForm channelId={channel._id} />
-
+      {!isMember && <button onClick={handleJoinRequestClick}>가입하기</button>}
       {posts?.map((post) => (
         <>
           <div>{post.author.name}</div>
