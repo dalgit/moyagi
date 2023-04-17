@@ -12,7 +12,7 @@ const UserProfilePage = ({ userInfo }: any) => {
   useEffect(() => {
     const handleChannels = async () => {
       const joinedChannels = await client
-        .get('/getJoinedChannels')
+        .get('/users/me/channels')
         .then((res) => res.data.joinedChannels)
 
       const managedChannels2: any[] = []

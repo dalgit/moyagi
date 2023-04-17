@@ -36,4 +36,19 @@ const getJoinedChannels = async (
   }
 }
 
-export default authMiddleware(getJoinedChannels)
+export default async function handler(
+  req: NextApiRequestWithUser,
+  res: NextApiResponse,
+) {
+  const requestMethod = req.method
+
+  switch (requestMethod) {
+    case 'GET':
+      await authMiddleware(getJoinedChannels)(req, res)
+      break
+
+    default:
+      res.status(405).end(`${requestMethod} not allowed`)
+      break
+  }
+}

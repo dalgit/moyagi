@@ -87,7 +87,7 @@ const PostCreateForm = ({ channelId }: { channelId: string }) => {
   const handleSubmit = async () => {
     const content = quillRef.current?.getEditorContents()
 
-    await client.post('/createPost', { channelId, content })
+    await client.post(`/channels/${channelId}/posts`, { content })
   }
 
   return (

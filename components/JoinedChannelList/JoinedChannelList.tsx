@@ -6,18 +6,22 @@ const JoinedChannelList = () => {
   const [channels, setChannels] = useState([])
   useEffect(() => {
     client
-      .get('/getJoinedChannels')
+      .get('/users/me/channels')
       .then((res) => setChannels(res.data.joinedChannels))
+      .catch((e) => console.log(e))
   }, [])
 
   return (
-    <ul>
-      {channels.map((channel) => (
-        <Link href={`/channels/${channel.address}`} key={channel._id}>
-          {channel.name}
-        </Link>
-      ))}
-    </ul>
+    <>
+      <p>내가 가입한 채널들</p>
+      <ul>
+        {channels.map((channel) => (
+          <Link href={`/channels/${channel.address}`} key={channel._id}>
+            {channel.name}
+          </Link>
+        ))}
+      </ul>
+    </>
   )
 }
 
