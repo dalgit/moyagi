@@ -11,7 +11,7 @@ const Header = () => {
 
   const handleProfile = async () => {
     try {
-      const userInfo = await client.get('/getUserInfo').then((res) => res.data)
+      const userInfo = await client.get('/users/me').then((res) => res.data)
       sessionStorage.setItem('userNameItem', userInfo.name)
       setUserName(userInfo.name)
     } catch {

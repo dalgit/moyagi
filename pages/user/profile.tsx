@@ -73,7 +73,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const server = createServerInstance(context)
 
   try {
-    const userInfo = await server.get('/getUserInfo').then((res) => res.data)
+    const userInfo = await server.get('/users/me').then((res) => res.data)
 
     return {
       props: { userInfo },

@@ -1,5 +1,5 @@
 import { ObjectId } from 'mongodb'
-import { NextApiResponse } from 'next'
+import { NextApiRequest, NextApiResponse } from 'next'
 import { NextApiRequestWithUser } from '@/types/types'
 import authMiddleware from '@/utils/authMiddleware'
 import { connectToDatabase } from '@/utils/db/db'
@@ -27,4 +27,19 @@ const getUserInfo = async (
   }
 }
 
-export default authMiddleware(getUserInfo)
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse,
+) {
+  const requestMethod = req.method
+
+  switch (requestMethod) {
+    case 'GET':
+      await authMiddleware(getUserInfo)(req, res)
+      break
+
+    default:
+      res.status(405).end(`${requestMethod} not allowed`)
+      break
+  }
+}

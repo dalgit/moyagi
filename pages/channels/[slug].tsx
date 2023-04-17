@@ -87,11 +87,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     .then((res) => res.data.channel)
 
   const userInfo = await server
-    .get('http://localhost:3000/api/getUserInfo', {
-      params: {
-        channelAddress: slug,
-      },
-    })
+    .get('http://localhost:3000/api/users/me')
     .then((res) => {
       return res.data
     })
