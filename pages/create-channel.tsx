@@ -15,7 +15,7 @@ const CreateChannelPage = () => {
     e.preventDefault()
 
     try {
-      await client.post('/createChannel', {
+      await client.post('/channels', {
         name: form.name,
         address: form.address,
         description: form.description,

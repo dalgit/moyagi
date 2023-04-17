@@ -31,11 +31,7 @@ const ChannelPage = ({ channel, userInfo }: any) => {
   useEffect(() => {
     if (channel.isPublic || isMember) {
       client
-        .get('/getChannelPosts', {
-          params: {
-            channelId: channel._id,
-          },
-        })
+        .get(`/channels/${channel._id}/posts`)
         .then((res) => setPosts(res.data))
     }
   }, [channel._id, channel.isPublic, isMember])
@@ -79,10 +75,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const server = createServerInstance(context)
 
   const channel = await server
-    .get('http://localhost:3000/api/getChannelData', {
-      params: {
-        channelAddress: slug,
-      },
+    .get('http://localhost:3000/api/channels', {
+      params: { channelAddress: slug },
     })
     .then((res) => res.data.channel)
 

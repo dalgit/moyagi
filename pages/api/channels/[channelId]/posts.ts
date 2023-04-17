@@ -51,4 +51,19 @@ const getChannelPosts = async (
   }
 }
 
-export default getChannelPosts
+export default async function handler(
+  req: ExtendedNextApiRequest,
+  res: NextApiResponse,
+) {
+  const requestMethod = req.method
+
+  switch (requestMethod) {
+    case 'GET':
+      await getChannelPosts(req, res)
+      break
+
+    default:
+      res.status(405).end(`${requestMethod} not allowed`)
+      break
+  }
+}
