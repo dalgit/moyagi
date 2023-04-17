@@ -23,9 +23,8 @@ const JoinRequestForm = ({
     e.preventDefault()
 
     client
-      .post('/joinRequest', {
+      .post(`/channels/${channelId}/join-requests`, {
         message: form.message,
-        channelId,
         isPublic,
       })
       .catch((e) => {

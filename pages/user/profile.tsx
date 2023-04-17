@@ -29,7 +29,7 @@ const UserProfilePage = ({ userInfo }: any) => {
     }
     const handleJoinRequests = async () => {
       await client
-        .get('/getJoinRequest')
+        .get('/users/me/join-requests')
         .then((res) => setJoinRequests(res.data.joinRequests))
     }
     handleChannels()
