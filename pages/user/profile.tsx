@@ -8,6 +8,7 @@ const UserProfilePage = ({ userInfo }: any) => {
   const [managedChannels, setManagedChannels] = useState<any[]>([])
   const [subscribedChannels, setSubscribedChannels] = useState<any[]>([])
   const [joinRequests, setJoinRequests] = useState([])
+  const [channelJoinRequests, setChannelJoinRequests] = useState([])
 
   useEffect(() => {
     const handleChannels = async () => {
@@ -36,13 +37,61 @@ const UserProfilePage = ({ userInfo }: any) => {
     handleJoinRequests()
   }, [userInfo._id])
 
+  const handleChannelRequests = async (channelId: string) => {
+    await client
+      .get(`/channels/${channelId}/join-requests`)
+      .then((res) => setChannelJoinRequests(res.data.joinRequests))
+  }
+
+  const handleRequest = async (
+    requestId: string,
+    channelId: string,
+    isApproved: boolean,
+  ) => {
+    const status = isApproved ? 'approve' : 'reject'
+    await client.patch(`/channels/${channelId}/join-requests/${requestId}`, {
+      status,
+    })
+  }
+
   return (
     <div>
       <h3>내정보</h3>
       <div>{userInfo.name}</div>
       <h3>운영중인 채널</h3>
       {managedChannels.map((channel) => {
-        return <p key={channel._id}>{channel?.name}</p>
+        return (
+          <>
+            <p
+              key={channel._id}
+              onClick={() => handleChannelRequests(channel._id)}
+            >
+              {channel?.name}
+            </p>
+            {channelJoinRequests.map((request) => {
+              return (
+                <div key={request._id}>
+                  닉네임: {request.requestor.name}
+                  메시지: {request.message}
+                  <button
+                    onClick={() =>
+                      handleRequest(request._id, channel._id, true)
+                    }
+                  >
+                    승인
+                  </button>
+                  <button
+                    onClick={() =>
+                      handleRequest(request._id, channel._id, false)
+                    }
+                  >
+                    거절
+                  </button>
+                </div>
+              )
+            })}
+          </>
+        )
       })}
       <h3>가입한 채널</h3>
       {subscribedChannels.map((channel) => {
