@@ -9,6 +9,7 @@ const UserProfilePage = ({ userInfo }: any) => {
   const [subscribedChannels, setSubscribedChannels] = useState<any[]>([])
   const [joinRequests, setJoinRequests] = useState([])
   const [channelJoinRequests, setChannelJoinRequests] = useState([])
+  const [posts, setPosts] = useState([])
 
   useEffect(() => {
     const handleChannels = async () => {
@@ -52,6 +53,10 @@ const UserProfilePage = ({ userInfo }: any) => {
     await client.patch(`/channels/${channelId}/join-requests/${requestId}`, {
       status,
     })
+  }
+
+  const fetchPosts = async () => {
+    await client.get(`/users/me/posts`).then((res) => setPosts(res.data))
   }
 
   return (
@@ -110,8 +115,10 @@ const UserProfilePage = ({ userInfo }: any) => {
           )
         })}
       </div>
-      <h3>내 글 보기</h3>
-      <h3>내 댓글 보기</h3>
+      <h3 onClick={fetchPosts}>내 글 보기</h3>
+      {posts?.map((post) => (
+        <div>{post.content}</div>
+      ))}
     </div>
   )
 }
