@@ -2,19 +2,19 @@ import styled from 'styled-components'
 import Image from 'next/image'
 import tmp from '/public/assets/smile_emotion_icon.png'
 
-const FeedCommentBox = () => {
+const PostCommentBox = () => {
   return (
-    <FeedCommentBoxLayout>
+    <PostCommentBoxLayout>
       <Image src={tmp} alt="emotion_icon" height={30} />
       <CommentArea />
       <Button>전송</Button>
-    </FeedCommentBoxLayout>
+    </PostCommentBoxLayout>
   )
 }
 
-export default FeedCommentBox
+export default PostCommentBox
 
-const FeedCommentBoxLayout = styled.div`
+const PostCommentBoxLayout = styled.div`
   display: flex;
   gap: 5px;
   align-items: center;

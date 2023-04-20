@@ -37,6 +37,9 @@ const getChannelByAddress = async (
           },
         },
         {
+          $unwind: '$manager',
+        },
+        {
           $project: {
             _id: true,
             name: true,
