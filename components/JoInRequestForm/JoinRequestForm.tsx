@@ -1,16 +1,13 @@
 import useForm from '@/hooks/useForm'
 import client from '@/utils/axios/axios'
-import ModalFrame from '../Modal/ModalFrame'
 
 interface JoinRequestFormProps {
-  isModalOpen: boolean
   channelId: string
   isPublic: boolean
   closeModal: () => void
 }
 
 const JoinRequestForm = ({
-  isModalOpen,
   channelId,
   isPublic,
   closeModal,
@@ -33,25 +30,23 @@ const JoinRequestForm = ({
   }
 
   return (
-    <ModalFrame isModalOpen={isModalOpen} closeModal={closeModal}>
-      <form onSubmit={handleJoinRequest}>
-        <p>채널 가입 신청</p>
-        <div>
-          <input
-            type="text"
-            id="message"
-            name="message"
-            placeholder="메시지를 작성해주세요"
-            value={form.message}
-            onChange={updateForm}
-          />
-          <button type="button" onClick={closeModal}>
-            취소
-          </button>
-          <button type="submit">제출하기</button>
-        </div>
-      </form>
-    </ModalFrame>
+    <form onSubmit={handleJoinRequest}>
+      <p>채널 가입 신청</p>
+      <div>
+        <input
+          type="text"
+          id="message"
+          name="message"
+          placeholder="메시지를 작성해주세요"
+          value={form.message}
+          onChange={updateForm}
+        />
+        <button type="button" onClick={closeModal}>
+          취소
+        </button>
+        <button type="submit">제출하기</button>
+      </div>
+    </form>
   )
 }
 

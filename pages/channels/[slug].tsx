@@ -3,8 +3,9 @@ import { useRouter } from 'next/router'
 import { GetServerSideProps } from 'next/types'
 import { useState, useEffect } from 'react'
 import JoinRequestForm from '@/components/JoInRequestForm/JoinRequestForm'
+import ModalFrame from '@/components/Modal/ModalFrame'
 import PostCreateForm from '@/components/PostForm/PostCreateForm'
-import useToggle from '@/hooks/useToggle'
+import PostList from '@/components/PostList/PostList'
 import client from '@/utils/axios/axios'
 import createServerInstance from '@/utils/axios/server'
 
@@ -14,54 +15,75 @@ export interface IParams extends ParsedUrlQuery {
 
 const ChannelPage = ({ channel, userInfo }: any) => {
   const [posts, setPosts] = useState([])
-  const { isActive, toggle: handleModal } = useToggle()
+  const [isPostCreateModalActive, setIsPostCreateModalActive] =
+    useState<boolean>(false)
+  const [isJoinRequestModalActive, setIsJoinRequestModalActive] =
+    useState<boolean>(false)
 
   const { push } = useRouter()
 
-  const getIsMember = () => {
-    if (userInfo) {
-      return channel?.members.some(
-        (member: any) => member._id === userInfo?._id,
-      )
-    }
-    return false
-  }
-  const isMember = getIsMember()
+  const isMember = userInfo
+    ? channel.members.some((member: any) => member._id === userInfo._id)
+    : false
 
   useEffect(() => {
-    if (channel.isPublic || isMember) {
+    const shouldFetchPosts = channel.isPublic || isMember
+
+    if (shouldFetchPosts) {
       client
         .get(`/channels/${channel._id}/posts`)
         .then((res) => setPosts(res.data))
     }
   }, [channel._id, channel.isPublic, isMember])
 
-  const handleJoinRequestClick = () => {
-    if (!userInfo) {
-      push('/login')
-    } else {
-      handleModal()
-    }
+  const handleModal = (toggleModal: any) => {
+    if (!userInfo) push('/login')
+    toggleModal()
   }
+
+  const togglePostCreateModal = () =>
+    setIsPostCreateModalActive(!isPostCreateModalActive)
+
+  const toggleJoinRequestModal = () =>
+    setIsJoinRequestModalActive(!isJoinRequestModalActive)
+
   return (
     <div>
-      <JoinRequestForm
-        isModalOpen={isActive}
-        closeModal={handleModal}
-        channelId={channel._id}
-        isPublic={channel.isPublic}
-      />
-      <div>{channel.name}</div>
-      <div>{channel.description}</div>
-      <div>매니저 : {channel.manager.name}</div>
-      <PostCreateForm channelId={channel._id} />
-      {!isMember && <button onClick={handleJoinRequestClick}>가입하기</button>}
-      {posts?.map((post) => (
-        <>
-          <div>{post.author.name}</div>
-          <div>{post.content}</div>
-        </>
-      ))}
+      <ModalFrame
+        isModalOpen={isPostCreateModalActive}
+        closeModal={togglePostCreateModal}
+      >
+        <JoinRequestForm
+          closeModal={togglePostCreateModal}
+          channelId={channel._id}
+          isPublic={channel.isPublic}
+        />
+      </ModalFrame>
+
+      <ModalFrame
+        isModalOpen={isPostCreateModalActive}
+        closeModal={togglePostCreateModal}
+      >
+        <PostCreateForm channelId={channel._id} />
+      </ModalFrame>
+
+      <div>
+        <div>{channel.name}</div>
+        <div>{channel.description}</div>
+        <div>매니저 : {channel.manager.name}</div>
+      </div>
+
+      {isMember ? (
+        <button onClick={() => handleModal(togglePostCreateModal)}>
+          작성하기
+        </button>
+      ) : (
+        <button onClick={() => handleModal(toggleJoinRequestModal)}>
+          가입하기
+        </button>
+      )}
+
+      <PostList posts={posts} />
     </div>
   )
 }
