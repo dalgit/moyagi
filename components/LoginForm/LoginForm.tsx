@@ -1,13 +1,16 @@
+import Button from '@mui/material/Button'
+import TextField from '@mui/material/TextField'
 import { isAxiosError } from 'axios'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import styled from 'styled-components'
 import useForm from '@/hooks/useForm'
+import { validateAuth } from '@/utils/authValidation'
 import client from '@/utils/axios/axios'
 
 const LoginForm = () => {
-  const [error, setError] = useState<string>('')
+  const [isBlurred, setIsBlurred] = useState<{ [key: string]: boolean }>({})
   const { form, updateForm } = useForm<{ [key: string]: string }>({
     email: '',
     password: '',
@@ -29,37 +32,51 @@ const LoginForm = () => {
       router.push('/')
     } catch (err) {
       if (isAxiosError(err)) {
-        setError(err.response?.data.message)
+        console.log(err.response?.data.message)
       }
     }
   }
 
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    setIsBlurred({ ...isBlurred, [e.target.name]: true })
+  }
+
   return (
     <LoginFormLayout onSubmit={handleLogin}>
-      <div>Login</div>
+      <TitleText>LOGIN</TitleText>
 
-      <div>
-        <label htmlFor="email">Email</label>
-        <input
-          type="email"
-          name="email"
-          value={form.email}
-          onChange={updateForm}
-        />
-      </div>
+      <TextField
+        required
+        type="email"
+        name="email"
+        label="email"
+        margin="normal"
+        value={form.email}
+        onChange={updateForm}
+        onBlur={handleBlur}
+        error={isBlurred.email ? validateAuth.email(form.email) !== '' : false}
+        helperText={isBlurred.email && validateAuth.email(form.email)}
+      />
+      <TextField
+        required
+        type="password"
+        name="password"
+        label="Password"
+        margin="normal"
+        value={form.password}
+        onChange={updateForm}
+        onBlur={handleBlur}
+        error={
+          isBlurred.password
+            ? validateAuth.password(form.password) !== ''
+            : false
+        }
+        helperText={isBlurred.password && validateAuth.password(form.password)}
+      />
 
-      <div>
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          name="password"
-          value={form.password}
-          onChange={updateForm}
-        />
-      </div>
-
-      <div>{error}</div>
-      <button type="submit">로그인</button>
+      <SubmitButton type="submit" variant="contained">
+        로그인
+      </SubmitButton>
       <Link href="/signup">계정이 없으신가요? 회원가입</Link>
     </LoginFormLayout>
   )
@@ -69,4 +86,21 @@ export default LoginForm
 
 const LoginFormLayout = styled.form`
   width: 450px;
+  padding: 80px 20px 0 20px;
+
+  display: flex;
+  flex-direction: column;
+
+  a {
+    text-align: center;
+  }
+`
+
+const TitleText = styled.span`
+  font-size: 40px;
+  text-align: center;
+`
+
+const SubmitButton = styled(Button)`
+  margin: 30px 0;
 `

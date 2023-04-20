@@ -1,13 +1,16 @@
+import Button from '@mui/material/Button'
+import TextField from '@mui/material/TextField'
 import { isAxiosError } from 'axios'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import styled from 'styled-components'
 import useForm from '@/hooks/useForm'
+import { validateAuth } from '@/utils/authValidation'
 import client from '@/utils/axios/axios'
 
 const SignUpForm = () => {
-  const [error, setError] = useState<string>('')
+  const [isBlurred, setIsBlurred] = useState<{ [key: string]: boolean }>({})
   const { form, updateForm } = useForm<{ [key: string]: string }>({
     name: '',
     email: '',
@@ -16,6 +19,7 @@ const SignUpForm = () => {
   })
 
   const router = useRouter()
+
   const handleSignUp = async (
     e: React.FormEvent<HTMLFormElement>,
   ): Promise<void> => {
@@ -31,57 +35,88 @@ const SignUpForm = () => {
       router.push('/login')
     } catch (err) {
       if (isAxiosError(err)) {
-        setError(err.response?.data.message)
+        console.log(err.response?.data.message)
       }
     }
   }
 
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    setIsBlurred({ ...isBlurred, [e.target.name]: true })
+  }
+
   return (
     <SignUpFormLayout onSubmit={handleSignUp}>
-      <div>Sign Up</div>
+      <TitleText>Sign Up</TitleText>
 
-      <div>
-        <label htmlFor="name">Name</label>
-        <input
-          type="text"
-          name="name"
-          value={form.name}
-          onChange={updateForm}
-        />
-      </div>
+      <TextField
+        required
+        type="text"
+        name="name"
+        label="name"
+        margin="normal"
+        value={form.name}
+        onChange={updateForm}
+        onBlur={handleBlur}
+        error={isBlurred.name ? validateAuth.name(form.name) !== '' : false}
+        helperText={isBlurred.name && validateAuth.name(form.name)}
+      />
 
-      <div>
-        <label htmlFor="email">Email</label>
-        <input
-          type="email"
-          name="email"
-          value={form.email}
-          onChange={updateForm}
-        />
-      </div>
+      <TextField
+        required
+        type="email"
+        name="email"
+        label="email"
+        margin="normal"
+        value={form.email}
+        onChange={updateForm}
+        onBlur={handleBlur}
+        error={isBlurred.email ? validateAuth.email(form.email) !== '' : false}
+        helperText={isBlurred.email && validateAuth.email(form.email)}
+      />
 
-      <div>
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          name="password"
-          value={form.password}
-          onChange={updateForm}
-        />
-      </div>
+      <TextField
+        required
+        type="password"
+        name="password"
+        label="Password"
+        margin="normal"
+        value={form.password}
+        onChange={updateForm}
+        onBlur={handleBlur}
+        error={
+          isBlurred.password
+            ? validateAuth.password(form.password) !== ''
+            : false
+        }
+        helperText={isBlurred.password && validateAuth.password(form.password)}
+      />
 
-      <div>
-        <label htmlFor="passwordConfirm">Password Confirm</label>
-        <input
-          type="password"
-          name="passwordConfirm"
-          value={form.passwordConfirm}
-          onChange={updateForm}
-        />
-      </div>
+      <TextField
+        required
+        type="password"
+        name="passwordConfirm"
+        label="passwordConfirm"
+        margin="normal"
+        value={form.passwordConfirm}
+        onChange={updateForm}
+        onBlur={handleBlur}
+        error={
+          isBlurred.passwordConfirm
+            ? validateAuth.passwordConfirm(
+                form.password,
+                form.passwordConfirm,
+              ) !== ''
+            : false
+        }
+        helperText={
+          isBlurred.passwordConfirm &&
+          validateAuth.passwordConfirm(form.password, form.passwordConfirm)
+        }
+      />
 
-      <div>{error}</div>
-      <button type="submit">회원가입</button>
+      <SubmitButton type="submit" variant="contained">
+        회원가입
+      </SubmitButton>
       <Link href="/login">계정이 이미 있으신가요? 로그인</Link>
     </SignUpFormLayout>
   )
@@ -91,4 +126,21 @@ export default SignUpForm
 
 const SignUpFormLayout = styled.form`
   width: 450px;
+  padding: 80px 20px 0 20px;
+
+  display: flex;
+  flex-direction: column;
+
+  a {
+    text-align: center;
+  }
+`
+
+const TitleText = styled.span`
+  font-size: 40px;
+  text-align: center;
+`
+
+const SubmitButton = styled(Button)`
+  margin: 30px 0;
 `
