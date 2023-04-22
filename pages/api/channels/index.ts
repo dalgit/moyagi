@@ -60,6 +60,27 @@ const getChannelByAddress = async (
   }
 }
 
+const getChannelsByKeyword = async (
+  req: NextApiRequest,
+  res: NextApiResponse,
+) => {
+  try {
+    const db = await connectToDatabase()
+    const channelsCollection = db.collection('channels')
+    const { keyword } = req.query
+
+    const channel = await channelsCollection
+      .find({ name: { $regex: keyword, $options: 'i' } })
+      .toArray()
+
+    return res.status(200).json(channel)
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: '서버가 불안정합니다. 잠시후 다시 시도해주세요.' })
+  }
+}
+
 const createChannel = async (
   req: NextApiRequestWithUser,
   res: NextApiResponse,
@@ -102,6 +123,10 @@ export default async function handler(
     case 'GET':
       if (req.query.channelAddress) {
         await getChannelByAddress(req, res)
+      }
+
+      if (req.query.keyword) {
+        await getChannelsByKeyword(req, res)
       }
       break
 
