@@ -11,5 +11,6 @@ declare module 'styled-components' {
     colors: {
       background: string
     }
+    button: { [key: string]: { backgroundColor: string; color: string } }
   }
 }
