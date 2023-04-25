@@ -4,13 +4,16 @@ import { isAxiosError } from 'axios'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import { useSetRecoilState } from 'recoil'
 import styled from 'styled-components'
 import useForm from '@/hooks/useForm'
+import { userSelector } from '@/recoil/user'
 import { validateAuth } from '@/utils/authValidation'
 import client from '@/utils/axios/axios'
 
 const LoginForm = () => {
   const [isBlurred, setIsBlurred] = useState<{ [key: string]: boolean }>({})
+  const setUser = useSetRecoilState(userSelector)
   const { form, updateForm } = useForm<{ [key: string]: string }>({
     email: '',
     password: '',
@@ -23,11 +26,12 @@ const LoginForm = () => {
     e.preventDefault()
 
     try {
-      const res = await client.post('/auth/login', {
-        email: form.email,
-        password: form.password,
-      })
-      sessionStorage.setItem('userNameItem', res.data.userName)
+      await client
+        .post('/auth/login', {
+          email: form.email,
+          password: form.password,
+        })
+        .then((res) => setUser(res.data))
 
       router.push('/')
     } catch (err) {
