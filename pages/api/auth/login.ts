@@ -9,13 +9,15 @@ const loginApi = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const { email, password } = req.body
 
-    const user = await db.collection('users').findOne({ email })
+    const userInfo = await db.collection('users').findOne({ email })
 
-    if (!user) {
+    if (!userInfo) {
       return res.status(404).json({ message: '가입되지 않은 이메일입니다.' })
     }
 
-    const isPasswordMatched = await bcrypt.compare(password, user.password)
+    const { password: enteredPassword, ...user } = userInfo
+
+    const isPasswordMatched = await bcrypt.compare(password, enteredPassword)
 
     if (!isPasswordMatched) {
       return res.status(401).json({ message: '비밀번호가 일치하지 않습니다.' })
@@ -40,9 +42,7 @@ const loginApi = async (req: NextApiRequest, res: NextApiResponse) => {
       `access_token=${accessToken}; Path=/; HttpOnly; Secure; SameSite=None;`,
     ])
 
-    return res
-      .status(200)
-      .json({ message: '로그인이 완료되었습니다.', userName: user.name })
+    return res.status(200).json(user)
   } catch (error) {
     res
       .status(500)

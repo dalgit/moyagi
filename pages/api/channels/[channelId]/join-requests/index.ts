@@ -40,7 +40,7 @@ const getJoinRequests = async (req: NextApiRequest, res: NextApiResponse) => {
       ])
       .toArray()
 
-    return res.status(200).json({ joinRequests })
+    return res.status(200).json(joinRequests)
   } catch (error) {
     res
       .status(500)

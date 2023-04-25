@@ -52,7 +52,7 @@ const getChannelByAddress = async (
         },
       ])
       .next()
-    return res.status(200).json({ channel })
+    return res.status(200).json(channel)
   } catch (error) {
     res
       .status(500)

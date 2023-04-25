@@ -28,7 +28,7 @@ const getJoinedChannels = async (
       })
       .toArray()
 
-    res.status(200).json({ joinedChannels })
+    res.status(200).json(joinedChannels)
   } catch (error) {
     res
       .status(500)
