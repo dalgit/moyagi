@@ -1,8 +1,13 @@
+import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import tmp from '/public/assets/tmp.png'
 import Link from 'next/link'
 import styled from 'styled-components'
-import UserStatus from '../UserStatus/UserStatus'
+
+const UserStatus = dynamic(() => import('../UserStatus/UserStatus'), {
+  ssr: false,
+})
+
 const Header = () => {
   return (
     <HeaderLayout>
