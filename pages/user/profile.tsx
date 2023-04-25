@@ -1,47 +1,49 @@
+import { useQuery } from '@tanstack/react-query'
 import moment from 'moment'
 import { GetServerSideProps } from 'next/types'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
+import { useRecoilValue } from 'recoil'
+import { userSelector } from '@/recoil/user'
 import client from '@/utils/axios/axios'
 import createServerInstance from '@/utils/axios/server'
 
 const UserProfilePage = ({ userInfo }: any) => {
-  const [managedChannels, setManagedChannels] = useState<any[]>([])
-  const [subscribedChannels, setSubscribedChannels] = useState<any[]>([])
-  const [joinRequests, setJoinRequests] = useState([])
-  const [channelJoinRequests, setChannelJoinRequests] = useState([])
-  const [posts, setPosts] = useState([])
+  const [clickedChannelId, setClickedChannelId] = useState<string | null>(null)
+  const user = useRecoilValue(userSelector)
 
-  useEffect(() => {
-    const handleChannels = async () => {
-      const joinedChannels = await client
-        .get('/users/me/channels')
-        .then((res) => res.data.joinedChannels)
+  const { data: posts } = useQuery(['myPosts'], () =>
+    client.get('/users/me/posts').then((res) => res.data),
+  )
 
-      const managedChannels2: any[] = []
-      const subscribedChannels2: any[] = []
+  const { data: joinRequests } = useQuery(['myJoinRequests'], () =>
+    client.get('/users/me/join-requests').then((res) => res.data),
+  )
 
-      joinedChannels.forEach((channel: any) =>
-        channel.manager === userInfo._id
-          ? managedChannels2.push(channel)
-          : subscribedChannels2.push(channel),
-      )
+  const { data: joinnedChannels } = useQuery(['myJoinnedChannels'], () =>
+    client.get('/users/me/channels').then((res) => res.data),
+  )
 
-      setManagedChannels(managedChannels2)
-      setSubscribedChannels(subscribedChannels2)
-    }
-    const handleJoinRequests = async () => {
-      await client
-        .get('/users/me/join-requests')
-        .then((res) => setJoinRequests(res.data.joinRequests))
-    }
-    handleChannels()
-    handleJoinRequests()
-  }, [userInfo._id])
+  const managedChannels = joinnedChannels?.filter(
+    (channel) => channel.manager === user?._id,
+  )
 
-  const handleChannelRequests = async (channelId: string) => {
-    await client
-      .get(`/channels/${channelId}/join-requests`)
-      .then((res) => setChannelJoinRequests(res.data.joinRequests))
+  const subscribedChannels = joinnedChannels?.filter(
+    (channel) => channel.manager !== user?._id,
+  )
+
+  const getChannelJoinRequests = (channelId: string) =>
+    client.get(`/channels/${channelId}/join-requests`).then((res) => res.data)
+
+  const { data: channelJoinRequests } = useQuery(
+    ['joinRequests', clickedChannelId],
+    () => clickedChannelId && getChannelJoinRequests(clickedChannelId),
+    {
+      enabled: !!clickedChannelId,
+    },
+  )
+
+  const handleChannelClick = async (channelId: string) => {
+    setClickedChannelId(channelId)
   }
 
   const handleRequest = async (
@@ -55,25 +57,21 @@ const UserProfilePage = ({ userInfo }: any) => {
     })
   }
 
-  const fetchPosts = async () => {
-    await client.get(`/users/me/posts`).then((res) => setPosts(res.data))
-  }
-
   return (
     <div>
       <h3>내정보</h3>
       <div>{userInfo.name}</div>
       <h3>운영중인 채널</h3>
-      {managedChannels.map((channel) => {
+      {managedChannels?.map((channel) => {
         return (
           <>
             <p
               key={channel._id}
-              onClick={() => handleChannelRequests(channel._id)}
+              onClick={() => handleChannelClick(channel._id)}
             >
               {channel?.name}
             </p>
-            {channelJoinRequests.map((request) => {
+            {channelJoinRequests?.map((request) => {
               return (
                 <div key={request._id}>
                   닉네임: {request.requestor.name}
@@ -99,12 +97,12 @@ const UserProfilePage = ({ userInfo }: any) => {
         )
       })}
       <h3>가입한 채널</h3>
-      {subscribedChannels.map((channel) => {
+      {subscribedChannels?.map((channel) => {
         return <p key={channel._id}>{channel?.name}</p>
       })}
       <div>
         <h3>가입심사중인 채널</h3>
-        {joinRequests.map((request) => {
+        {joinRequests?.map((request) => {
           return (
             <div key={request._id}>
               <p>채널이름 : {request.channel.name}</p>
@@ -115,7 +113,7 @@ const UserProfilePage = ({ userInfo }: any) => {
           )
         })}
       </div>
-      <h3 onClick={fetchPosts}>내 글 보기</h3>
+      <h3>내 글 보기</h3>
       {posts?.map((post) => (
         <div>{post.content}</div>
       ))}

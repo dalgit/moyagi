@@ -15,20 +15,21 @@ import theme from '@/styles/theme'
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const [queryClient] = useState(
-    new QueryClient({
-      defaultOptions: {
-        queries: {
-          refetchOnWindowFocus: false,
-          staleTime: 1000 * 60 * 5,
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            refetchOnWindowFocus: false,
+            staleTime: 1000 * 60 * 5,
+          },
         },
-      },
-    }),
+      }),
   )
 
   return (
     <RecoilRoot>
       <QueryClientProvider client={queryClient}>
-        <Hydrate state={pageProps.dehydratedState}>
+        <Hydrate state={pageProps.dehydratedProps}>
           <ThemeProvider theme={theme}>
             <GlobalStyle />
             <CssBaseline />

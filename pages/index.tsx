@@ -1,28 +1,32 @@
+import { useQuery } from '@tanstack/react-query'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useState, KeyboardEvent } from 'react'
 import { RxReset } from 'react-icons/rx'
 import { TiArrowRightThick as ArrowIcon } from 'react-icons/ti'
 import styled from 'styled-components'
 import Button from '@/components/common/Ui/Button'
 import Card from '@/components/common/Ui/Card'
 import client from '@/utils/axios/axios'
+
 const Home = () => {
-  const [channels, setChannels] = useState([])
   const [keyword, setKeyword] = useState('')
   const [serachedChannels, setSearchedChannels] = useState([])
   const isSearched = serachedChannels.length > 0
 
-  useEffect(() => {
-    client
-      .get('/users/me/channels')
-      .then((res) => setChannels(res.data.joinedChannels))
-      .catch((e) => console.log(e))
-  }, [])
+  const { data: channels = [] } = useQuery(['myJoinnedChannels'], () =>
+    client.get('/users/me/channels').then((res) => res.data),
+  )
 
   const handleSearch = () => {
     client
       .get('/channels', { params: { keyword } })
       .then((res) => setSearchedChannels(res.data))
+  }
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSearch()
+    }
   }
 
   const resetSearchedChannels = () => {
@@ -38,6 +42,7 @@ const Home = () => {
             type="text"
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
+            onKeyDown={handleKeyDown}
             placeholder="채널 검색하기"
           />
           {isSearched && (
@@ -47,7 +52,7 @@ const Home = () => {
         <Button onClick={handleSearch}>검색</Button>
       </SearchBarBox>
       <StyledLink href="/create-channel">
-        채널 만들러 가기 <ArrowIcon />
+        채널 만들기 <ArrowIcon />
       </StyledLink>
       <CardList>
         {isSearched ? (
@@ -61,7 +66,7 @@ const Home = () => {
           ))
         ) : (
           <>
-            {channels.map((channel) => (
+            {channels?.map((channel) => (
               <Card
                 key={channel._id}
                 title={channel.name}

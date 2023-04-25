@@ -14,10 +14,7 @@ const getUserInfo = async (
 
     const db = await connectToDatabase()
     const usersCollection = db.collection('users')
-    const userInfo = await usersCollection.findOne(
-      { _id: userId },
-      { projection: { name: true } },
-    )
+    const userInfo = await usersCollection.findOne({ _id: userId })
 
     return res.status(200).json(userInfo)
   } catch (error) {
