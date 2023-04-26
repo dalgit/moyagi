@@ -1,28 +1,20 @@
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import { FaUserCircle } from 'react-icons/fa'
-import { useRecoilState } from 'recoil'
+import { useRecoilValue } from 'recoil'
 import styled from 'styled-components'
+import { useLogoutUser } from '@/hooks/mutations/useLogoutUser'
 import useClickOutside from '@/hooks/useClickOutside'
 import useToggle from '@/hooks/useToggle'
 import { userSelector } from '@/recoil/user'
-import { logoutUser } from '@/utils/api'
 
 const UserStatus = () => {
-  const [user, setUser] = useRecoilState(userSelector)
+  const user = useRecoilValue(userSelector)
   const [isMenuActive, toggleUserMenu] = useToggle()
   const listRef = useClickOutside<HTMLDivElement>(
     () => isMenuActive && toggleUserMenu(),
   )
 
-  const { push } = useRouter()
-
-  const handleLogout = async () => {
-    logoutUser().then(() => {
-      setUser(null)
-      push('/login')
-    })
-  }
+  const { mutate: logoutMuate } = useLogoutUser()
 
   return (
     <div>
@@ -35,12 +27,12 @@ const UserStatus = () => {
               <Link href="/user/profile">
                 <li>내 정보</li>
               </Link>
-              <li onClick={handleLogout}>로그아웃</li>
+              <li onClick={() => logoutMuate()}>로그아웃</li>
             </MenuList>
           )}
         </UserBox>
       ) : (
-        <button onClick={handleLogout}>로그아웃</button>
+        <button onClick={() => logoutMuate()}>로그아웃</button>
       )}
     </div>
   )

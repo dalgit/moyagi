@@ -1,12 +1,10 @@
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
-import { isAxiosError } from 'axios'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import { useState } from 'react'
 import styled from 'styled-components'
+import { useRegisterUser } from '@/hooks/mutations/useRegisterUser'
 import useForm from '@/hooks/useForm'
-import { resiterUser } from '@/utils/api'
 import { validateAuth } from '@/utils/authValidation'
 
 const SignUpForm = () => {
@@ -18,27 +16,19 @@ const SignUpForm = () => {
     passwordConfirm: '',
   })
 
-  const router = useRouter()
+  const { mutate: registerUserMutate } = useRegisterUser()
 
   const handleSignUp = async (
     e: React.FormEvent<HTMLFormElement>,
   ): Promise<void> => {
     e.preventDefault()
 
-    try {
-      await resiterUser({
-        name: form.name,
-        email: form.email,
-        password: form.password,
-        passwordConfirm: form.passwordConfirm,
-      })
-
-      router.push('/login')
-    } catch (err) {
-      if (isAxiosError(err)) {
-        console.log(err.response?.data.message)
-      }
-    }
+    registerUserMutate({
+      name: form.name,
+      email: form.email,
+      password: form.password,
+      passwordConfirm: form.passwordConfirm,
+    })
   }
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {

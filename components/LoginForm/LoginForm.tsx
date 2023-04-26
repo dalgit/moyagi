@@ -1,35 +1,28 @@
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import { useState } from 'react'
-import { useSetRecoilState } from 'recoil'
 import styled from 'styled-components'
+import { useAuthenticateUser } from '@/hooks/mutations/useAuthenticateUser'
 import useForm from '@/hooks/useForm'
-import { userSelector } from '@/recoil/user'
-import { authenticateUser } from '@/utils/api'
 import { validateAuth } from '@/utils/authValidation'
 
 const LoginForm = () => {
   const [isBlurred, setIsBlurred] = useState<{ [key: string]: boolean }>({})
-  const setUser = useSetRecoilState(userSelector)
   const { form, updateForm } = useForm<{ [key: string]: string }>({
     email: '',
     password: '',
   })
-  const router = useRouter()
 
+  const { mutate: authenticateMutate } = useAuthenticateUser()
   const handleLogin = async (
     e: React.FormEvent<HTMLFormElement>,
   ): Promise<void> => {
     e.preventDefault()
 
-    await authenticateUser({
+    authenticateMutate({
       email: form.email,
       password: form.password,
-    }).then((res) => {
-      setUser(res.data)
-      router.push('/')
     })
   }
 
