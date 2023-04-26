@@ -1,5 +1,5 @@
 import useForm from '@/hooks/useForm'
-import client from '@/utils/axios/axios'
+import { createChannel } from '@/utils/api'
 
 const CreateChannelPage = () => {
   const { form, updateForm } = useForm<{ [key: string]: string }>({
@@ -14,16 +14,14 @@ const CreateChannelPage = () => {
   ): Promise<void> => {
     e.preventDefault()
 
-    try {
-      await client.post('/channels', {
-        name: form.name,
-        address: form.address,
-        description: form.description,
-        isPublic: JSON.parse(form.isPublic),
-      })
-    } catch (err) {
-      console.log(err)
-    }
+    createChannel({
+      name: form.name,
+      address: form.address,
+      description: form.description,
+      isPublic: JSON.parse(form.isPublic),
+    }).then(() => {
+      alert('채널이 개설되었습니다!')
+    })
   }
 
   return (

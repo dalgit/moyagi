@@ -11,7 +11,7 @@ import ModalFrame from '@/components/Modal/ModalFrame'
 import PostCreateForm from '@/components/PostForm/PostCreateForm'
 import PostList from '@/components/PostList/PostList'
 import { userSelector } from '@/recoil/user'
-import client from '@/utils/axios/axios'
+import { getChannelBySlug, getChannelPostsById } from '@/utils/api'
 import createServerInstance from '@/utils/axios/server'
 export interface IParams extends ParsedUrlQuery {
   slug: string
@@ -27,12 +27,9 @@ const ChannelPage = ({ slug }: { slug: string }) => {
   const { push } = useRouter()
 
   const { data: channel } = useQuery(['channel', slug], () =>
-    client
-      .get('http://localhost:3000/api/channels', {
-        params: { channelAddress: slug },
-      })
-      .then((res) => res.data),
+    getChannelBySlug(slug),
   )
+
   const isMember = channel.members.some(
     (member: any) => member._id === user?._id,
   )
@@ -40,8 +37,10 @@ const ChannelPage = ({ slug }: { slug: string }) => {
 
   const { data: posts } = useQuery(
     ['posts', slug],
-    () => client.get(`/channels/${channel._id}/posts`).then((res) => res.data),
-    { enabled: shouldFetchPosts },
+    () => getChannelPostsById(channel._id),
+    {
+      enabled: shouldFetchPosts,
+    },
   )
 
   const handleModal = (toggleModal: any) => {
@@ -80,7 +79,6 @@ const ChannelPage = ({ slug }: { slug: string }) => {
           <div>{channel.name}</div>
           <div>{channel.description}</div>
           <div>매니저 : {channel.manager.name}</div>
-
           {isMember ? (
             <button onClick={() => handleModal(togglePostCreateModal)}>
               작성하기

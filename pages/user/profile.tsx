@@ -1,26 +1,29 @@
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import moment from 'moment'
 import { GetServerSideProps } from 'next/types'
 import { useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import { userSelector } from '@/recoil/user'
-import client from '@/utils/axios/axios'
+import {
+  getMyPosts,
+  getMyJoinRequests,
+  getMyJoinnedChannels,
+  getChannelJoinRequests,
+  patchJoinRequestStatus,
+} from '@/utils/api'
 import createServerInstance from '@/utils/axios/server'
 
 const UserProfilePage = ({ userInfo }: any) => {
   const [clickedChannelId, setClickedChannelId] = useState<string | null>(null)
   const user = useRecoilValue(userSelector)
 
-  const { data: posts } = useQuery(['myPosts'], () =>
-    client.get('/users/me/posts').then((res) => res.data),
-  )
+  const { data: posts } = useQuery(['myPosts'], getMyPosts)
 
-  const { data: joinRequests } = useQuery(['myJoinRequests'], () =>
-    client.get('/users/me/join-requests').then((res) => res.data),
-  )
+  const { data: joinRequests } = useQuery(['myJoinRequests'], getMyJoinRequests)
 
-  const { data: joinnedChannels } = useQuery(['myJoinnedChannels'], () =>
-    client.get('/users/me/channels').then((res) => res.data),
+  const { data: joinnedChannels } = useQuery(
+    ['myJoinnedChannels'],
+    getMyJoinnedChannels,
   )
 
   const managedChannels = joinnedChannels?.filter(
@@ -31,11 +34,8 @@ const UserProfilePage = ({ userInfo }: any) => {
     (channel) => channel.manager !== user?._id,
   )
 
-  const getChannelJoinRequests = (channelId: string) =>
-    client.get(`/channels/${channelId}/join-requests`).then((res) => res.data)
-
   const { data: channelJoinRequests } = useQuery(
-    ['joinRequests', clickedChannelId],
+    ['channelJoinRequests', clickedChannelId],
     () => clickedChannelId && getChannelJoinRequests(clickedChannelId),
     {
       enabled: !!clickedChannelId,
@@ -46,21 +46,27 @@ const UserProfilePage = ({ userInfo }: any) => {
     setClickedChannelId(channelId)
   }
 
-  const handleRequest = async (
+  const handleJoinRequestStatus = async (
     requestId: string,
     channelId: string,
     isApproved: boolean,
   ) => {
     const status = isApproved ? 'approve' : 'reject'
-    await client.patch(`/channels/${channelId}/join-requests/${requestId}`, {
-      status,
-    })
+    mutate({ channelId, requestId, status })
   }
+
+  const queryClient = useQueryClient()
+
+  const { mutate } = useMutation(patchJoinRequestStatus, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['channelJoinRequests'])
+    },
+  })
 
   return (
     <div>
       <h3>내정보</h3>
-      <div>{userInfo.name}</div>
+      <div>{user?.name}</div>
       <h3>운영중인 채널</h3>
       {managedChannels?.map((channel) => {
         return (
@@ -78,18 +84,19 @@ const UserProfilePage = ({ userInfo }: any) => {
                   메시지: {request.message}
                   <button
                     onClick={() =>
-                      handleRequest(request._id, channel._id, true)
+                      handleJoinRequestStatus(request._id, channel._id, true)
                     }
                   >
                     승인
                   </button>
                   <button
                     onClick={() =>
-                      handleRequest(request._id, channel._id, false)
+                      handleJoinRequestStatus(request._id, channel._id, false)
                     }
                   >
                     거절
                   </button>
+                  ss
                 </div>
               )
             })}

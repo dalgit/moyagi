@@ -6,8 +6,8 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import styled from 'styled-components'
 import useForm from '@/hooks/useForm'
+import { resiterUser } from '@/utils/api'
 import { validateAuth } from '@/utils/authValidation'
-import client from '@/utils/axios/axios'
 
 const SignUpForm = () => {
   const [isBlurred, setIsBlurred] = useState<{ [key: string]: boolean }>({})
@@ -26,12 +26,13 @@ const SignUpForm = () => {
     e.preventDefault()
 
     try {
-      await client.post('/auth/signup', {
+      await resiterUser({
         name: form.name,
         email: form.email,
         password: form.password,
         passwordConfirm: form.passwordConfirm,
       })
+
       router.push('/login')
     } catch (err) {
       if (isAxiosError(err)) {

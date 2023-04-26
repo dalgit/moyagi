@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import useClickOutside from '@/hooks/useClickOutside'
 import useToggle from '@/hooks/useToggle'
 import { userSelector } from '@/recoil/user'
-import client from '@/utils/axios/axios'
+import { logoutUser } from '@/utils/api'
 
 const UserStatus = () => {
   const [user, setUser] = useRecoilState(userSelector)
@@ -18,9 +18,10 @@ const UserStatus = () => {
   const { push } = useRouter()
 
   const handleLogout = async () => {
-    await client.post('/auth/logout')
-    setUser(null)
-    push('/login')
+    logoutUser().then(() => {
+      setUser(null)
+      push('/login')
+    })
   }
 
   return (

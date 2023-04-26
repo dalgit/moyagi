@@ -1,5 +1,5 @@
 import useForm from '@/hooks/useForm'
-import client from '@/utils/axios/axios'
+import { createJoinRequest } from '@/utils/api'
 
 interface JoinRequestFormProps {
   channelId: string
@@ -18,15 +18,7 @@ const JoinRequestForm = ({
 
   const handleJoinRequest = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-
-    client
-      .post(`/channels/${channelId}/join-requests`, {
-        message: form.message,
-        isPublic,
-      })
-      .catch((e) => {
-        console.log(e.response.data.errorType)
-      })
+    createJoinRequest({ channelId, message: form.message, isPublic })
   }
 
   return (

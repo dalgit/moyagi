@@ -1,6 +1,5 @@
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
-import { isAxiosError } from 'axios'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
@@ -8,8 +7,8 @@ import { useSetRecoilState } from 'recoil'
 import styled from 'styled-components'
 import useForm from '@/hooks/useForm'
 import { userSelector } from '@/recoil/user'
+import { authenticateUser } from '@/utils/api'
 import { validateAuth } from '@/utils/authValidation'
-import client from '@/utils/axios/axios'
 
 const LoginForm = () => {
   const [isBlurred, setIsBlurred] = useState<{ [key: string]: boolean }>({})
@@ -25,20 +24,13 @@ const LoginForm = () => {
   ): Promise<void> => {
     e.preventDefault()
 
-    try {
-      await client
-        .post('/auth/login', {
-          email: form.email,
-          password: form.password,
-        })
-        .then((res) => setUser(res.data))
-
+    await authenticateUser({
+      email: form.email,
+      password: form.password,
+    }).then((res) => {
+      setUser(res.data)
       router.push('/')
-    } catch (err) {
-      if (isAxiosError(err)) {
-        console.log(err.response?.data.message)
-      }
-    }
+    })
   }
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {

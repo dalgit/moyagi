@@ -6,6 +6,7 @@ import { TiArrowRightThick as ArrowIcon } from 'react-icons/ti'
 import styled from 'styled-components'
 import Button from '@/components/common/Ui/Button'
 import Card from '@/components/common/Ui/Card'
+import { getMyChannels, searchChannels } from '@/utils/api'
 import client from '@/utils/axios/axios'
 
 const Home = () => {
@@ -13,14 +14,10 @@ const Home = () => {
   const [serachedChannels, setSearchedChannels] = useState([])
   const isSearched = serachedChannels.length > 0
 
-  const { data: channels = [] } = useQuery(['myJoinnedChannels'], () =>
-    client.get('/users/me/channels').then((res) => res.data),
-  )
+  const { data: channels = [] } = useQuery(['myJoinnedChannels'], getMyChannels)
 
-  const handleSearch = () => {
-    client
-      .get('/channels', { params: { keyword } })
-      .then((res) => setSearchedChannels(res.data))
+  const handleSearch = async () => {
+    await searchChannels(keyword).then((res) => setSearchedChannels(res))
   }
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
