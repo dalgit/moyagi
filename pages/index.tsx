@@ -4,7 +4,7 @@ import { RxReset } from 'react-icons/rx'
 import { TiArrowRightThick as ArrowIcon } from 'react-icons/ti'
 import styled from 'styled-components'
 import Button from '@/components/common/Ui/Button'
-import Card from '@/components/common/Ui/Card'
+import JoinnedChannelCards from '@/components/JoinnedChannelCards/JoinnedChannelCards'
 import { useGetJoinnedChannels } from '@/hooks/queries/useGetJoinnedChannels'
 import { useSearchChannels } from '@/hooks/queries/useSearchChannels'
 
@@ -52,29 +52,9 @@ const Home = () => {
       <StyledLink href="/create-channel">
         채널 만들기 <ArrowIcon />
       </StyledLink>
-      <CardList>
-        {isSearched ? (
-          searchedChannels?.map((channel) => (
-            <Card
-              key={channel._id}
-              title={channel.name}
-              href={`/channels/${channel.address}`}
-              imageSrc="/assets/a.jpg"
-            />
-          ))
-        ) : (
-          <>
-            {channels?.map((channel) => (
-              <Card
-                key={channel._id}
-                title={channel.name}
-                href={`/channels/${channel.address}`}
-                imageSrc="/assets/a.jpg"
-              />
-            ))}
-          </>
-        )}
-      </CardList>
+      <JoinnedChannelCards
+        channels={isSearched ? searchedChannels : channels}
+      />
     </HomeLayout>
   )
 }

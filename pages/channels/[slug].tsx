@@ -1,19 +1,21 @@
 import { ParsedUrlQuery } from 'querystring'
-import { QueryClient, dehydrate, useQuery } from '@tanstack/react-query'
+import { QueryClient, dehydrate } from '@tanstack/react-query'
 import { useRouter } from 'next/router'
 import { GetServerSideProps } from 'next/types'
 import { useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import styled from 'styled-components'
-import JoinedChannelList from '@/components/JoinedChannelList/JoinedChannelList'
+import JoinnedChannelList from '@/components/JoinnedChannelList/JoinnedChannelList'
 import JoinRequestForm from '@/components/JoInRequestForm/JoinRequestForm'
 import ModalFrame from '@/components/Modal/ModalFrame'
 import PostCreateForm from '@/components/PostForm/PostCreateForm'
 import PostList from '@/components/PostList/PostList'
 import { useGetChannel } from '@/hooks/queries/useGetChannel'
 import { useGetChannelPosts } from '@/hooks/queries/useGetChannelPosts'
+import { useGetJoinnedChannels } from '@/hooks/queries/useGetJoinnedChannels'
 import { userSelector } from '@/recoil/user'
 import createServerInstance from '@/utils/axios/server'
+
 export interface IParams extends ParsedUrlQuery {
   slug: string
 }
@@ -26,6 +28,7 @@ const ChannelPage = ({ slug }: { slug: string }) => {
 
   const user = useRecoilValue(userSelector)
   const { push } = useRouter()
+  const { data: channels = [] } = useGetJoinnedChannels()
 
   const { data: channel } = useGetChannel(slug)
   const isMember = channel.members.some(
@@ -83,7 +86,8 @@ const ChannelPage = ({ slug }: { slug: string }) => {
         </ChannelBox>
 
         <PostList posts={posts} />
-        <JoinedChannelList />
+
+        <JoinnedChannelList channels={channels} />
       </ChannelPageLayout>
     </>
   )
