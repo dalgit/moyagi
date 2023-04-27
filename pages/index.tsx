@@ -7,27 +7,30 @@ import styled from 'styled-components'
 import Button from '@/components/common/Ui/Button'
 import Card from '@/components/common/Ui/Card'
 import { getMyChannels, searchChannels } from '@/utils/api'
-import client from '@/utils/axios/axios'
+import { useSearchChannels } from '@/hooks/queries/useSearchChannels'
 
 const Home = () => {
   const [keyword, setKeyword] = useState('')
   const [serachedChannels, setSearchedChannels] = useState([])
   const isSearched = serachedChannels.length > 0
 
-  const { data: channels = [] } = useQuery(['myJoinnedChannels'], getMyChannels)
+  const {
+    data: searchedChannels,
+    isFetchedAfterMount: isSearched,
+    refetch,
+    remove,
+  } = useSearchChannels(keyword)
 
-  const handleSearch = async () => {
-    await searchChannels(keyword).then((res) => setSearchedChannels(res))
+  const handleSearch = () => {
+    refetch()
   }
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      handleSearch()
-    }
+    if (e.key === 'Enter') refetch()
   }
 
   const resetSearchedChannels = () => {
-    setSearchedChannels([])
+    remove()
     setKeyword('')
   }
 
@@ -53,7 +56,7 @@ const Home = () => {
       </StyledLink>
       <CardList>
         {isSearched ? (
-          serachedChannels.map((channel) => (
+          searchedChannels?.map((channel) => (
             <Card
               key={channel._id}
               title={channel.name}
