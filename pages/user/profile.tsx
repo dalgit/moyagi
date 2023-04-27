@@ -1,20 +1,13 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import moment from 'moment'
 import { GetServerSideProps } from 'next/types'
 import { useState } from 'react'
 import { useRecoilValue } from 'recoil'
+import { usePatchJoinRequestStatus } from '@/hooks/mutations/usePatchJoinRequestsStatus'
 import { useGetChannelJoinRequests } from '@/hooks/queries/useGetChannelJoinRequests'
 import { useGetJoinnedChannels } from '@/hooks/queries/useGetJoinnedChannels'
 import { useGetMyJoinRequests } from '@/hooks/queries/useGetMyJoinRequests'
 import { useGetMyPosts } from '@/hooks/queries/useGetMyPosts'
 import { userSelector } from '@/recoil/user'
-import {
-  getMyPosts,
-  getMyJoinRequests,
-  getMyJoinnedChannels,
-  getChannelJoinRequests,
-  patchJoinRequestStatus,
-} from '@/utils/api'
 import createServerInstance from '@/utils/axios/server'
 
 const UserProfilePage = ({ userInfo }: any) => {
@@ -37,14 +30,6 @@ const UserProfilePage = ({ userInfo }: any) => {
     (channel) => channel.manager !== user?._id,
   )
 
-  const { data: channelJoinRequests } = useQuery(
-    ['channelJoinRequests', clickedChannelId],
-    () => clickedChannelId && getChannelJoinRequests(clickedChannelId),
-    {
-      enabled: !!clickedChannelId,
-    },
-  )
-
   const handleChannelClick = async (channelId: string) => {
     setClickedChannelId(channelId)
   }
@@ -55,16 +40,10 @@ const UserProfilePage = ({ userInfo }: any) => {
     isApproved: boolean,
   ) => {
     const status = isApproved ? 'approve' : 'reject'
-    mutate({ channelId, requestId, status })
+    patchJoinRequestStatusMutate({ channelId, requestId, status })
   }
 
-  const queryClient = useQueryClient()
-
-  const { mutate } = useMutation(patchJoinRequestStatus, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['channelJoinRequests'])
-    },
-  })
+  const { mutate: patchJoinRequestStatusMutate } = usePatchJoinRequestStatus()
 
   return (
     <div>

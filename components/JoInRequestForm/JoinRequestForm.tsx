@@ -1,5 +1,5 @@
+import { useCreateJoinRequest } from '@/hooks/mutations/useCreateJoinRequest'
 import useForm from '@/hooks/useForm'
-import { createJoinRequest } from '@/utils/api'
 
 interface JoinRequestFormProps {
   channelId: string
@@ -12,13 +12,14 @@ const JoinRequestForm = ({
   isPublic,
   closeModal,
 }: JoinRequestFormProps) => {
+  const { mutate: createJoinRequestMutate } = useCreateJoinRequest()
   const { form, updateForm } = useForm<{ [key: string]: string }>({
     message: '',
   })
 
   const handleJoinRequest = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    createJoinRequest({ channelId, message: form.message, isPublic })
+    createJoinRequestMutate({ channelId, message: form.message, isPublic })
   }
 
   return (

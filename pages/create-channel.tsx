@@ -1,5 +1,5 @@
+import { useCreateChannel } from '@/hooks/mutations/useCreateChannel'
 import useForm from '@/hooks/useForm'
-import { createChannel } from '@/utils/api'
 
 const CreateChannelPage = () => {
   const { form, updateForm } = useForm<{ [key: string]: string }>({
@@ -9,18 +9,17 @@ const CreateChannelPage = () => {
     isPublic: 'true',
   })
 
+  const { mutate: createChannelMutate } = useCreateChannel()
   const handleCreateChannel = async (
     e: React.FormEvent<HTMLFormElement>,
   ): Promise<void> => {
     e.preventDefault()
 
-    createChannel({
+    createChannelMutate({
       name: form.name,
       address: form.address,
       description: form.description,
       isPublic: JSON.parse(form.isPublic),
-    }).then(() => {
-      alert('채널이 개설되었습니다!')
     })
   }
 
