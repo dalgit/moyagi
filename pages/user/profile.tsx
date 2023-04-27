@@ -3,6 +3,10 @@ import moment from 'moment'
 import { GetServerSideProps } from 'next/types'
 import { useState } from 'react'
 import { useRecoilValue } from 'recoil'
+import { useGetChannelJoinRequests } from '@/hooks/queries/useGetChannelJoinRequests'
+import { useGetJoinnedChannels } from '@/hooks/queries/useGetJoinnedChannels'
+import { useGetMyJoinRequests } from '@/hooks/queries/useGetMyJoinRequests'
+import { useGetMyPosts } from '@/hooks/queries/useGetMyPosts'
 import { userSelector } from '@/recoil/user'
 import {
   getMyPosts,
@@ -14,16 +18,15 @@ import {
 import createServerInstance from '@/utils/axios/server'
 
 const UserProfilePage = ({ userInfo }: any) => {
-  const [clickedChannelId, setClickedChannelId] = useState<string | null>(null)
+  const [clickedChannelId, setClickedChannelId] = useState<string>('')
   const user = useRecoilValue(userSelector)
 
-  const { data: posts } = useQuery(['myPosts'], getMyPosts)
-
-  const { data: joinRequests } = useQuery(['myJoinRequests'], getMyJoinRequests)
-
-  const { data: joinnedChannels } = useQuery(
-    ['myJoinnedChannels'],
-    getMyJoinnedChannels,
+  const { data: posts } = useGetMyPosts()
+  const { data: joinRequests } = useGetMyJoinRequests()
+  const { data: joinnedChannels } = useGetJoinnedChannels()
+  const { data: channelJoinRequests } = useGetChannelJoinRequests(
+    clickedChannelId,
+    { enabled: !!clickedChannelId },
   )
 
   const managedChannels = joinnedChannels?.filter(

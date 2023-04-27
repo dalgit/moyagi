@@ -10,8 +10,9 @@ import JoinRequestForm from '@/components/JoInRequestForm/JoinRequestForm'
 import ModalFrame from '@/components/Modal/ModalFrame'
 import PostCreateForm from '@/components/PostForm/PostCreateForm'
 import PostList from '@/components/PostList/PostList'
+import { useGetChannel } from '@/hooks/queries/useGetChannel'
+import { useGetChannelPosts } from '@/hooks/queries/useGetChannelPosts'
 import { userSelector } from '@/recoil/user'
-import { getChannelBySlug, getChannelPostsById } from '@/utils/api'
 import createServerInstance from '@/utils/axios/server'
 export interface IParams extends ParsedUrlQuery {
   slug: string
@@ -26,22 +27,13 @@ const ChannelPage = ({ slug }: { slug: string }) => {
   const user = useRecoilValue(userSelector)
   const { push } = useRouter()
 
-  const { data: channel } = useQuery(['channel', slug], () =>
-    getChannelBySlug(slug),
-  )
-
+  const { data: channel } = useGetChannel(slug)
   const isMember = channel.members.some(
     (member: any) => member._id === user?._id,
   )
-  const shouldFetchPosts = channel.isPublic || isMember
 
-  const { data: posts } = useQuery(
-    ['posts', slug],
-    () => getChannelPostsById(channel._id),
-    {
-      enabled: shouldFetchPosts,
-    },
-  )
+  const shouldFetchPosts = channel.isPublic || isMember
+  const { data: posts } = useGetChannelPosts(channel._id, shouldFetchPosts)
 
   const handleModal = (toggleModal: any) => {
     if (!user) push('/login')

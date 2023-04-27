@@ -1,4 +1,3 @@
-import { useQuery } from '@tanstack/react-query'
 import Link from 'next/link'
 import { useState, KeyboardEvent } from 'react'
 import { RxReset } from 'react-icons/rx'
@@ -6,14 +5,13 @@ import { TiArrowRightThick as ArrowIcon } from 'react-icons/ti'
 import styled from 'styled-components'
 import Button from '@/components/common/Ui/Button'
 import Card from '@/components/common/Ui/Card'
-import { getMyChannels, searchChannels } from '@/utils/api'
+import { useGetJoinnedChannels } from '@/hooks/queries/useGetJoinnedChannels'
 import { useSearchChannels } from '@/hooks/queries/useSearchChannels'
 
 const Home = () => {
   const [keyword, setKeyword] = useState('')
-  const [serachedChannels, setSearchedChannels] = useState([])
-  const isSearched = serachedChannels.length > 0
 
+  const { data: channels = [] } = useGetJoinnedChannels()
   const {
     data: searchedChannels,
     isFetchedAfterMount: isSearched,
