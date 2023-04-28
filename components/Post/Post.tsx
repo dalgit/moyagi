@@ -1,10 +1,15 @@
 import styled from 'styled-components'
+import { IPost } from '@/types/post'
 import PostCommentBox from './PostCommentBox/PostCommentBox'
 import PostCommentStatus from './PostCommentStatus/PostCommentStatus'
 import PostContent from './PostContent/PostContent'
 import PostHeader from './PostHeader/PostHeader'
 
-const Post = ({ post }: any) => {
+interface PostProps {
+  post: IPost
+}
+
+const Post = ({ post }: PostProps) => {
   return (
     <PostLayout>
       <PostHeader author={post.author} />

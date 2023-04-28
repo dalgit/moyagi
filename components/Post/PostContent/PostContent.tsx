@@ -1,6 +1,10 @@
 import styled from 'styled-components'
 
-const PostContent = ({ content }: any) => {
+interface PostContentProps {
+  content: string
+}
+
+const PostContent = ({ content }: PostContentProps) => {
   return (
     <PostContentLayout>
       <div dangerouslySetInnerHTML={{ __html: content }} />

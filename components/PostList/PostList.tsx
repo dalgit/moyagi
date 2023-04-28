@@ -1,11 +1,16 @@
 import styled from 'styled-components'
+import { IPost } from '@/types/post'
 import Post from '../Post/Post'
 
-const PostList = ({ posts }: any) => {
+interface PostListProps {
+  posts: IPost[]
+}
+
+const PostList = ({ posts }: PostListProps) => {
   return (
     <PostListLayout>
-      {posts?.map((post: any, index: number) => (
-        <Post key={index} post={post} />
+      {posts.map((post) => (
+        <Post key={post._id} post={post} />
       ))}
     </PostListLayout>
   )
@@ -17,4 +22,5 @@ const PostListLayout = styled.div`
   display: flex;
   flex-direction: column;
   gap: 40px;
+  width: 550px;
 `

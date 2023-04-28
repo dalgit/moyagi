@@ -1,9 +1,14 @@
-import styled from 'styled-components'
-import MoreButton from '../../common/MoreButton/MoreButton'
 import Image from 'next/image'
+import styled from 'styled-components'
+import { IUser } from '@/types/user'
+import MoreButton from '../../common/MoreButton/MoreButton'
 import tmp from '/public/assets/tmp.png'
 
-const PostHeader = ({ author }: any) => {
+interface PostHeaderProps {
+  author: IUser
+}
+
+const PostHeader = ({ author }: PostHeaderProps) => {
   return (
     <PostHeaderLayout>
       <UserBox>

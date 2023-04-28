@@ -1,10 +1,15 @@
 import styled from 'styled-components'
+import { IChannel } from '@/types/channel'
 import ListItem from '../common/Ui/ListItem'
 
-const JoinnedChannelList = ({ channels }: any) => {
+interface JoinnedChannelListProps {
+  channels: IChannel[]
+}
+
+const JoinnedChannelList = ({ channels }: JoinnedChannelListProps) => {
   return (
     <ListLayout>
-      {channels?.map((channel) => (
+      {channels.map((channel) => (
         <ListItem
           key={channel._id}
           title={channel.name}

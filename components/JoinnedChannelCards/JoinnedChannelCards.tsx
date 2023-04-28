@@ -1,10 +1,15 @@
 import styled from 'styled-components'
+import { IChannel } from '@/types/channel'
 import Card from '../common/Ui/Card'
 
-const JoinnedChannelCards = ({ channels }: any) => {
+interface JoinnedChannelCardsProps {
+  channels: IChannel[]
+}
+
+const JoinnedChannelCards = ({ channels }: JoinnedChannelCardsProps) => {
   return (
     <CardList>
-      {channels?.map((channel) => (
+      {channels.map((channel) => (
         <Card
           key={channel._id}
           title={channel.name}
