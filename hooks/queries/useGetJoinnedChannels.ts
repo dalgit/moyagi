@@ -1,10 +1,7 @@
-import { useQuery } from '@tanstack/react-query'
+import { UseQueryResult, useQuery } from '@tanstack/react-query'
 import { IChannel } from '@/types/channel'
 import { getMyJoinnedChannels } from '@/utils/api'
 
-export const useGetJoinnedChannels = () => {
-  return useQuery<IChannel[], Error>(
-    ['myJoinnedChannels'],
-    getMyJoinnedChannels,
-  )
+export const useGetJoinnedChannels = (): UseQueryResult<IChannel[], Error> => {
+  return useQuery(['myJoinnedChannels'], getMyJoinnedChannels)
 }

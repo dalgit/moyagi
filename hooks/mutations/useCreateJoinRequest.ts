@@ -1,7 +1,21 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import {
+  UseMutationResult,
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query'
+import { AxiosError, AxiosResponse } from 'axios'
 import { createJoinRequest } from '@/utils/api'
 
-export const useCreateJoinRequest = () => {
+interface useCreateJoinRequestArgs {
+  channelId: string
+  message: string
+  isPublic: boolean
+}
+export const useCreateJoinRequest = (): UseMutationResult<
+  AxiosResponse,
+  AxiosError,
+  useCreateJoinRequestArgs
+> => {
   const queryClient = useQueryClient()
 
   return useMutation(createJoinRequest, {
