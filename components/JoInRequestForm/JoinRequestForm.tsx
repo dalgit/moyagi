@@ -4,14 +4,9 @@ import useForm from '@/hooks/useForm'
 interface JoinRequestFormProps {
   channelId: string
   isPublic: boolean
-  closeModal: () => void
 }
 
-const JoinRequestForm = ({
-  channelId,
-  isPublic,
-  closeModal,
-}: JoinRequestFormProps) => {
+const JoinRequestForm = ({ channelId, isPublic }: JoinRequestFormProps) => {
   const { mutate: createJoinRequestMutate } = useCreateJoinRequest()
   const { form, updateForm } = useForm<{ [key: string]: string }>({
     message: '',
@@ -34,9 +29,6 @@ const JoinRequestForm = ({
           value={form.message}
           onChange={updateForm}
         />
-        <button type="button" onClick={closeModal}>
-          취소
-        </button>
         <button type="submit">제출하기</button>
       </div>
     </form>

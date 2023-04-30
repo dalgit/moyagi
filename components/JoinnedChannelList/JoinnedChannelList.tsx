@@ -1,12 +1,10 @@
 import styled from 'styled-components'
-import { IChannel } from '@/types/channel'
+import { useGetJoinnedChannels } from '@/hooks/queries/useGetJoinnedChannels'
 import ListItem from '../common/Ui/ListItem'
 
-interface JoinnedChannelListProps {
-  channels: IChannel[]
-}
+const JoinnedChannelList = () => {
+  const { data: channels = [] } = useGetJoinnedChannels()
 
-const JoinnedChannelList = ({ channels }: JoinnedChannelListProps) => {
   return (
     <ListLayout>
       {channels.map((channel) => (

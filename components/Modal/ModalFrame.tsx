@@ -1,3 +1,4 @@
+import { GrClose } from 'react-icons/gr'
 import styled from 'styled-components'
 import Portal from './Portal'
 
@@ -8,14 +9,15 @@ interface ModalFrameProps {
 }
 
 const ModalFrame = ({ children, isModalOpen, closeModal }: ModalFrameProps) => {
+  if (!isModalOpen) return null
+
   return (
     <Portal>
-      {isModalOpen && (
-        <>
-          <Blur onClick={closeModal} />
-          <ChildrenWrapper>{children}</ChildrenWrapper>
-        </>
-      )}
+      <Blur onClick={closeModal} />
+      <ChildrenWrapper>
+        {children}
+        <ExitIcon onClick={closeModal} />
+      </ChildrenWrapper>
     </Portal>
   )
 }
@@ -35,7 +37,22 @@ const ChildrenWrapper = styled.div`
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  padding: 20px;
+  padding: 50px 20px 20px 20px;
   background-color: white;
   box-shadow: 0 5px 18px -7px rgba(0, 0, 0, 1);
+`
+
+const ExitIcon = styled(GrClose)`
+  width: 20px;
+  height: 20px;
+
+  position: absolute;
+  top: 5px;
+  right: 5px;
+
+  color: gray;
+
+  :hover {
+    cursor: pointer;
+  }
 `
