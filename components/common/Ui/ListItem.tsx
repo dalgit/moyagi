@@ -27,6 +27,7 @@ export default ListItem
 const StyledImage = styled(FImage)`
   border-radius: 50%;
   width: 30px;
+  height: 30px;
 `
 
 const ListItemLayout = styled.li`

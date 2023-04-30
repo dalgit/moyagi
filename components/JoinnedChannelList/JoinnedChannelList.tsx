@@ -1,12 +1,13 @@
 import styled from 'styled-components'
 import { useGetJoinnedChannels } from '@/hooks/queries/useGetJoinnedChannels'
+import List from '../common/Ui/List'
 import ListItem from '../common/Ui/ListItem'
 
 const JoinnedChannelList = () => {
   const { data: channels = [] } = useGetJoinnedChannels()
 
   return (
-    <ListLayout>
+    <List>
       {channels.map((channel) => (
         <ListItem
           key={channel._id}
@@ -15,7 +16,7 @@ const JoinnedChannelList = () => {
           imageSrc="/assets/a.jpg"
         />
       ))}
-    </ListLayout>
+    </List>
   )
 }
 
