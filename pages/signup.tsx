@@ -1,14 +1,12 @@
-import Image from 'next/image'
 import styled from 'styled-components'
 import bg from '/public/assets/login_page_background.png'
+import FImage from '@/components/common/Ui/FImage'
 import SignUpForm from '@/components/SignUpForm/SignUpForm'
 
 const SignUpPage = () => {
   return (
     <LoginPageLayout>
-      <BackgroundWrapper>
-        <Image src={bg} alt="background" fill />
-      </BackgroundWrapper>
+      <BackgroundImage src={bg} alt="background" />
       <SignUpForm />
     </LoginPageLayout>
   )
@@ -22,7 +20,7 @@ const LoginPageLayout = styled.div`
   height: 100%;
 `
 
-const BackgroundWrapper = styled.div`
+const BackgroundImage = styled(FImage)`
   position: relative;
   flex: 1;
 `

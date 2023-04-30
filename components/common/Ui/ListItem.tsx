@@ -1,6 +1,6 @@
-import Image from 'next/image'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
+import FImage from './FImage'
 
 interface ListItemProps {
   title: string
@@ -16,17 +16,18 @@ const ListItem = ({ href, imageSrc, title }: ListItemProps) => {
 
   return (
     <ListItemLayout onClick={handleClick}>
-      {imageSrc && (
-        <ImageWrapper>
-          <Image src={imageSrc} alt="thumbnail" fill />
-        </ImageWrapper>
-      )}
+      {imageSrc && <StyledImage src={imageSrc} />}
       <Title>{title}</Title>
     </ListItemLayout>
   )
 }
 
 export default ListItem
+
+const StyledImage = styled(FImage)`
+  border-radius: 50%;
+  width: 30px;
+`
 
 const ListItemLayout = styled.li`
   display: flex;
@@ -39,22 +40,7 @@ const ListItemLayout = styled.li`
     cursor: pointer;
   }
 `
-
-const ImageWrapper = styled.div`
-  position: relative;
-  border-radius: 50%;
-  width: 30px;
-  img {
-    border-radius: inherit;
-  }
-`
-
 const Title = styled.div`
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
-
   padding: 5px;
-
   font-weight: bold;
 `

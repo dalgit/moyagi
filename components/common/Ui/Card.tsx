@@ -1,20 +1,24 @@
-import Image from 'next/image'
 import Link from 'next/link'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
+import FImage from './FImage'
 
-interface CardProps {
+interface CardStyle {
+  width?: string
+  padding?: string
+  hasBoxShadow?: boolean
+}
+
+interface CardProps extends CardStyle {
   href: string
   imageSrc: string
   title: string
 }
 
-const Card = ({ href, imageSrc, title }: CardProps) => {
+const Card = ({ href, imageSrc, title, ...rest }: CardProps) => {
   return (
-    <CardLayout>
+    <CardLayout {...rest}>
       <Link href={href}>
-        <ImageWrapper>
-          <Image src={imageSrc} alt="thumbnail" fill />
-        </ImageWrapper>
+        <StyledImage src={imageSrc} />
         <Title>{title}</Title>
       </Link>
     </CardLayout>
@@ -23,20 +27,31 @@ const Card = ({ href, imageSrc, title }: CardProps) => {
 
 export default Card
 
-const CardLayout = styled.div`
-  max-width: 160px;
-  width: 100%;
+Card.defaultProps = {
+  width: '160px',
+  padding: '5px',
+  hasBoxShadow: true,
+}
+
+const StyledImage = styled(FImage)`
   border-radius: 12px;
+  width: 100%;
+  aspect-ratio: 1/1;
 `
 
-const ImageWrapper = styled.div`
-  aspect-ratio: 1/1;
-  position: relative;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+const CardLayout = styled.div<CardStyle>`
   border-radius: 12px;
 
-  img {
-    border-radius: inherit;
+  ${({ width }) => css`
+    width: ${width};
+  `}
+
+  ${StyledImage} {
+    ${({ hasBoxShadow }) =>
+      hasBoxShadow &&
+      css`
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      `}
   }
 `
 
@@ -44,8 +59,6 @@ const Title = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
   padding: 5px;
-
   font-weight: bold;
 `
