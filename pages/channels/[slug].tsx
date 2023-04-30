@@ -103,24 +103,22 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const server = createServerInstance(context)
 
   const queryClient = new QueryClient()
-  await queryClient.prefetchQuery(['channel', slug], () =>
+
+  try {
+    await queryClient.fetchQuery(['channel', slug], () =>
     server
       .get('http://localhost:3000/api/channels', {
         params: { channelAddress: slug },
       })
       .then((res) => res.data),
   )
-
   return {
     props: { dehydratedProps: dehydrate(queryClient), slug },
+    }
+  } catch {
+    return { notFound: true }
   }
 }
-
-const ChannelBox = styled.div`
-  border: 2px solid red;
-  width: 180px;
-`
-
 const ChannelPageLayout = styled.div`
   display: flex;
   justify-content: space-between;
