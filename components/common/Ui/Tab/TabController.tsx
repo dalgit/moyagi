@@ -1,4 +1,4 @@
-import { Children, ReactElement } from 'react'
+import { Children, ReactElement, cloneElement } from 'react'
 import TabContent from './TabContent'
 import TabContentList from './TabContentList'
 import TabPair from './TabPair'
@@ -9,24 +9,13 @@ interface TabControllerProps {
   children: ReactElement[]
 }
 
+interface ClassifiedData {
+  tabTitles: ReactElement[]
+  tabContents: ReactElement[]
+}
+
 const TabController = ({ children }: TabControllerProps) => {
-  const tabTitles: ReactElement[] = []
-  const tabContents: ReactElement[] = []
-
-  Children.forEach(children, (child) => {
-    if (child.type !== TabPair) return
-    Children.forEach(child.props.children, (pairChild) => {
-      const { type } = pairChild
-
-      if (type === TabTitle) {
-        tabTitles.push(pairChild)
-      }
-
-      if (type === TabContent) {
-        tabContents.push(pairChild)
-      }
-    })
-  })
+  const { tabTitles, tabContents } = getClassifiedData(children)
 
   return (
     <>
@@ -37,3 +26,33 @@ const TabController = ({ children }: TabControllerProps) => {
 }
 
 export default TabController
+
+const getClassifiedData = (children: ReactElement[]): ClassifiedData => {
+  const tabTitles: ReactElement[] = []
+  const tabContents: ReactElement[] = []
+
+  const handleChild = (child: ReactElement, idx?: number) => {
+    if (child.type === TabPair) {
+      Children.forEach(child.props.children, (pairChild) => {
+        const indexedChild = cloneElement(pairChild, { idx })
+
+        if (pairChild.type === TabTitle) {
+          tabTitles.push(indexedChild)
+        }
+
+        if (pairChild.type === TabContent) {
+          tabContents.push(indexedChild)
+        }
+      })
+    } else if (typeof child.type === 'function') {
+      const { type } = child
+      handleChild((type as () => ReactElement)())
+    }
+  }
+
+  Children.forEach(children, (child, idx) => {
+    handleChild(child, idx)
+  })
+
+  return { tabTitles, tabContents }
+}

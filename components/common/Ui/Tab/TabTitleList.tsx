@@ -9,7 +9,7 @@ const TabTitleList = ({ children }: TabTitleListProps) => {
   return (
     <ListLayout>
       {Children.map(children, (child, idx) => {
-        return cloneElement(child as ReactElement, { idx })
+        return cloneElement(child, { idx })
       })}
     </ListLayout>
   )
