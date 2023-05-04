@@ -1,14 +1,18 @@
 import styled from 'styled-components'
-import { useGetChannelPosts } from '@/hooks/queries/useGetChannelPosts'
-import Post from '../Post/Post'
+import { useGetMyPosts } from '@/hooks/queries/useGetMyPosts'
+import { IPost } from '@/types/post'
+import Post from './Post'
 
 interface PostListProps {
-  channelId: string
+  posts: IPost[]
 }
 
-const PostList = ({ channelId }: PostListProps) => {
-  const { data: posts = [] } = useGetChannelPosts(channelId)
+export const MyPostList = () => {
+  const { data: posts = [] } = useGetMyPosts()
+  return <PostList posts={posts} />
+}
 
+export const PostList = ({ posts }: PostListProps) => {
   return (
     <PostListLayout>
       {posts.map((post) => (
@@ -17,8 +21,6 @@ const PostList = ({ channelId }: PostListProps) => {
     </PostListLayout>
   )
 }
-
-export default PostList
 
 const PostListLayout = styled.div`
   display: flex;

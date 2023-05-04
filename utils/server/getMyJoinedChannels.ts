@@ -15,16 +15,43 @@ export const getMyJoinedChannels = async (
     const channelsCollection = db.collection('channels')
 
     const joinedChannels = await channelsCollection
-      .find({
-        membersId: userId,
-      })
-      .project({
-        name: true,
-        address: true,
-        description: true,
-        managerId: true,
-        memberCount: { $size: '$membersId' },
-      })
+      .aggregate([
+        {
+          $match: {
+            membersId: userId,
+          },
+        },
+        {
+          $lookup: {
+            from: 'users',
+            foreignField: '_id',
+            localField: 'membersId',
+            as: 'members',
+          },
+        },
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'managerId',
+            foreignField: '_id',
+            as: 'manager',
+          },
+        },
+        {
+          $unwind: '$manager',
+        },
+        {
+          $project: {
+            _id: true,
+            name: true,
+            address: true,
+            description: true,
+            isPublic: true,
+            manager: { _id: true, name: true },
+            members: { _id: true, name: true },
+          },
+        },
+      ])
       .toArray()
 
     res.status(200).json(joinedChannels)

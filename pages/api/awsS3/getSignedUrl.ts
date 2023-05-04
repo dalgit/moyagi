@@ -4,7 +4,6 @@ import uuid from 'react-uuid'
 
 const getSignedUrl = async (req: NextApiRequest, res: NextApiResponse) => {
   const { fileName } = req.body
-
   const REGION = process.env.NEXT_PUBLIC_REGION
   const ACESS_KEY = process.env.NEXT_PUBLIC_ACESS_KEY
   const SECRET_ACESS_KEY = process.env.NEXT_PUBLIC_SECRET_ACESS_KEY

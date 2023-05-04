@@ -8,7 +8,7 @@ interface ListItemProps {
   imageSrc?: string
 }
 
-const ListItem = ({ href, imageSrc, title }: ListItemProps) => {
+const Item = ({ href, imageSrc, title }: ListItemProps) => {
   const { push } = useRouter()
 
   const handleClick = () => {

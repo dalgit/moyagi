@@ -38,7 +38,7 @@ export const getMyJoinRequests = async (
             message: true,
             status: true,
             time: true,
-            channel: { name: true, description: true },
+            channel: true,
           },
         },
       ])

@@ -26,7 +26,7 @@
     "react/destructuring-assignment": "warn",
     "react/jsx-pascal-case": "warn",
     "react/no-direct-mutation-state": "warn",
-    "react/jsx-no-useless-fragment": "warn",
+    "react/jsx-no-useless-fragment": "off",
     "react/no-unused-state": "warn",
     "react/jsx-key": "warn",
     "react/self-closing-comp": "warn",

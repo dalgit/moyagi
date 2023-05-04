@@ -23,7 +23,6 @@ FImage.defaultProps = {
 
 const FImageLayout = styled.div`
   position: relative;
-
   img {
     border-radius: inherit;
   }

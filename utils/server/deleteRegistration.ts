@@ -3,7 +3,7 @@ import { NextApiResponse } from 'next'
 import { NextApiRequestWithUser } from '@/types/types'
 import { connectToDatabase } from '@/utils/db/db'
 
-export const updateJoinRequest = async (
+export const deleteJoinRequest = async (
   req: NextApiRequestWithUser,
   res: NextApiResponse,
 ) => {
@@ -12,18 +12,13 @@ export const updateJoinRequest = async (
     const channelId = new ObjectId(cid)
     const requestId = new ObjectId(rid)
 
-    const { status } = req.body
-
     const db = await connectToDatabase()
     const joinRequestCollection = db.collection('joinRequest')
 
-    await joinRequestCollection.findOneAndUpdate(
-      {
-        _id: requestId,
-        channelId,
-      },
-      { $set: { status } },
-    )
+    await joinRequestCollection.deleteOne({
+      _id: requestId,
+      channelId,
+    })
 
     return res.status(200).json({ message: 'ok' })
   } catch (error) {

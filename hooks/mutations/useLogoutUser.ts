@@ -1,4 +1,8 @@
-import { UseMutationResult, useMutation } from '@tanstack/react-query'
+import {
+  UseMutationResult,
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query'
 import { AxiosError, AxiosResponse } from 'axios'
 import { useRouter } from 'next/router'
 import { useResetRecoilState } from 'recoil'
@@ -10,12 +14,14 @@ export const useLogoutUser = (): UseMutationResult<
   AxiosError
 > => {
   const resetUser = useResetRecoilState(userSelector)
+  const queryClient = useQueryClient()
   const { push } = useRouter()
 
   return useMutation(logoutUser, {
     onSuccess: () => {
-      resetUser()
       push('/login')
+      resetUser()
+      queryClient.clear()
     },
   })
 }

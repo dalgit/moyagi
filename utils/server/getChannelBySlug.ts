@@ -51,6 +51,10 @@ export const getChannelBySlug = async (
       ])
       .next()
 
+    if (!channel) {
+      return res.status(404).json({ message: '채널을 찾을 수 없습니다.' })
+    }
+
     return res.status(200).json(channel)
   } catch (error) {
     res

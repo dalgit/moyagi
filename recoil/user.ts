@@ -22,7 +22,7 @@ const sessionStorageEffect =
 export const userState = atom<IUser | null>({
   key: 'userState',
   default: null,
-  effects: [sessionStorageEffect('user')],
+  effects_UNSTABLE: [sessionStorageEffect('user')],
 })
 
 export const userSelector = selector<IUser | null>({

@@ -1,9 +1,9 @@
 import 'react-quill/dist/quill.snow.css'
-import axios from 'axios'
 import dynamic from 'next/dynamic'
 import { useRef, RefObject } from 'react'
 import ReactQuill, { ReactQuillProps } from 'react-quill'
 import styled from 'styled-components'
+import { useCreatePost } from '@/hooks/mutations/useCreaetePost'
 import client from '@/utils/axios/axios'
 
 interface CustomQuillProps extends ReactQuillProps {
@@ -23,7 +23,7 @@ const CustomReactQuill = dynamic(
 
 const PostCreateForm = ({ channelId }: { channelId: string }) => {
   const quillRef = useRef<ReactQuill>(null)
-
+  const { mutate: createPostMutate } = useCreatePost(channelId)
   const imageHandler = () => {
     const input = document.createElement('input')
     input.setAttribute('type', 'file')
@@ -36,7 +36,7 @@ const PostCreateForm = ({ channelId }: { channelId: string }) => {
       const [file] = input.files
       const fileName = file.name
 
-      await axios
+      await client
         .post('/awsS3/getSignedUrl', { fileName })
         .then(async (res) => {
           const { signedUrl, imageUrl } = res.data
@@ -85,9 +85,9 @@ const PostCreateForm = ({ channelId }: { channelId: string }) => {
   }
 
   const handleSubmit = async () => {
-    const content = quillRef.current?.getEditorContents()
-
-    await client.post(`/channels/${channelId}/posts`, { content })
+    const contentValue = quillRef.current?.getEditorContents()
+    const content = JSON.stringify(contentValue)
+    createPostMutate({ channelId, content })
   }
 
   return (

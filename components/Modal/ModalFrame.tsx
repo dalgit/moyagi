@@ -37,7 +37,7 @@ const ChildrenWrapper = styled.div`
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  padding: 50px 20px 20px 20px;
+  padding: 25px;
   background-color: white;
   box-shadow: 0 5px 18px -7px rgba(0, 0, 0, 1);
 `

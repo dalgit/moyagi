@@ -1,7 +1,18 @@
-import { UseQueryResult, useQuery } from '@tanstack/react-query'
+import {
+  useQuery,
+  UseQueryOptions,
+  UseQueryResult,
+} from '@tanstack/react-query'
+import { AxiosError } from 'axios'
 import { IChannel } from '@/types/channel'
 import { getMyJoinnedChannels } from '@/utils/api'
 
-export const useGetJoinnedChannels = (): UseQueryResult<IChannel[], Error> => {
-  return useQuery(['myJoinnedChannels'], getMyJoinnedChannels)
+export const useGetJoinnedChannels = (
+  options?: UseQueryOptions<IChannel[], AxiosError>,
+): UseQueryResult<IChannel[], Error> => {
+  return useQuery<IChannel[], AxiosError>(
+    ['myJoinnedChannels'],
+    getMyJoinnedChannels,
+    options,
+  )
 }

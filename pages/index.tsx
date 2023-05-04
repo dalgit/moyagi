@@ -7,7 +7,6 @@ import Button from '@/components/common/Ui/Button'
 import JoinnedChannelCards from '@/components/JoinnedChannelCards/JoinnedChannelCards'
 import { useGetJoinnedChannels } from '@/hooks/queries/useGetJoinnedChannels'
 import { useSearchChannels } from '@/hooks/queries/useSearchChannels'
-
 const Home = () => {
   const [keyword, setKeyword] = useState('')
 
@@ -110,14 +109,6 @@ const SearchBarBox = styled.div`
     height: 50px;
     font-size: 16px;
   }
-`
-
-const CardList = styled.div`
-  display: grid;
-  width: 100%;
-  grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
-  grid-gap: 55px;
-  justify-items: center;
 `
 
 const StyledLink = styled(Link)`
