@@ -1,6 +1,8 @@
 import { useRouter } from 'next/router'
 import { ReactNode } from 'react'
+import { IconContext } from 'react-icons'
 import styled from 'styled-components'
+import { iconStyles } from '@/styles/icons'
 import Header from './Header'
 
 interface LayoutProps {
@@ -13,8 +15,10 @@ const Layout = ({ children }: LayoutProps) => {
 
   return (
     <BaseLayout>
-      {!isLoginPage && <Header />}
-      <ChildrenWrapper isLoginPage={isLoginPage}>{children}</ChildrenWrapper>
+      <IconContext.Provider value={iconStyles}>
+        {!isLoginPage && <Header />}
+        <ChildrenWrapper isLoginPage={isLoginPage}>{children}</ChildrenWrapper>
+      </IconContext.Provider>
     </BaseLayout>
   )
 }
