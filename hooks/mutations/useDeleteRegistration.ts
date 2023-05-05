@@ -6,7 +6,7 @@ import {
 import { AxiosError, AxiosResponse } from 'axios'
 import { deleteRegistration } from '@/utils/api'
 
-interface useCreateJoinRequestArgs {
+interface useCreateRegistrationArgs {
   registrationId: string
   channelId: string
 }
@@ -14,13 +14,13 @@ interface useCreateJoinRequestArgs {
 export const useDeleteRegistration = (): UseMutationResult<
   AxiosResponse,
   AxiosError,
-  useCreateJoinRequestArgs
+  useCreateRegistrationArgs
 > => {
   const queryClient = useQueryClient()
 
   return useMutation(deleteRegistration, {
     onSuccess: () => {
-      queryClient.invalidateQueries(['myJoinRequests'])
+      queryClient.invalidateQueries(['myRegistrations'])
       alert('취소가 완료되었습니다.')
     },
   })

@@ -3,23 +3,22 @@ import { NextApiResponse } from 'next'
 import { NextApiRequestWithUser } from '@/types/types'
 import { connectToDatabase } from '@/utils/db/db'
 
-export const updateJoinRequest = async (
+export const updateRegistration = async (
   req: NextApiRequestWithUser,
   res: NextApiResponse,
 ) => {
   try {
-    const { channelId: cid, requestId: rid } = req.query
+    const { channelId: cid, registrationId: rid } = req.query
     const channelId = new ObjectId(cid)
-    const requestId = new ObjectId(rid)
+    const registrationId = new ObjectId(rid)
 
     const { status } = req.body
-
     const db = await connectToDatabase()
-    const joinRequestCollection = db.collection('joinRequest')
+    const registrationsCollection = db.collection('registrations')
 
-    await joinRequestCollection.findOneAndUpdate(
+    await registrationsCollection.findOneAndUpdate(
       {
-        _id: requestId,
+        _id: registrationId,
         channelId,
       },
       { $set: { status } },

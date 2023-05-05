@@ -1,36 +1,33 @@
 import { ObjectId } from 'mongodb'
-import { NextApiResponse } from 'next'
-import { NextApiRequestWithUser } from '@/types/types'
+import { NextApiResponse, NextApiRequest } from 'next'
 import { connectToDatabase } from '@/utils/db/db'
 
-export const getMyJoinRequests = async (
-  req: NextApiRequestWithUser,
+export const getRegistrations = async (
+  req: NextApiRequest,
   res: NextApiResponse,
 ) => {
   try {
-    const { user } = req
-    const userId = new ObjectId(user?.id)
+    const { channelId: cid } = req.query
+    const channelId = new ObjectId(cid)
 
     const db = await connectToDatabase()
-    const joinRequestCollection = db.collection('joinRequest')
+    const registrationsCollection = db.collection('registrations')
 
-    const joinRequests = await joinRequestCollection
+    const registrations = await registrationsCollection
       .aggregate([
         {
-          $match: {
-            requestorId: userId,
-          },
+          $match: { channelId },
         },
         {
           $lookup: {
-            from: 'channels',
-            localField: 'channelId',
+            from: 'users',
+            localField: 'requesterId',
             foreignField: '_id',
-            as: 'channel',
+            as: 'requester',
           },
         },
         {
-          $unwind: '$channel',
+          $unwind: '$requester',
         },
         {
           $project: {
@@ -38,13 +35,13 @@ export const getMyJoinRequests = async (
             message: true,
             status: true,
             time: true,
-            channel: true,
+            requester: { _id: true, name: true },
           },
         },
       ])
       .toArray()
 
-    return res.status(200).json(joinRequests)
+    return res.status(200).json(registrations)
   } catch (error) {
     res
       .status(500)

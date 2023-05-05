@@ -1,7 +1,7 @@
 import { NextApiResponse, NextApiRequest } from 'next'
 import authMiddleware from '@/utils/authMiddleware'
-import { createJoinRequest } from '@/utils/server/createJoinRequest'
-import { getJoinRequests } from '@/utils/server/getJoinRequests'
+import { createRegistration } from '@/utils/server/createRegistration'
+import { getRegistrations } from '@/utils/server/getRegistrations'
 
 export default async function handler(
   req: NextApiRequest,
@@ -11,11 +11,11 @@ export default async function handler(
 
   switch (requestMethod) {
     case 'GET':
-      await getJoinRequests(req, res)
+      await getRegistrations(req, res)
       break
 
     case 'POST':
-      await authMiddleware(createJoinRequest)(req, res)
+      await authMiddleware(createRegistration)(req, res)
       break
 
     default:

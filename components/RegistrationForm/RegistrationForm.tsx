@@ -1,24 +1,24 @@
-import { useCreateJoinRequest } from '@/hooks/mutations/useCreateJoinRequest'
+import { useCreateRegistration } from '@/hooks/mutations/useCreateRegistration'
 import useForm from '@/hooks/useForm'
 
-interface JoinRequestFormProps {
+interface RegistrationFormProps {
   channelId: string
   isPublic: boolean
 }
 
-const JoinRequestForm = ({ channelId, isPublic }: JoinRequestFormProps) => {
-  const { mutate: createJoinRequestMutate } = useCreateJoinRequest()
+const RegistrationForm = ({ channelId, isPublic }: RegistrationFormProps) => {
+  const { mutate: createRegistrationMutate } = useCreateRegistration()
   const { form, updateForm } = useForm<{ [key: string]: string }>({
     message: '',
   })
 
-  const handleJoinRequest = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleRegistration = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    createJoinRequestMutate({ channelId, message: form.message, isPublic })
+    createRegistrationMutate({ channelId, message: form.message, isPublic })
   }
 
   return (
-    <form onSubmit={handleJoinRequest}>
+    <form onSubmit={handleRegistration}>
       <p>채널 가입 신청</p>
       <div>
         <input
@@ -35,4 +35,4 @@ const JoinRequestForm = ({ channelId, isPublic }: JoinRequestFormProps) => {
   )
 }
 
-export default JoinRequestForm
+export default RegistrationForm

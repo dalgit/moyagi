@@ -1,6 +1,6 @@
 import { NextApiResponse, NextApiRequest } from 'next'
 import authMiddleware from '@/utils/authMiddleware'
-import { getMyJoinRequests } from '@/utils/server/getMyJoinRequests'
+import { getMyRegistration } from '@/utils/server/getMyRegistration'
 
 export default async function handler(
   req: NextApiRequest,
@@ -10,7 +10,7 @@ export default async function handler(
 
   switch (requestMethod) {
     case 'GET':
-      await authMiddleware(getMyJoinRequests)(req, res)
+      await authMiddleware(getMyRegistration)(req, res)
       break
 
     default:

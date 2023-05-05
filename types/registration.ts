@@ -7,9 +7,9 @@ export enum EStatus {
   REJECT = 'reject',
 }
 
-export interface IJoinRequest {
+export interface IRegistration {
   _id: string
-  requestor: IUser
+  requester: IUser
   channel: IChannel
   status: EStatus
   time: Date

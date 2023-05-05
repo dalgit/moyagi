@@ -1,6 +1,6 @@
 import { NextApiResponse, NextApiRequest } from 'next'
-import { deleteJoinRequest } from '@/utils/server/deleteRegistration'
-import { updateJoinRequest } from '@/utils/server/updateJoinRequest'
+import { deleteRegistration } from '@/utils/server/deleteRegistration'
+import { updateRegistration } from '@/utils/server/updateRegistration'
 
 export default async function handler(
   req: NextApiRequest,
@@ -10,11 +10,11 @@ export default async function handler(
 
   switch (requestMethod) {
     case 'PATCH':
-      await updateJoinRequest(req, res)
+      await updateRegistration(req, res)
       break
 
     case 'DELETE':
-      await deleteJoinRequest(req, res)
+      await deleteRegistration(req, res)
       break
 
     default:

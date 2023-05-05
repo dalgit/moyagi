@@ -3,20 +3,20 @@ import { NextApiResponse } from 'next'
 import { NextApiRequestWithUser } from '@/types/types'
 import { connectToDatabase } from '@/utils/db/db'
 
-export const deleteJoinRequest = async (
+export const deleteRegistration = async (
   req: NextApiRequestWithUser,
   res: NextApiResponse,
 ) => {
   try {
-    const { channelId: cid, requestId: rid } = req.query
+    const { channelId: cid, registrationId: rid } = req.query
     const channelId = new ObjectId(cid)
-    const requestId = new ObjectId(rid)
+    const registrationId = new ObjectId(rid)
 
     const db = await connectToDatabase()
-    const joinRequestCollection = db.collection('joinRequest')
+    const registrationsCollection = db.collection('registrations')
 
-    await joinRequestCollection.deleteOne({
-      _id: requestId,
+    await registrationsCollection.deleteOne({
+      _id: registrationId,
       channelId,
     })
 

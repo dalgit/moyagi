@@ -1,14 +1,14 @@
-import { useGetChannelJoinRequests } from '@/hooks/queries/useGetChannelJoinRequests'
-import { useGetMyJoinRequests } from '@/hooks/queries/useGetMyJoinRequests'
-import { IJoinRequest } from '@/types/joinRequest'
+import { useGetChannelRegistrations } from '@/hooks/queries/useGetChannelRegistrations'
+import { useGetMyRegistrations } from '@/hooks/queries/useGetMyRegistrations'
+import { IRegistration } from '@/types/registration'
 import { Registration } from './Registration'
 
 interface RegistrationListProps {
-  registrations: IJoinRequest[]
+  registrations: IRegistration[]
 }
 
 export const MyRegistrationList = () => {
-  const { data: registrations = [] } = useGetMyJoinRequests()
+  const { data: registrations = [] } = useGetMyRegistrations()
 
   return <RegistrationList registrations={registrations} />
 }
@@ -18,7 +18,7 @@ export const ChannelRegistrationList = ({
 }: {
   channelId: string
 }) => {
-  const { data: registrations = [] } = useGetChannelJoinRequests(channelId)
+  const { data: registrations = [] } = useGetChannelRegistrations(channelId)
 
   return <RegistrationList registrations={registrations} />
 }

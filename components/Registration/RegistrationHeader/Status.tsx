@@ -1,5 +1,5 @@
 import React from 'react'
-import { EStatus } from '@/types/joinRequest'
+import { EStatus } from '@/types/registration'
 
 interface StatusProps {
   status: EStatus

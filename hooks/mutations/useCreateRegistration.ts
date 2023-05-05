@@ -4,23 +4,23 @@ import {
   useQueryClient,
 } from '@tanstack/react-query'
 import { AxiosError, AxiosResponse } from 'axios'
-import { createJoinRequest } from '@/utils/api'
+import { createRegistration } from '@/utils/api'
 
-interface useCreateJoinRequestArgs {
+interface useCreateRegistrationArgs {
   channelId: string
   message: string
   isPublic: boolean
 }
-export const useCreateJoinRequest = (): UseMutationResult<
+export const useCreateRegistration = (): UseMutationResult<
   AxiosResponse,
   AxiosError,
-  useCreateJoinRequestArgs
+  useCreateRegistrationArgs
 > => {
   const queryClient = useQueryClient()
 
-  return useMutation(createJoinRequest, {
+  return useMutation(createRegistration, {
     onSuccess: () => {
-      queryClient.invalidateQueries(['myJoinRequests'])
+      queryClient.invalidateQueries(['myRegistrations'])
     },
   })
 }

@@ -1,5 +1,5 @@
 import { IChannel } from '@/types/channel'
-import { IJoinRequest } from '@/types/joinRequest'
+import { IRegistration } from '@/types/registration'
 import { IPost } from '@/types/post'
 import { IUser } from '@/types/user'
 import client from '../axios/axios'
@@ -18,7 +18,7 @@ export const deleteRegistration = async ({
   channelId: string
 }) => {
   return await client.delete(
-    `/channels/${channelId}/join-requests/${registrationId}`,
+    `/channels/${channelId}/registrations/${registrationId}`,
   )
 }
 
@@ -32,7 +32,7 @@ export const deletePost = async ({
   return await client.delete(`/channels/${channelId}/posts/${postId}`)
 }
 
-export const createJoinRequest = async ({
+export const createRegistration = async ({
   channelId,
   message,
   isPublic,
@@ -41,7 +41,7 @@ export const createJoinRequest = async ({
   message: string
   isPublic: boolean
 }) => {
-  return await client.post(`/channels/${channelId}/join-requests`, {
+  return await client.post(`/channels/${channelId}/registrations`, {
     message,
     isPublic,
   })
@@ -105,33 +105,33 @@ export const getMyPosts = async (): Promise<IPost[]> => {
   return await client.get('/users/me/posts').then((res) => res.data)
 }
 
-export const getMyJoinRequests = async (): Promise<IJoinRequest[]> => {
-  return await client.get('/users/me/join-requests').then((res) => res.data)
+export const getMyRegistrations = async (): Promise<IRegistration[]> => {
+  return await client.get('/users/me/registrations').then((res) => res.data)
 }
 
 export const getMyJoinnedChannels = async (): Promise<IChannel[]> => {
   return await client.get('/users/me/channels').then((res) => res.data)
 }
 
-export const getChannelJoinRequests = async (
+export const getChannelRegistrations = async (
   channelId: string,
-): Promise<IJoinRequest[]> => {
+): Promise<IRegistration[]> => {
   return await client
-    .get(`/channels/${channelId}/join-requests`)
+    .get(`/channels/${channelId}/registrations`)
     .then((res) => res.data)
 }
 
-export const patchJoinRequestStatus = async ({
+export const patchRegistrationStatus = async ({
   channelId,
-  requestId,
+  registrationId,
   status,
 }: {
   channelId: string
-  requestId: string
+  registrationId: string
   status: string
 }) => {
   return await client.patch(
-    `/channels/${channelId}/join-requests/${requestId}`,
+    `/channels/${channelId}/registrations/${registrationId}`,
     {
       status,
     },

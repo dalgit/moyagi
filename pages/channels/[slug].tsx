@@ -8,10 +8,10 @@ import styled from 'styled-components'
 import ChannelInfo from '@/components/ChannelInfo/ChannelInfo'
 import Button from '@/components/common/Ui/Button'
 import JoinnedChannelList from '@/components/JoinnedChannelList/JoinnedChannelList'
-import JoinRequestForm from '@/components/JoInRequestForm/JoinRequestForm'
 import ModalFrame from '@/components/Modal/ModalFrame'
 import PostCreateForm from '@/components/Post/PostForm/PostCreateForm'
 import { ChannelPostList } from '@/components/Post/PostList'
+import RegistrationForm from '@/components/RegistrationForm/RegistrationForm'
 import { useGetChannel } from '@/hooks/queries/useGetChannel'
 import { userSelector } from '@/recoil/user'
 import { IChannel } from '@/types/channel'
@@ -69,7 +69,7 @@ const ChannelPage = ({ slug }: { slug: string }) => {
         {isMember ? (
           <PostCreateForm channelId={channel._id} />
         ) : (
-          <JoinRequestForm
+          <RegistrationForm
             channelId={channel._id}
             isPublic={channel.isPublic}
           />

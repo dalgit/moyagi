@@ -1,13 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useDeleteRegistration } from '@/hooks/mutations/useDeleteRegistration'
-import { usePatchJoinRequestStatus } from '@/hooks/mutations/usePatchJoinRequestsStatus'
-import { IJoinRequest, EStatus } from '@/types/joinRequest'
+import { usePatchRegistrationStatus } from '@/hooks/mutations/usePatchRegistrationStatus'
+import { IRegistration, EStatus } from '@/types/registration'
 import RegistrationHeader from './RegistrationHeader'
 import Button from '../common/Ui/Button'
-
 interface RegistrationProps {
-  registration: IJoinRequest
+  registration: IRegistration
 }
 
 export const AdminRegistration = ({ registration }: RegistrationProps) => {
@@ -17,16 +16,16 @@ export const AdminRegistration = ({ registration }: RegistrationProps) => {
     status,
     time,
     channel,
-    requestor,
+    requester,
   } = registration
   const { _id: channelId } = channel
 
   const isPending = status === EStatus.PENDING
-  const { mutate: patchJoinRequestStatusMutate } = usePatchJoinRequestStatus()
+  const { mutate: patchRegistrationStatusMutate } = usePatchRegistrationStatus()
 
   const handleButtonClick = async (status: EStatus) => {
-    patchJoinRequestStatusMutate({
-      requestId: registrationId,
+    patchRegistrationStatusMutate({
+      registrationId,
       channelId,
       status,
     })
@@ -34,7 +33,7 @@ export const AdminRegistration = ({ registration }: RegistrationProps) => {
 
   return (
     <RegistrationLayout status={status}>
-      <RegistrationHeader name={requestor.name} status={status} date={time} />
+      <RegistrationHeader name={requester.name} status={status} date={time} />
       <Message>{message}</Message>
       {isPending && (
         <Buttons>

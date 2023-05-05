@@ -3,13 +3,13 @@ import { NextApiResponse } from 'next'
 import { NextApiRequestWithUser } from '@/types/types'
 import { connectToDatabase } from '@/utils/db/db'
 
-export const createJoinRequest = async (
+export const createRegistration = async (
   req: NextApiRequestWithUser,
   res: NextApiResponse,
 ) => {
   try {
     const db = await connectToDatabase()
-    const joinRequestCollection = db.collection('joinRequest')
+    const registrationsCollection = db.collection('registrations')
 
     const { user } = req
     const userId = new ObjectId(user?.id)
@@ -31,8 +31,8 @@ export const createJoinRequest = async (
       )
     }
 
-    await joinRequestCollection.insertOne({
-      requestorId: userId,
+    await registrationsCollection.insertOne({
+      requesterId: userId,
       channelId,
       message,
       status,
