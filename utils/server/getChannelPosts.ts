@@ -32,12 +32,27 @@ export const getChannelPosts = async (
             from: 'users',
             foreignField: '_id',
             as: 'author',
-            pipeline: [{ $project: { _id: false, password: false } }],
           },
         },
         {
-          $unwind: {
-            path: '$author',
+          $lookup: {
+            from: 'channels',
+            foreignField: '_id',
+            localField: 'channelId',
+            as: 'channel',
+          },
+        },
+        {
+          $unwind: '$author',
+        },
+        {
+          $unwind: '$channel',
+        },
+        {
+          $project: {
+            author: { _id: true, name: true },
+            content: true,
+            channel: true,
           },
         },
       ])

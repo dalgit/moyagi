@@ -22,6 +22,16 @@ export const deleteRegistration = async ({
   )
 }
 
+export const deletePost = async ({
+  channelId,
+  postId,
+}: {
+  channelId: string
+  postId: string
+}) => {
+  return await client.delete(`/channels/${channelId}/posts/${postId}`)
+}
+
 export const createJoinRequest = async ({
   channelId,
   message,

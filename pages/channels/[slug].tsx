@@ -10,8 +10,8 @@ import Button from '@/components/common/Ui/Button'
 import JoinnedChannelList from '@/components/JoinnedChannelList/JoinnedChannelList'
 import JoinRequestForm from '@/components/JoInRequestForm/JoinRequestForm'
 import ModalFrame from '@/components/Modal/ModalFrame'
-import PostCreateForm from '@/components/PostForm/PostCreateForm'
-import PostList from '@/components/PostList/PostList'
+import PostCreateForm from '@/components/Post/PostForm/PostCreateForm'
+import { ChannelPostList } from '@/components/Post/PostList'
 import { useGetChannel } from '@/hooks/queries/useGetChannel'
 import { userSelector } from '@/recoil/user'
 import { IChannel } from '@/types/channel'
@@ -58,7 +58,7 @@ const ChannelPage = ({ slug }: { slug: string }) => {
           <Button onClick={handleButton}>{buttonTitle}</Button>
         </ChannelInfoWrapper>
         {shouldFetchPosts ? (
-          <PostList channelId={channel._id} />
+          <ChannelPostList channelId={channel._id} />
         ) : (
           <div>가입 후 소통해보세요</div>
         )}

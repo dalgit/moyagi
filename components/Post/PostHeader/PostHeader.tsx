@@ -1,21 +1,21 @@
-import Image from 'next/image'
 import styled from 'styled-components'
-import { IUser } from '@/types/user'
-import MoreButton from '../../common/MoreButton/MoreButton'
+import FImage from '@/components/common/Ui/FImage'
+import { IPost } from '@/types/post'
 import tmp from '/public/assets/tmp.png'
+import PostHeaderMenu from './PostHeaderMenu'
 
 interface PostHeaderProps {
-  author: IUser
+  post: IPost
 }
 
-const PostHeader = ({ author }: PostHeaderProps) => {
+const PostHeader = ({ post }: PostHeaderProps) => {
   return (
     <PostHeaderLayout>
       <UserBox>
-        <Image src={tmp} alt="logo_icon" width={30} height={30} />
-        {author.name}
+        <ProfileImage src={tmp} alt="logo_icon" />
+        <span>{post.author.name}</span>
       </UserBox>
-      <MoreButton />
+      <PostHeaderMenu post={post} />
     </PostHeaderLayout>
   )
 }
@@ -30,4 +30,10 @@ const PostHeaderLayout = styled.div`
 const UserBox = styled.div`
   display: flex;
   align-items: center;
+`
+
+const ProfileImage = styled(FImage)`
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
 `

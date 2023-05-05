@@ -85,8 +85,7 @@ const PostCreateForm = ({ channelId }: { channelId: string }) => {
   }
 
   const handleSubmit = async () => {
-    const contentValue = quillRef.current?.getEditorContents()
-    const content = JSON.stringify(contentValue)
+    const content = quillRef.current?.getEditorContents() as string
     createPostMutate({ channelId, content })
   }
 
