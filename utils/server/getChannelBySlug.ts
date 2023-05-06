@@ -1,6 +1,7 @@
 import { NextApiResponse } from 'next'
 import { NextApiRequestWithUser } from '@/types/types'
 import { connectToDatabase } from '@/utils/db/db'
+import { channelsByAddressPipeLine } from './pipeLine/channel'
 
 export const getChannelBySlug = async (
   req: NextApiRequestWithUser,
@@ -9,46 +10,10 @@ export const getChannelBySlug = async (
   try {
     const db = await connectToDatabase()
     const channelsCollection = db.collection('channels')
-    const { channelAddress } = req.query
+    const { channelAddress: address } = req.query
 
     const channel = await channelsCollection
-      .aggregate([
-        {
-          $match: {
-            address: channelAddress,
-          },
-        },
-        {
-          $lookup: {
-            from: 'users',
-            foreignField: '_id',
-            localField: 'membersId',
-            as: 'members',
-          },
-        },
-        {
-          $lookup: {
-            from: 'users',
-            localField: 'managerId',
-            foreignField: '_id',
-            as: 'manager',
-          },
-        },
-        {
-          $unwind: '$manager',
-        },
-        {
-          $project: {
-            _id: true,
-            name: true,
-            address: true,
-            description: true,
-            isPublic: true,
-            manager: { _id: true, name: true },
-            members: { _id: true, name: true },
-          },
-        },
-      ])
+      .aggregate(channelsByAddressPipeLine(address as string))
       .next()
 
     if (!channel) {

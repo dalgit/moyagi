@@ -2,6 +2,7 @@ import { ObjectId } from 'mongodb'
 import { NextApiResponse } from 'next'
 import { NextApiRequestWithUser } from '@/types/types'
 import { connectToDatabase } from '@/utils/db/db'
+import { channelsByUserIdPipeLine } from './pipeLine/channel'
 
 export const getMyJoinedChannels = async (
   req: NextApiRequestWithUser,
@@ -14,47 +15,11 @@ export const getMyJoinedChannels = async (
     const db = await connectToDatabase()
     const channelsCollection = db.collection('channels')
 
-    const joinedChannels = await channelsCollection
-      .aggregate([
-        {
-          $match: {
-            membersId: userId,
-          },
-        },
-        {
-          $lookup: {
-            from: 'users',
-            foreignField: '_id',
-            localField: 'membersId',
-            as: 'members',
-          },
-        },
-        {
-          $lookup: {
-            from: 'users',
-            localField: 'managerId',
-            foreignField: '_id',
-            as: 'manager',
-          },
-        },
-        {
-          $unwind: '$manager',
-        },
-        {
-          $project: {
-            _id: true,
-            name: true,
-            address: true,
-            description: true,
-            isPublic: true,
-            manager: { _id: true, name: true },
-            members: { _id: true, name: true },
-          },
-        },
-      ])
+    const channels = await channelsCollection
+      .aggregate(channelsByUserIdPipeLine(userId))
       .toArray()
 
-    res.status(200).json(joinedChannels)
+    res.status(200).json(channels)
   } catch (error) {
     res
       .status(500)

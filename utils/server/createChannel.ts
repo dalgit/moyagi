@@ -2,6 +2,7 @@ import { ObjectId } from 'mongodb'
 import { NextApiResponse } from 'next'
 import { NextApiRequestWithUser } from '@/types/types'
 import { connectToDatabase } from '@/utils/db/db'
+import { channelsByAddressPipeLine } from './pipeLine/channel'
 
 export const createChannel = async (
   req: NextApiRequestWithUser,
@@ -13,8 +14,9 @@ export const createChannel = async (
     const { user } = req
 
     const userId = new ObjectId(user?.id)
+    const channelsCollection = db.collection('channels')
 
-    await db.collection('channels').insertOne({
+    await channelsCollection.insertOne({
       name,
       address,
       description,
@@ -23,7 +25,11 @@ export const createChannel = async (
       membersId: [userId],
     })
 
-    res.status(200).json({ message: '채널이 개설되었습니다.' })
+    const channel = await channelsCollection
+      .aggregate(channelsByAddressPipeLine(address))
+      .next()
+
+    res.status(200).json(channel)
   } catch (error) {
     res
       .status(500)
