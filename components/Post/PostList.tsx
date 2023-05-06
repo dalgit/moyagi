@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import { useGetChannelPosts } from '@/hooks/queries/useGetChannelPosts'
-import { useGetMyPosts } from '@/hooks/queries/useGetMyPosts'
+import { useChannelPosts } from '@/hooks/queries/useChannelPosts'
+import { useMyPosts } from '@/hooks/queries/useMyPosts'
 import { IPost } from '@/types/post'
 import Post from './Post'
 
@@ -13,12 +13,12 @@ interface ChannelPostListProps {
 }
 
 export const ChannelPostList = ({ channelId }: ChannelPostListProps) => {
-  const { data: posts = [] } = useGetChannelPosts(channelId)
+  const { data: posts = [] } = useChannelPosts(channelId)
   return <PostList posts={posts} />
 }
 
 export const MyPostList = () => {
-  const { data: posts = [] } = useGetMyPosts()
+  const { data: posts = [] } = useMyPosts()
   return <PostList posts={posts} />
 }
 

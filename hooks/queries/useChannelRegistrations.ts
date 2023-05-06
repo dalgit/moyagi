@@ -7,7 +7,7 @@ import { AxiosError } from 'axios'
 import { IRegistration } from '@/types/registration'
 import { getChannelRegistrations } from '@/utils/api'
 
-export const useGetChannelRegistrations = (
+export const useChannelRegistrations = (
   channelId: string,
   options?: UseQueryOptions<IRegistration[], AxiosError>,
 ): UseQueryResult<IRegistration[], AxiosError> => {

@@ -3,7 +3,7 @@ import { AxiosError } from 'axios'
 import { IPost } from '@/types/post'
 import { getChannelPostsById } from '@/utils/api'
 
-export const useGetChannelPosts = (
+export const useChannelPosts = (
   channelId: string,
 ): UseQueryResult<IPost[], AxiosError> => {
   return useQuery(['channelPosts', channelId], () =>

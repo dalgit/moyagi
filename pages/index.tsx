@@ -5,12 +5,13 @@ import { TiArrowRightThick as ArrowIcon } from 'react-icons/ti'
 import styled from 'styled-components'
 import JoinnedChannelCards from '@/components/Channel/JoinnedChannelCards'
 import Button from '@/components/common/Button'
-import { useGetJoinnedChannels } from '@/hooks/queries/useGetJoinnedChannels'
+import { useMyChannels } from '@/hooks/queries/useMyChannels'
 import { useSearchChannels } from '@/hooks/queries/useSearchChannels'
+
 const Home = () => {
   const [keyword, setKeyword] = useState('')
 
-  const { data: channels = [] } = useGetJoinnedChannels()
+  const { data: channels = [] } = useMyChannels()
   const {
     data: searchedChannels,
     isFetchedAfterMount: isSearched,

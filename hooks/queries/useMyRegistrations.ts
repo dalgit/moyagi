@@ -3,7 +3,7 @@ import { AxiosError } from 'axios'
 import { IRegistration } from '@/types/registration'
 import { getMyRegistrations } from '@/utils/api'
 
-export const useGetMyRegistrations = (): UseQueryResult<
+export const useMyRegistrations = (): UseQueryResult<
   IRegistration[],
   AxiosError
 > => {

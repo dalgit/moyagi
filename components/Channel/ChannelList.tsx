@@ -1,5 +1,5 @@
 import { useRecoilValue } from 'recoil'
-import { useGetJoinnedChannels } from '@/hooks/queries/useGetJoinnedChannels'
+import { useMyChannels } from '@/hooks/queries/useMyChannels'
 import { userSelector } from '@/recoil/user'
 import { IChannel } from '@/types/channel'
 import List from '../common/List'
@@ -12,7 +12,7 @@ interface ChannelListProps {
 }
 
 export const MyChannelList = () => {
-  const { data: channels = [] } = useGetJoinnedChannels()
+  const { data: channels = [] } = useMyChannels()
 
   return (
     <List>
@@ -30,7 +30,7 @@ export const MyChannelList = () => {
 
 export const ManagedChannelList = () => {
   const user = useRecoilValue(userSelector)
-  const { data: channels } = useGetJoinnedChannels({
+  const { data: channels } = useMyChannels({
     select: (channels) => filterManagedChannels(channels, user?._id),
   })
 
@@ -50,7 +50,7 @@ export const ManagedChannelList = () => {
 
 export const SubscribedChannels = () => {
   const user = useRecoilValue(userSelector)
-  const { data: channels } = useGetJoinnedChannels({
+  const { data: channels } = useMyChannels({
     select: (channels) => filterSubscribedChannels(channels, user?._id),
   })
 

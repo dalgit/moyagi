@@ -1,11 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useGetMyInformation } from '@/hooks/queries/useGetMyInformation'
+import { useMyInformation } from '@/hooks/queries/useMyInformation'
 import FImage from '../common/FImage'
 import tmp from '/public/assets/tmp.png'
 
 const UserInformation = () => {
-  const { data: myInformation } = useGetMyInformation()
+  const { data: myInformation } = useMyInformation()
 
   return (
     <UserInformationLayout>

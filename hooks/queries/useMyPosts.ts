@@ -3,6 +3,6 @@ import { AxiosError } from 'axios'
 import { IPost } from '@/types/post'
 import { getMyPosts } from '@/utils/api'
 
-export const useGetMyPosts = (): UseQueryResult<IPost[], AxiosError> => {
+export const useMyPosts = (): UseQueryResult<IPost[], AxiosError> => {
   return useQuery(['myPosts'], getMyPosts)
 }

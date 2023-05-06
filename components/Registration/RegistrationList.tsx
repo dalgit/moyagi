@@ -1,5 +1,5 @@
-import { useGetChannelRegistrations } from '@/hooks/queries/useGetChannelRegistrations'
-import { useGetMyRegistrations } from '@/hooks/queries/useGetMyRegistrations'
+import { useChannelRegistrations } from '@/hooks/queries/useChannelRegistrations'
+import { useMyRegistrations } from '@/hooks/queries/useMyRegistrations'
 import { IRegistration } from '@/types/registration'
 import { Registration } from './Registration'
 
@@ -8,7 +8,7 @@ interface RegistrationListProps {
 }
 
 export const MyRegistrationList = () => {
-  const { data: registrations = [] } = useGetMyRegistrations()
+  const { data: registrations = [] } = useMyRegistrations()
 
   return <RegistrationList registrations={registrations} />
 }
@@ -18,7 +18,7 @@ export const ChannelRegistrationList = ({
 }: {
   channelId: string
 }) => {
-  const { data: registrations = [] } = useGetChannelRegistrations(channelId)
+  const { data: registrations = [] } = useChannelRegistrations(channelId)
 
   return <RegistrationList registrations={registrations} />
 }

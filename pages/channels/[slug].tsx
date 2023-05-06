@@ -12,7 +12,7 @@ import ModalFrame from '@/components/common/Modal/ModalFrame'
 import PostCreateForm from '@/components/Post/PostForm/PostCreateForm'
 import { ChannelPostList } from '@/components/Post/PostList'
 import RegistrationForm from '@/components/Registration/RegistrationForm/RegistrationForm'
-import { useGetChannel } from '@/hooks/queries/useGetChannel'
+import { useChannel } from '@/hooks/queries/useChannel'
 import { userSelector } from '@/recoil/user'
 import { IChannel } from '@/types/channel'
 import { IUser } from '@/types/user'
@@ -28,7 +28,7 @@ const ChannelPage = ({ slug }: { slug: string }) => {
   const user = useRecoilValue(userSelector)
   const { push } = useRouter()
 
-  const { data: channel = {} as IChannel } = useGetChannel(slug)
+  const { data: channel = {} as IChannel } = useChannel(slug)
 
   const isMember = channel.members.some(
     (member: IUser) => member._id === user?._id,
