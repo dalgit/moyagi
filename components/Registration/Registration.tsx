@@ -4,7 +4,7 @@ import { useDeleteRegistration } from '@/hooks/mutations/useDeleteRegistration'
 import { usePatchRegistrationStatus } from '@/hooks/mutations/usePatchRegistrationStatus'
 import { IRegistration, EStatus } from '@/types/registration'
 import RegistrationHeader from './RegistrationHeader'
-import Button from '../common/Ui/Button'
+import Button from '../common/Button'
 interface RegistrationProps {
   registration: IRegistration
 }

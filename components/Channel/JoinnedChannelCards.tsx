@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { IChannel } from '@/types/channel'
-import Card from '../common/Ui/Card'
+import Card from '../common/Card'
 
 interface JoinnedChannelCardsProps {
   channels: IChannel[]

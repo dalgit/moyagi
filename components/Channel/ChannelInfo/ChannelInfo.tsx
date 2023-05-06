@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 import { IChannel } from '@/types/channel'
-import Card from '../common/Ui/Card'
-import List from '../common/Ui/List'
-import ListItem from '../common/Ui/ListItem'
-import ModalFrame from '../Modal/ModalFrame'
+import Card from '../../common/Card'
+import List from '../../common/List'
+import ListItem from '../../common/ListItem'
+import ModalFrame from '../../common/Modal/ModalFrame'
 
 interface ChannelInfoProps {
   channel: IChannel

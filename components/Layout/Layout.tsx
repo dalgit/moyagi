@@ -3,7 +3,7 @@ import { ReactNode } from 'react'
 import { IconContext } from 'react-icons'
 import styled from 'styled-components'
 import { iconStyles } from '@/styles/icons'
-import Header from './Header'
+import Header from './Header/Header'
 
 interface LayoutProps {
   children: ReactNode

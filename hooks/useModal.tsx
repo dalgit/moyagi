@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import ModalFrame from '@/components/Modal/ModalFrame'
+import ModalFrame from '@/components/common/Modal/ModalFrame'
 
 const useModal = () => {
   const [isModalActive, setIsModalActive] = useState<boolean>(false)

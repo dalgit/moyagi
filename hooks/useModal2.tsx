@@ -1,7 +1,5 @@
-import React, { useCallback, useState, ReactNode } from 'react'
-import ModalFrame from '@/components/Modal/ModalFrame'
-
-//컴포넌트 펑션으로 만들면 될듯?
+import React, { useCallback, useState } from 'react'
+import ModalFrame from '@/components/common/Modal/ModalFrame'
 
 export const useModal2 = (Component: any) => {
   const [isOpen, setIsOpen] = useState(false)

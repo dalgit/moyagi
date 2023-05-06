@@ -4,7 +4,7 @@ import tmp from '/public/assets/tmp.png'
 import Link from 'next/link'
 import styled from 'styled-components'
 
-const UserStatus = dynamic(() => import('../UserStatus/UserStatus'), {
+const UserStatus = dynamic(() => import('./UserStatus'), {
   ssr: false,
 })
 

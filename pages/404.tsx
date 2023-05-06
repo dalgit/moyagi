@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import styled from 'styled-components'
-import Button from '@/components/common/Ui/Button'
+import Button from '@/components/common/Button'
 
 const notFoundPage = () => {
   return (

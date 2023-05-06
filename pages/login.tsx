@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import bg from '/public/assets/login_page_background.png'
-import FImage from '@/components/common/Ui/FImage'
-import LoginForm from '@/components/LoginForm/LoginForm'
+import LoginForm from '@/components/Auth/LoginForm/LoginForm'
+import FImage from '@/components/common/FImage'
 
 const LoginPage = () => {
   return (

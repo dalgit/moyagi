@@ -2,13 +2,30 @@ import { useRecoilValue } from 'recoil'
 import { useGetJoinnedChannels } from '@/hooks/queries/useGetJoinnedChannels'
 import { userSelector } from '@/recoil/user'
 import { IChannel } from '@/types/channel'
-import List from '../common/Ui/List'
-import ListItem from '../common/Ui/ListItem'
-import DropDownItem from '../common/Ui/Tab/DropDownItem'
+import List from '../common/List'
+import ListItem from '../common/ListItem'
+import DropDownItem from '../common/Tab/DropDownItem'
 import { ChannelRegistrationList } from '../Registration/RegistrationList'
 
 interface ChannelListProps {
   channels: IChannel[]
+}
+
+export const MyChannelList = () => {
+  const { data: channels = [] } = useGetJoinnedChannels()
+
+  return (
+    <List>
+      {channels.map((channel) => (
+        <ListItem
+          key={channel._id}
+          title={channel.name}
+          href={`/channels/${channel.address}`}
+          imageSrc="/assets/a.jpg"
+        />
+      ))}
+    </List>
+  )
 }
 
 export const ManagedChannelList = () => {
@@ -34,18 +51,17 @@ export const ManagedChannelList = () => {
 export const SubscribedChannels = () => {
   const user = useRecoilValue(userSelector)
   const { data: channels } = useGetJoinnedChannels({
-    select: (channels) => filterSubscribedChannels(channels, user?.id),
+    select: (channels) => filterSubscribedChannels(channels, user?._id),
   })
 
   return (
     <List>
       {channels?.map((channel) => (
-        <DropDownItem
-          render={() => <ChannelRegistrationList channelId={channel._id} />}
+        <ListItem
           key={channel._id}
-        >
-          <ListItem title={channel.name} imageSrc="/assets/a.jpg" />
-        </DropDownItem>
+          title={channel.name}
+          imageSrc="/assets/a.jpg"
+        />
       ))}
     </List>
   )
@@ -77,5 +93,5 @@ const filterSubscribedChannels = (
   channels: IChannel[],
   userId: string | undefined,
 ) => {
-  return channels.filter((channel) => channel.manager._id === userId)
+  return channels.filter((channel) => channel.manager._id !== userId)
 }

@@ -1,5 +1,5 @@
 import { useRecoilValue } from 'recoil'
-import MoreMenu from '@/components/common/Ui/MoreMenu'
+import MoreMenu from '@/components/common/MoreMenu'
 import { userSelector } from '@/recoil/user'
 import { IPost } from '@/types/post'
 import AuthorMenuList from './AuthorMenuList'

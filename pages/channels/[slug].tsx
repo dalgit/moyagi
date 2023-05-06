@@ -5,13 +5,13 @@ import { GetServerSideProps } from 'next/types'
 import { useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import styled from 'styled-components'
-import ChannelInfo from '@/components/ChannelInfo/ChannelInfo'
-import Button from '@/components/common/Ui/Button'
-import JoinnedChannelList from '@/components/JoinnedChannelList/JoinnedChannelList'
-import ModalFrame from '@/components/Modal/ModalFrame'
+import ChannelInfo from '@/components/Channel/ChannelInfo/ChannelInfo'
+import { MyChannelList } from '@/components/Channel/ChannelList'
+import Button from '@/components/common/Button'
+import ModalFrame from '@/components/common/Modal/ModalFrame'
 import PostCreateForm from '@/components/Post/PostForm/PostCreateForm'
 import { ChannelPostList } from '@/components/Post/PostList'
-import RegistrationForm from '@/components/RegistrationForm/RegistrationForm'
+import RegistrationForm from '@/components/Registration/RegistrationForm/RegistrationForm'
 import { useGetChannel } from '@/hooks/queries/useGetChannel'
 import { userSelector } from '@/recoil/user'
 import { IChannel } from '@/types/channel'
@@ -62,7 +62,7 @@ const ChannelPage = ({ slug }: { slug: string }) => {
         ) : (
           <div>가입 후 소통해보세요</div>
         )}
-        <JoinnedChannelList />
+        <MyChannelList />
       </ChannelPageLayout>
 
       <ModalFrame isModalOpen={isModalOpen} closeModal={toggleModal}>

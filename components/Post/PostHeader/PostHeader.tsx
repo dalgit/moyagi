@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import FImage from '@/components/common/Ui/FImage'
+import FImage from '@/components/common/FImage'
 import { IPost } from '@/types/post'
 import tmp from '/public/assets/tmp.png'
 import PostHeaderMenu from './PostHeaderMenu'

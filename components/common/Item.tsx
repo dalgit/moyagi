@@ -23,7 +23,7 @@ const Item = ({ href, imageSrc, title }: ListItemProps) => {
   )
 }
 
-export default ListItem
+export default Item
 
 const StyledImage = styled(FImage)`
   border-radius: 50%;

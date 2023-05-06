@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useGetMyInformation } from '@/hooks/queries/useGetMyInformation'
-import FImage from '../common/Ui/FImage'
+import FImage from '../common/FImage'
 import tmp from '/public/assets/tmp.png'
 
 const UserInformation = () => {

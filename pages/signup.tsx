@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import bg from '/public/assets/login_page_background.png'
-import FImage from '@/components/common/Ui/FImage'
-import SignUpForm from '@/components/SignUpForm/SignUpForm'
+import SignUpForm from '@/components/Auth/SignUpForm/SignUpForm'
+import FImage from '@/components/common/FImage'
 
 const SignUpPage = () => {
   return (

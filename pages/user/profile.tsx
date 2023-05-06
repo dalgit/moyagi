@@ -5,7 +5,7 @@ import {
   SubscribedChannels,
   ManagedChannelList,
 } from '@/components/Channel/ChannelList'
-import { Tab } from '@/components/common/Ui/Tab'
+import { Tab } from '@/components/common/Tab'
 import { MyPostList } from '@/components/Post/PostList'
 import { MyRegistrationList } from '@/components/Registration/RegistrationList'
 import UserInformation from '@/components/User/UserInformation'
