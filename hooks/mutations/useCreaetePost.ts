@@ -5,6 +5,7 @@ import {
 } from '@tanstack/react-query'
 import { AxiosError, AxiosResponse } from 'axios'
 import { createPost } from '@/utils/api'
+import { postKeys } from '@/utils/queryKeys/post'
 
 interface useCreatePostArgs {
   channelId: string

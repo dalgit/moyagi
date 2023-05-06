@@ -17,6 +17,7 @@ import { userSelector } from '@/recoil/user'
 import { IChannel } from '@/types/channel'
 import { IUser } from '@/types/user'
 import createServerInstance from '@/utils/axios/server'
+import { channelKeys } from '@/utils/queryKeys/channel'
 
 export interface IParams extends ParsedUrlQuery {
   slug: string
@@ -30,7 +31,7 @@ const ChannelPage = ({ slug }: { slug: string }) => {
 
   const { data: channel = {} as IChannel } = useChannel(slug)
 
-  const isMember = channel.members.some(
+  const isMember = channel?.members.some(
     (member: IUser) => member._id === user?._id,
   )
 
@@ -90,7 +91,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const queryClient = new QueryClient()
 
   try {
-    await queryClient.fetchQuery(['channel', slug], () =>
+    await queryClient.fetchQuery(channelKeys.detail(slug), () =>
       server
         .get('http://localhost:3000/api/channels', {
           params: { channelAddress: slug },
