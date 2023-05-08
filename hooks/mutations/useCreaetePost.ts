@@ -19,13 +19,17 @@ export const useCreatePost = (
   const queryClient = useQueryClient()
 
   return useMutation(createPost, {
-    onSuccess: () => {
-      queryClient.setQueriesData<IPost[]>(
-        postKeys.channel(channelId),
-        (previous) => previous?.filter((post) => post._id !== postId),
+    onSuccess: (newPost) => {
+      queryClient.setQueryData<IPost[]>(
+        postKeys.list(channelId),
+        (previousPosts = []) => [newPost, ...previousPosts],
       )
 
-      queryClient.invalidateQueries(postKeys.channel(channelId))
+      queryClient.setQueryData<IPost[]>(postKeys.me(), (previousPosts = []) => [
+        newPost,
+        ...previousPosts,
+      ])
+
       alert('작성이 완료되었습니다.')
     },
   })
@@ -35,4 +39,6 @@ const createPost = async ({
   channelId,
   content,
 }: createPostArgs): Promise<IPost> =>
-  await client.post(`/channels/${channelId}/posts`, { content })
+  await client
+    .post(`/channels/${channelId}/posts`, { content })
+    .then((res) => res.data)

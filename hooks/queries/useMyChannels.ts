@@ -12,7 +12,7 @@ export const useMyChannels = (
   options?: UseQueryOptions<IChannel[], AxiosError>,
 ): UseQueryResult<IChannel[], Error> => {
   return useQuery<IChannel[], AxiosError>(
-    [channelKeys.all, 'me'],
+    channelKeys.me(),
     getMyChannels,
     options,
   )

@@ -6,6 +6,7 @@ import {
 import { AxiosError } from 'axios'
 import { IRegistration } from '@/types/registration'
 import client from '@/utils/axios/axios'
+import { registrationKeys } from '@/utils/queryKeys/registration'
 
 interface createRegistrationArgs {
   channelId: string
@@ -21,8 +22,14 @@ export const useCreateRegistration = (): UseMutationResult<
   const queryClient = useQueryClient()
 
   return useMutation(createRegistration, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['myRegistrations'])
+    onSuccess: (newRegistration) => {
+      queryClient.setQueryData<IRegistration[]>(
+        registrationKeys.me(),
+        (previousRegistrations = []) => [
+          newRegistration,
+          ...previousRegistrations,
+        ],
+      )
     },
   })
 }

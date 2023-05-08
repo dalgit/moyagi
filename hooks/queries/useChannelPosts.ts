@@ -7,7 +7,7 @@ import { postKeys } from '@/utils/queryKeys/post'
 export const useChannelPosts = (
   channelId: string,
 ): UseQueryResult<IPost[], AxiosError> => {
-  return useQuery(postKeys.channel(channelId), () =>
+  return useQuery(postKeys.list(channelId), () =>
     getChannelPostsById(channelId),
   )
 }

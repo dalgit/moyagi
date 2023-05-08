@@ -8,7 +8,7 @@ export const useMyRegistrations = (): UseQueryResult<
   IRegistration[],
   AxiosError
 > => {
-  return useQuery(registrationKeys.list('me'), getMyRegistrations)
+  return useQuery(registrationKeys.me(), getMyRegistrations)
 }
 
 export const getMyRegistrations = async (): Promise<IRegistration[]> =>

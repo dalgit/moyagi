@@ -5,8 +5,8 @@ import client from '@/utils/axios/axios'
 import { userKeys } from '@/utils/queryKeys/user'
 
 export const useMyInformation = (): UseQueryResult<IUser, AxiosError> => {
-  return useQuery(userKeys.detail('me'), getMyInformation)
+  return useQuery(userKeys.me(), getMyInformation)
 }
 
 const getMyInformation = async (): Promise<IUser> =>
-  await client.get(`/users/me`).then((res) => res.data)
+  await client.get('/users/me').then((res) => res.data)

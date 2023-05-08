@@ -6,6 +6,7 @@ import {
 import { AxiosError } from 'axios'
 import { IRegistration } from '@/types/registration'
 import client from '@/utils/axios/axios'
+import { registrationKeys } from '@/utils/queryKeys/registration'
 
 interface PatchRegistrationStatusProps {
   channelId: string
@@ -21,8 +22,16 @@ export const usePatchRegistrationStatus = (): UseMutationResult<
   const queryClient = useQueryClient()
 
   return useMutation(patchRegistrationStatus, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['channelRegistrations'])
+    onSuccess: (updatedRegistration, { channelId }) => {
+      queryClient.setQueryData<IRegistration[]>(
+        registrationKeys.list(channelId),
+        (previousRegistrations = []) =>
+          previousRegistrations.map((registration) =>
+            registration._id === updatedRegistration._id
+              ? updatedRegistration
+              : registration,
+          ),
+      )
     },
   })
 }

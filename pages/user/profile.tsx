@@ -10,6 +10,7 @@ import { MyPostList } from '@/components/Post/PostList'
 import { MyRegistrationList } from '@/components/Registration/RegistrationList'
 import UserInformation from '@/components/User/UserInformation'
 import createServerInstance from '@/utils/axios/server'
+import { userKeys } from '@/utils/queryKeys/user'
 
 const UserProfilePage = () => {
   const MyInfoTabPair = () => (
@@ -94,7 +95,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const queryClient = new QueryClient()
 
   try {
-    await queryClient.fetchQuery(['users', 'me'], () =>
+    await queryClient.fetchQuery(userKeys.me(), () =>
       server.get('/users/me').then((res) => res.data),
     )
     return {

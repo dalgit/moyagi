@@ -6,6 +6,7 @@ import {
 import { AxiosError } from 'axios'
 import { IRegistration } from '@/types/registration'
 import client from '@/utils/axios/axios'
+import { registrationKeys } from '@/utils/queryKeys/registration'
 
 interface CreateRegistrationArgs {
   registrationId: string
@@ -20,8 +21,15 @@ export const useDeleteRegistration = (): UseMutationResult<
   const queryClient = useQueryClient()
 
   return useMutation(deleteRegistration, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['myRegistrations'])
+    onSuccess: (deletedRegistration) => {
+      queryClient.setQueryData<IRegistration[]>(
+        registrationKeys.me(),
+        (previousRegistrations) =>
+          previousRegistrations?.filter(
+            (registration) => registration._id !== deletedRegistration._id,
+          ),
+      )
+
       alert('취소가 완료되었습니다.')
     },
   })

@@ -4,8 +4,10 @@ import {
   useQueryClient,
 } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
+import { useRouter } from 'next/router'
 import { IChannel } from '@/types/channel'
 import client from '@/utils/axios/axios'
+import { channelKeys } from '@/utils/queryKeys/channel'
 
 interface createChannelArgs {
   name: string
@@ -20,10 +22,23 @@ export const useCreateChannel = (): UseMutationResult<
   createChannelArgs
 > => {
   const queryClient = useQueryClient()
+  const { push } = useRouter()
 
   return useMutation(createChannel, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['myJoinnedChannels'])
+    onSuccess: (newChannel) => {
+      const { address } = newChannel
+
+      queryClient.setQueryData<IChannel>(
+        channelKeys.detail(address),
+        newChannel,
+      )
+
+      queryClient.setQueryData<IChannel[]>(
+        channelKeys.me(),
+        (previousChannels = []) => [newChannel, ...previousChannels],
+      )
+
+      push(`/channels/${address}`)
       alert('채널이 개설되었습니다!')
     },
   })
@@ -35,9 +50,11 @@ export const createChannel = async ({
   description,
   isPublic,
 }: createChannelArgs): Promise<IChannel> =>
-  await client.post('/channels', {
-    name,
-    address,
-    description,
-    isPublic,
-  })
+  await client
+    .post('/channels', {
+      name,
+      address,
+      description,
+      isPublic,
+    })
+    .then((res) => res.data)

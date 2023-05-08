@@ -5,7 +5,7 @@ import client from '@/utils/axios/axios'
 import { postKeys } from '@/utils/queryKeys/post'
 
 export const useMyPosts = (): UseQueryResult<IPost[], AxiosError> => {
-  return useQuery(postKeys.user('me'), getMyPosts)
+  return useQuery(postKeys.me(), getMyPosts)
 }
 
 export const getMyPosts = async (): Promise<IPost[]> =>

@@ -1,5 +1,6 @@
 export const userKeys = {
-  all: ['user'],
-  details: () => [...userKeys.all, 'detail'],
-  detail: (id: string) => [...userKeys.details(), id],
+  all: ['users'],
+  lists: () => [...userKeys.all, 'list'],
+  list: (id: string) => [...userKeys.lists(), id],
+  me: () => [...userKeys.all, { user: 'me' }],
 }
