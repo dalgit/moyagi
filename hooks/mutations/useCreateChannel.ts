@@ -3,10 +3,11 @@ import {
   useMutation,
   useQueryClient,
 } from '@tanstack/react-query'
-import { AxiosError, AxiosResponse } from 'axios'
-import { createChannel } from '@/utils/api'
+import { AxiosError } from 'axios'
+import { IChannel } from '@/types/channel'
+import client from '@/utils/axios/axios'
 
-interface useCreateChannelArgs {
+interface createChannelArgs {
   name: string
   address: string
   description: string
@@ -14,9 +15,9 @@ interface useCreateChannelArgs {
 }
 
 export const useCreateChannel = (): UseMutationResult<
-  AxiosResponse,
+  IChannel,
   AxiosError,
-  useCreateChannelArgs
+  createChannelArgs
 > => {
   const queryClient = useQueryClient()
 
@@ -27,3 +28,16 @@ export const useCreateChannel = (): UseMutationResult<
     },
   })
 }
+
+export const createChannel = async ({
+  name,
+  address,
+  description,
+  isPublic,
+}: createChannelArgs): Promise<IChannel> =>
+  await client.post('/channels', {
+    name,
+    address,
+    description,
+    isPublic,
+  })

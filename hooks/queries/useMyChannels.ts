@@ -5,7 +5,7 @@ import {
 } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 import { IChannel } from '@/types/channel'
-import { getMyJoinnedChannels } from '@/utils/api'
+import client from '@/utils/axios/axios'
 import { channelKeys } from '@/utils/queryKeys/channel'
 
 export const useMyChannels = (
@@ -13,7 +13,10 @@ export const useMyChannels = (
 ): UseQueryResult<IChannel[], Error> => {
   return useQuery<IChannel[], AxiosError>(
     [channelKeys.all, 'me'],
-    getMyJoinnedChannels,
+    getMyChannels,
     options,
   )
 }
+
+export const getMyChannels = async (): Promise<IChannel[]> =>
+  await client.get('/users/me/channels').then((res) => res.data)

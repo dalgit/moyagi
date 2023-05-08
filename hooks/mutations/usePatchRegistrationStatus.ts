@@ -3,18 +3,20 @@ import {
   useMutation,
   useQueryClient,
 } from '@tanstack/react-query'
-import { AxiosError, AxiosResponse } from 'axios'
-import { patchRegistrationStatus } from '@/utils/api'
+import { AxiosError } from 'axios'
+import { IRegistration } from '@/types/registration'
+import client from '@/utils/axios/axios'
 
-interface usePatchRegistrationStatusProps {
+interface PatchRegistrationStatusProps {
   channelId: string
   registrationId: string
   status: string
 }
+
 export const usePatchRegistrationStatus = (): UseMutationResult<
-  AxiosResponse,
+  IRegistration,
   AxiosError,
-  usePatchRegistrationStatusProps
+  PatchRegistrationStatusProps
 > => {
   const queryClient = useQueryClient()
 
@@ -24,3 +26,12 @@ export const usePatchRegistrationStatus = (): UseMutationResult<
     },
   })
 }
+
+const patchRegistrationStatus = async ({
+  channelId,
+  registrationId,
+  status,
+}: PatchRegistrationStatusProps): Promise<IRegistration> =>
+  await client.patch(`/channels/${channelId}/registrations/${registrationId}`, {
+    status,
+  })

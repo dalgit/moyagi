@@ -1,18 +1,19 @@
 import { UseMutationResult, useMutation } from '@tanstack/react-query'
 import { AxiosError, AxiosResponse } from 'axios'
 import { useRouter } from 'next/router'
-import { registerUser } from '@/utils/api'
+import client from '@/utils/axios/axios'
 
-interface useRegisterUserArgs {
+interface RegisterUserArgs {
   name: string
   email: string
   password: string
   passwordConfirm: string
 }
+
 export const useRegisterUser = (): UseMutationResult<
   AxiosResponse,
   AxiosError,
-  useRegisterUserArgs
+  RegisterUserArgs
 > => {
   const { push } = useRouter()
 
@@ -21,5 +22,19 @@ export const useRegisterUser = (): UseMutationResult<
       alert('회원가입이 완료되었습니다!')
       push('/login')
     },
+  })
+}
+
+export const registerUser = async ({
+  name,
+  email,
+  password,
+  passwordConfirm,
+}: RegisterUserArgs) => {
+  return await client.post('/auth/signup', {
+    name,
+    email,
+    password,
+    passwordConfirm,
   })
 }

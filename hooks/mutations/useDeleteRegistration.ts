@@ -3,18 +3,19 @@ import {
   useMutation,
   useQueryClient,
 } from '@tanstack/react-query'
-import { AxiosError, AxiosResponse } from 'axios'
-import { deleteRegistration } from '@/utils/api'
+import { AxiosError } from 'axios'
+import { IRegistration } from '@/types/registration'
+import client from '@/utils/axios/axios'
 
-interface useCreateRegistrationArgs {
+interface CreateRegistrationArgs {
   registrationId: string
   channelId: string
 }
 
 export const useDeleteRegistration = (): UseMutationResult<
-  AxiosResponse,
+  IRegistration,
   AxiosError,
-  useCreateRegistrationArgs
+  CreateRegistrationArgs
 > => {
   const queryClient = useQueryClient()
 
@@ -25,3 +26,9 @@ export const useDeleteRegistration = (): UseMutationResult<
     },
   })
 }
+
+const deleteRegistration = async ({
+  registrationId,
+  channelId,
+}: CreateRegistrationArgs): Promise<IRegistration> =>
+  await client.delete(`/channels/${channelId}/registrations/${registrationId}`)

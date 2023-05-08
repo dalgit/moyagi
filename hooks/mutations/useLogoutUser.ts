@@ -7,7 +7,7 @@ import { AxiosError, AxiosResponse } from 'axios'
 import { useRouter } from 'next/router'
 import { useResetRecoilState } from 'recoil'
 import { userSelector } from '@/recoil/user'
-import { logoutUser } from '@/utils/api'
+import client from '@/utils/axios/axios'
 
 export const useLogoutUser = (): UseMutationResult<
   AxiosResponse,
@@ -25,3 +25,5 @@ export const useLogoutUser = (): UseMutationResult<
     },
   })
 }
+
+const logoutUser = async () => await client.post('/auth/logout')

@@ -3,18 +3,20 @@ import {
   useMutation,
   useQueryClient,
 } from '@tanstack/react-query'
-import { AxiosError, AxiosResponse } from 'axios'
-import { createRegistration } from '@/utils/api'
+import { AxiosError } from 'axios'
+import { IRegistration } from '@/types/registration'
+import client from '@/utils/axios/axios'
 
-interface useCreateRegistrationArgs {
+interface createRegistrationArgs {
   channelId: string
   message: string
   isPublic: boolean
 }
+
 export const useCreateRegistration = (): UseMutationResult<
-  AxiosResponse,
+  IRegistration,
   AxiosError,
-  useCreateRegistrationArgs
+  createRegistrationArgs
 > => {
   const queryClient = useQueryClient()
 
@@ -24,3 +26,13 @@ export const useCreateRegistration = (): UseMutationResult<
     },
   })
 }
+
+const createRegistration = async ({
+  channelId,
+  message,
+  isPublic,
+}: createRegistrationArgs): Promise<IRegistration> =>
+  await client.post(`/channels/${channelId}/registrations`, {
+    message,
+    isPublic,
+  })

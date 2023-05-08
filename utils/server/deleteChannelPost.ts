@@ -18,7 +18,7 @@ export const deleteChannelPost = async (
 
     const post = await postsCollection
       .aggregate(postByIdPipeLine(postId))
-      .toArray()
+      .next()
 
     await postsCollection.deleteOne({
       _id: postId,

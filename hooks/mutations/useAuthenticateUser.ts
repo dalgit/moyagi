@@ -3,7 +3,7 @@ import { AxiosError, AxiosResponse } from 'axios'
 import { useRouter } from 'next/router'
 import { useSetRecoilState } from 'recoil'
 import { userSelector } from '@/recoil/user'
-import { authenticateUser } from '@/utils/api'
+import client from '@/utils/axios/axios'
 
 interface useAuthenticateUserArgs {
   email: string
@@ -25,3 +25,17 @@ export const useAuthenticateUser = (): UseMutationResult<
     },
   })
 }
+
+const authenticateUser = async ({
+  email,
+  password,
+}: {
+  email: string
+  password: string
+}) =>
+  await client
+    .post('/auth/login', {
+      email,
+      password,
+    })
+    .then((res) => res.data)

@@ -2,18 +2,14 @@ import { ObjectId } from 'mongodb'
 
 export const channelsByAddressPipeLine = (address: string) => [
   {
-    $match: {
-      address: address,
-    },
+    $match: { address: address },
   },
   ...channelBasePipeline,
 ]
 
 export const channelsByUserIdPipeLine = (userId: ObjectId) => [
   {
-    $match: {
-      membersId: userId,
-    },
+    $match: { membersId: userId },
   },
   ...channelBasePipeline,
 ]

@@ -5,7 +5,7 @@ import {
 } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 import { IRegistration } from '@/types/registration'
-import { getChannelRegistrations } from '@/utils/api'
+import client from '@/utils/axios/axios'
 import { registrationKeys } from '@/utils/queryKeys/registration'
 
 export const useChannelRegistrations = (
@@ -18,3 +18,10 @@ export const useChannelRegistrations = (
     options,
   )
 }
+
+const getChannelRegistrations = async (
+  channelId: string,
+): Promise<IRegistration[]> =>
+  await client
+    .get(`/channels/${channelId}/registrations`)
+    .then((res) => res.data)

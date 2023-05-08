@@ -1,7 +1,7 @@
 import { useQuery, UseQueryResult } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 import { IChannel } from '@/types/channel'
-import { searchChannels } from '@/utils/api'
+import client from '@/utils/axios/axios'
 import { channelKeys } from '@/utils/queryKeys/channel'
 
 export const useSearchChannels = (
@@ -11,3 +11,6 @@ export const useSearchChannels = (
     enabled: false,
   })
 }
+
+const searchChannels = async (keyword: string): Promise<IChannel[]> =>
+  await client.get('/channels', { params: { keyword } }).then((res) => res.data)
