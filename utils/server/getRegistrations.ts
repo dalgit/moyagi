@@ -1,6 +1,7 @@
 import { ObjectId } from 'mongodb'
 import { NextApiResponse, NextApiRequest } from 'next'
 import { connectToDatabase } from '@/utils/db/db'
+import { registrationByChannelIdPipeLine } from './pipeLine/registration'
 
 export const getRegistrations = async (
   req: NextApiRequest,
@@ -14,31 +15,7 @@ export const getRegistrations = async (
     const registrationsCollection = db.collection('registrations')
 
     const registrations = await registrationsCollection
-      .aggregate([
-        {
-          $match: { channelId },
-        },
-        {
-          $lookup: {
-            from: 'users',
-            localField: 'requesterId',
-            foreignField: '_id',
-            as: 'requester',
-          },
-        },
-        {
-          $unwind: '$requester',
-        },
-        {
-          $project: {
-            _id: true,
-            message: true,
-            status: true,
-            time: true,
-            requester: { _id: true, name: true },
-          },
-        },
-      ])
+      .aggregate(registrationByChannelIdPipeLine(channelId))
       .toArray()
 
     return res.status(200).json(registrations)

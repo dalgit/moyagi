@@ -2,6 +2,7 @@ import { ObjectId } from 'mongodb'
 import { NextApiResponse } from 'next'
 import { NextApiRequestWithUser } from '@/types/types'
 import { connectToDatabase } from '@/utils/db/db'
+import { registrationByIdPipeLine } from './pipeLine/registration'
 
 export const deleteRegistration = async (
   req: NextApiRequestWithUser,
@@ -15,12 +16,16 @@ export const deleteRegistration = async (
     const db = await connectToDatabase()
     const registrationsCollection = db.collection('registrations')
 
+    const registration = await registrationsCollection
+      .aggregate(registrationByIdPipeLine(registrationId))
+      .next()
+
     await registrationsCollection.deleteOne({
       _id: registrationId,
       channelId,
     })
 
-    return res.status(200).json({ message: 'ok' })
+    return res.status(200).json(registration)
   } catch (error) {
     res
       .status(500)

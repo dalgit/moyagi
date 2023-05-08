@@ -2,6 +2,7 @@ import { ObjectId } from 'mongodb'
 import { NextApiResponse } from 'next'
 import { NextApiRequestWithUser } from '@/types/types'
 import { connectToDatabase } from '@/utils/db/db'
+import { registrationByIdPipeLine } from './pipeLine/registration'
 
 export const updateRegistration = async (
   req: NextApiRequestWithUser,
@@ -16,7 +17,7 @@ export const updateRegistration = async (
     const db = await connectToDatabase()
     const registrationsCollection = db.collection('registrations')
 
-    await registrationsCollection.findOneAndUpdate(
+    await registrationsCollection.updateOne(
       {
         _id: registrationId,
         channelId,
@@ -24,7 +25,11 @@ export const updateRegistration = async (
       { $set: { status } },
     )
 
-    return res.status(200).json({ message: 'ok' })
+    const registration = await registrationsCollection
+      .aggregate(registrationByIdPipeLine(registrationId))
+      .next()
+
+    return res.status(200).json(registration)
   } catch (error) {
     res
       .status(500)

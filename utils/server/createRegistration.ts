@@ -2,6 +2,7 @@ import { ObjectId } from 'mongodb'
 import { NextApiResponse } from 'next'
 import { NextApiRequestWithUser } from '@/types/types'
 import { connectToDatabase } from '@/utils/db/db'
+import { registrationByIdPipeLine } from './pipeLine/registration'
 
 export const createRegistration = async (
   req: NextApiRequestWithUser,
@@ -31,7 +32,7 @@ export const createRegistration = async (
       )
     }
 
-    await registrationsCollection.insertOne({
+    const { insertedId } = await registrationsCollection.insertOne({
       requesterId: userId,
       channelId,
       message,
@@ -39,7 +40,11 @@ export const createRegistration = async (
       time,
     })
 
-    return res.status(200).json({ message: 'ok' })
+    const registration = await registrationsCollection
+      .aggregate(registrationByIdPipeLine(insertedId))
+      .next()
+
+    return res.status(200).json(registration)
   } catch {
     res
       .status(500)
