@@ -2,6 +2,7 @@ import { ObjectId } from 'mongodb'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { NextApiRequestWithUser } from '@/types/types'
 import { connectToDatabase } from '@/utils/db/db'
+import { postByIdPipeLine } from './pipeLine/post'
 
 interface ExtendedNextApiRequest extends NextApiRequest {
   query: {
@@ -20,14 +21,19 @@ export const createPost = async (
     const { user } = req
     const channelId = new ObjectId(cid)
     const userId = new ObjectId(user?.id)
+    const postsCollection = db.collection('posts')
 
-    await db.collection('posts').insertOne({
+    const { insertedId } = await postsCollection.insertOne({
       channelId: channelId,
       authorId: userId,
       content,
     })
 
-    res.status(200).json({ message: '작성이 완료되었습니다.' })
+    const post = await postsCollection
+      .aggregate(postByIdPipeLine(insertedId))
+      .next()
+
+    res.status(200).json(post)
   } catch (error) {
     res
       .status(500)

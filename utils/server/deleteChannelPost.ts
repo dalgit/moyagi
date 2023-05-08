@@ -2,6 +2,7 @@ import { ObjectId } from 'mongodb'
 import { NextApiResponse } from 'next'
 import { NextApiRequestWithUser } from '@/types/types'
 import { connectToDatabase } from '@/utils/db/db'
+import { postByIdPipeLine } from './pipeLine/post'
 
 export const deleteChannelPost = async (
   req: NextApiRequestWithUser,
@@ -15,12 +16,16 @@ export const deleteChannelPost = async (
     const db = await connectToDatabase()
     const postsCollection = db.collection('posts')
 
+    const post = await postsCollection
+      .aggregate(postByIdPipeLine(postId))
+      .toArray()
+
     await postsCollection.deleteOne({
       _id: postId,
       channelId,
     })
 
-    return res.status(200).json({ message: 'ok' })
+    return res.status(200).json(post)
   } catch (error) {
     res
       .status(500)
