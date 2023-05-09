@@ -10,9 +10,9 @@ interface InputProps {
 }
 
 const Input = ({ label, id, name, type, value, onChange }: InputProps) => {
-  return (
-    <>
-      {label && <LabelStyled htmlFor={id}>{label}</LabelStyled>}
+  return label ? (
+    <LabelStyled htmlFor={id}>
+      {label}
       <InputStyled
         type={type}
         id={id}
@@ -20,7 +20,15 @@ const Input = ({ label, id, name, type, value, onChange }: InputProps) => {
         value={value}
         onChange={onChange}
       />
-    </>
+    </LabelStyled>
+  ) : (
+    <InputStyled
+      type={type}
+      id={id}
+      name={name || id}
+      value={value}
+      onChange={onChange}
+    />
   )
 }
 
