@@ -10,7 +10,7 @@ export const createChannel = async (
 ) => {
   try {
     const db = await connectToDatabase()
-    const { name, address, description, isPublic } = req.body
+    const { name, address, description, isPublic, imageUrl } = req.body
     const { user } = req
 
     const userId = new ObjectId(user?.id)
@@ -21,6 +21,7 @@ export const createChannel = async (
       address,
       description,
       isPublic,
+      imageUrl: imageUrl ?? null,
       managerId: userId,
       membersId: [userId],
     })

@@ -14,6 +14,7 @@ interface createChannelArgs {
   address: string
   description: string
   isPublic: boolean
+  imageUrl?: string
 }
 
 export const useCreateChannel = (): UseMutationResult<
@@ -49,6 +50,7 @@ export const createChannel = async ({
   address,
   description,
   isPublic,
+  imageUrl,
 }: createChannelArgs): Promise<IChannel> =>
   await client
     .post('/channels', {
@@ -56,5 +58,6 @@ export const createChannel = async ({
       address,
       description,
       isPublic,
+      imageUrl,
     })
     .then((res) => res.data)
