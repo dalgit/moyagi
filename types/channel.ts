@@ -8,4 +8,5 @@ export interface IChannel {
   isPublic: boolean
   manager: IUser
   members: IUser[]
+  imageUrl: string
 }

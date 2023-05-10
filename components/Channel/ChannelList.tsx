@@ -1,4 +1,5 @@
 import { useRecoilValue } from 'recoil'
+import { channelDefaultImage } from '@/constants/defaultImage'
 import { useMyChannels } from '@/hooks/queries/useMyChannels'
 import { userSelector } from '@/recoil/user'
 import { IChannel } from '@/types/channel'
@@ -13,7 +14,6 @@ interface ChannelListProps {
 
 export const MyChannelList = () => {
   const { data: channels = [] } = useMyChannels()
-
   return (
     <List>
       {channels.map((channel) => (
@@ -21,7 +21,7 @@ export const MyChannelList = () => {
           key={channel._id}
           title={channel.name}
           href={`/channels/${channel.address}`}
-          imageSrc="/assets/a.jpg"
+          imageSrc={channel.imageUrl || channelDefaultImage}
         />
       ))}
     </List>
@@ -60,7 +60,7 @@ export const SubscribedChannels = () => {
         <ListItem
           key={channel._id}
           title={channel.name}
-          imageSrc="/assets/a.jpg"
+          imageSrc={channel.imageUrl || channelDefaultImage}
         />
       ))}
     </List>
@@ -75,7 +75,7 @@ export const ChannelList = ({ channels }: ChannelListProps) => {
           key={channel._id}
           title={channel.name}
           href={`/channels/${channel.address}`}
-          imageSrc="/assets/a.jpg"
+          imageSrc={channel.imageUrl || channelDefaultImage}
         />
       ))}
     </List>

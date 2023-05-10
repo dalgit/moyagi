@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { channelDefaultImage } from '@/constants/defaultImage'
 import { IChannel } from '@/types/channel'
 import Card from '../common/Card'
 
@@ -14,7 +15,7 @@ const JoinnedChannelCards = ({ channels }: JoinnedChannelCardsProps) => {
           key={channel._id}
           title={channel.name}
           href={`/channels/${channel.address}`}
-          imageSrc="/assets/a.jpg"
+          imageSrc={channel?.imageUrl || channelDefaultImage}
         />
       ))}
     </CardList>

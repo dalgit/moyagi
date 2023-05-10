@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import styled from 'styled-components'
+import { channelDefaultImage } from '@/constants/defaultImage'
 import { IChannel } from '@/types/channel'
 import Card from '../../common/Card'
 import List from '../../common/List'
@@ -11,19 +12,18 @@ interface ChannelInfoProps {
 }
 
 const ChannelInfo = ({ channel }: ChannelInfoProps) => {
-  const { name, description, manager, address, members } = channel
+  const { name, description, manager, address, members, imageUrl } = channel
   const memberCount = members.length
   const [isModalOpen, setIsModalActive] = useState<boolean>(false)
 
   const toggleModal = () => setIsModalActive(!isModalOpen)
-
   return (
     <ChannelInfoLayout>
       <Card
         width="100%"
         title={name}
         href={address}
-        imageSrc="/assets/a.jpg"
+        imageSrc={imageUrl || channelDefaultImage}
         hasBoxShadow={false}
       />
       <Description>{description}</Description>

@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react'
-import { RiImageAddLine } from 'react-icons/ri'
 import styled from 'styled-components'
 import FImage from '@/components/common/FImage'
+import { addDefaultImage } from '@/constants/defaultImage'
 
 interface ImageSelectorHandler {
   setFile: React.Dispatch<React.SetStateAction<File | undefined>>
@@ -9,7 +9,7 @@ interface ImageSelectorHandler {
 
 const ImageSelector = ({ setFile }: ImageSelectorHandler) => {
   const ref = useRef<HTMLInputElement>(null)
-  const [previewImg, setPreviewImg] = useState<string>('')
+  const [previewImg, setPreviewImg] = useState<string>(addDefaultImage)
 
   const handleInputChange = () => {
     if (!ref.current?.files) return
@@ -23,13 +23,13 @@ const ImageSelector = ({ setFile }: ImageSelectorHandler) => {
     }
   }
 
+  const handleClickSelector = () => {
+    ref.current && ref.current.click()
+  }
+
   return (
-    <ImageSelectorLayout>
-      {previewImg ? (
-        <SelectedImage src={previewImg} alt="preview" />
-      ) : (
-        <AddIcon />
-      )}
+    <ImageSelectorLayout onClick={handleClickSelector}>
+      <SelectedImage src={previewImg} alt="preview" />
       <label htmlFor="fileInput">파일 선택</label>
       <input
         id="fileInput"
@@ -48,8 +48,7 @@ const ImageSelectorLayout = styled.div`
   display: flex;
   flex-direction: column;
   width: 250px;
-  gap: 2px;
-  border-radius: 12px;
+  gap: 10px;
 
   label {
     text-align: center;
@@ -57,20 +56,18 @@ const ImageSelectorLayout = styled.div`
     padding: 10px;
     background-color: #7bcfb5;
     color: #fff;
+    cursor: pointer;
   }
+
   input {
     display: none;
   }
 `
 
-const AddIcon = styled(RiImageAddLine)`
-  background-color: white;
-  width: inherit;
-  height: inherit;
-`
-
 const SelectedImage = styled(FImage)`
   width: inherit;
-  height: inherit;
-  border-radius: inherit;
+  aspect-ratio: 1/1;
+  background-color: white;
+  border-radius: 12px;
+  cursor: pointer;
 `

@@ -41,6 +41,7 @@ const channelBasePipeline = [
       address: true,
       description: true,
       isPublic: true,
+      imageUrl: true,
       manager: { _id: true, name: true },
       members: { _id: true, name: true },
     },
