@@ -1,17 +1,26 @@
-import React from 'react'
+import { useState } from 'react'
 import styled from 'styled-components'
-import { useMyInformation } from '@/hooks/queries/useMyInformation'
-import FImage from '../common/FImage'
-import tmp from '/public/assets/tmp.png'
+import { MyProfile } from './Profile'
+import { MyProfileModifyForm } from './ProfileModifyForm'
+import Button from '../common/Button'
 
 const UserInformation = () => {
-  const { data: myInformation } = useMyInformation()
+  const [isUpdateForm, setIsUpdateForm] = useState<boolean>(false)
+
+  const handleChangeForm = () => {
+    setIsUpdateForm(!isUpdateForm)
+  }
 
   return (
     <UserInformationLayout>
-      <ProfileImage src={tmp} alt="profile_image" />
-      <h2>{myInformation?.name}</h2>
-      <span>이것은 나의 설명입니다.</span>
+      {isUpdateForm ? (
+        <MyProfileModifyForm handleChangeForm={handleChangeForm} />
+      ) : (
+        <>
+          <MyProfile />
+          <Button onClick={handleChangeForm}>프로필 변경하기</Button>
+        </>
+      )}
     </UserInformationLayout>
   )
 }
@@ -23,10 +32,4 @@ const UserInformationLayout = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 10px;
-`
-
-const ProfileImage = styled(FImage)`
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
 `

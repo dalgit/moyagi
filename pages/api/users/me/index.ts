@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import authMiddleware from '@/utils/authMiddleware'
 import { getMyInfo } from '@/utils/server/getMyInfo'
+import updateProfile from '@/utils/server/updateProfile'
 
 export default async function handler(
   req: NextApiRequest,
@@ -11,6 +12,10 @@ export default async function handler(
   switch (requestMethod) {
     case 'GET':
       await authMiddleware(getMyInfo)(req, res)
+      break
+
+    case 'PATCH':
+      await updateProfile(req, res)
       break
 
     default:

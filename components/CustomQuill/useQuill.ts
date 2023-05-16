@@ -12,10 +12,15 @@ const useQuill = () => {
     input.setAttribute('accept', 'image/*')
     document.body.appendChild(input)
     input.click()
-
     input.onchange = async () => {
       if (!input.files) return
       const [file] = input.files
+
+      if (file.size > 1 * 1024 * 1024) {
+        alert('이미지의 허용 용량은 1MB입니다.')
+        return
+      }
+
       const url = await uploadImage(file)
       const editor = quillRef.current?.getEditor()
       const index = editor?.getSelection()?.index || 0

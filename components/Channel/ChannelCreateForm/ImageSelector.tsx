@@ -1,15 +1,23 @@
 import { useState, useRef } from 'react'
 import styled from 'styled-components'
 import FImage from '@/components/common/FImage'
-import { addDefaultImage } from '@/constants/defaultImage'
+import { addDefaultImage, cameraIcon } from '@/constants/defaultImage'
 
 interface ImageSelectorHandler {
   setFile: React.Dispatch<React.SetStateAction<File | undefined>>
+  label?: string
+  defaultImage?: string
+  className?: string
 }
 
-const ImageSelector = ({ setFile }: ImageSelectorHandler) => {
+const ImageSelector = ({
+  setFile,
+  label,
+  defaultImage = addDefaultImage,
+  className,
+}: ImageSelectorHandler) => {
   const ref = useRef<HTMLInputElement>(null)
-  const [previewImg, setPreviewImg] = useState<string>(addDefaultImage)
+  const [previewImg, setPreviewImg] = useState<string>(defaultImage)
 
   const handleInputChange = () => {
     if (!ref.current?.files) return
@@ -28,9 +36,9 @@ const ImageSelector = ({ setFile }: ImageSelectorHandler) => {
   }
 
   return (
-    <ImageSelectorLayout onClick={handleClickSelector}>
+    <ImageSelectorLayout onClick={handleClickSelector} className={className}>
       <SelectedImage src={previewImg} alt="preview" />
-      <label htmlFor="fileInput">파일 선택</label>
+      {label && <label htmlFor="fileInput">{label}</label>}
       <input
         id="fileInput"
         type="file"
@@ -47,8 +55,10 @@ export default ImageSelector
 const ImageSelectorLayout = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   width: 250px;
   gap: 10px;
+  position: relative;
 
   label {
     text-align: center;
@@ -68,6 +78,17 @@ const SelectedImage = styled(FImage)`
   width: inherit;
   aspect-ratio: 1/1;
   background-color: white;
-  border-radius: 12px;
+  border-radius: 50%;
   cursor: pointer;
+
+  &::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 65px;
+    height: 65px;
+    background-image: url(${cameraIcon});
+    background-size: contain;
+  }
 `

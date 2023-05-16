@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import styled from 'styled-components'
+import Button from '@/components/common/Button'
 import Quill from '@/components/CustomQuill/Quill'
 import { useCreatePost } from '@/hooks/mutations/useCreaetePost'
+import { quillModal } from '@/styles/constants'
 
 const PostCreateForm = ({ channelId }: { channelId: string }) => {
   const { mutate: createPostMutate } = useCreatePost(channelId)
@@ -12,16 +14,19 @@ const PostCreateForm = ({ channelId }: { channelId: string }) => {
   }
 
   return (
-    <QuillRayout>
+    <PostCreateFormLayout>
       <Quill setContent={setContent} />
-      <button onClick={handleSubmit}>작성하기</button>
-    </QuillRayout>
+      <EventButton onClick={handleSubmit}>작성하기</EventButton>
+    </PostCreateFormLayout>
   )
 }
 
 export default PostCreateForm
 
-const QuillRayout = styled.div`
-  width: 600px;
-  height: 600px;
+const PostCreateFormLayout = styled.div`
+  ${quillModal}
+`
+
+const EventButton = styled(Button)`
+  width: 100%;
 `

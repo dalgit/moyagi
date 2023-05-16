@@ -6,3 +6,13 @@ export const baseHover = css`
     opacity: 0.6;
   }
 `
+
+export const quillModal = css`
+  .quill {
+    max-width: 400px;
+  }
+
+  .ql-editor {
+    height: 300px;
+  }
+`

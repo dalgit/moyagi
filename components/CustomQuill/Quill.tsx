@@ -13,7 +13,6 @@ const Quill = ({ setContent }: QuillProps) => {
       onChange={setContent}
       forwardedRef={quillRef}
       modules={modules}
-      theme="snow"
     />
   )
 }
