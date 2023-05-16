@@ -12,7 +12,7 @@ const PostHeader = ({ post }: PostHeaderProps) => {
   return (
     <PostHeaderLayout>
       <UserBox>
-        <ProfileImage src={tmp} alt="logo_icon" />
+        <ProfileImage src={post.author.imageUrl || tmp} alt="logo_icon" />
         <span>{post.author.name}</span>
       </UserBox>
       <PostHeaderMenu post={post} />
@@ -30,6 +30,7 @@ const PostHeaderLayout = styled.div`
 const UserBox = styled.div`
   display: flex;
   align-items: center;
+  gap: 7px;
 `
 
 const ProfileImage = styled(FImage)`

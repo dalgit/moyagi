@@ -16,6 +16,10 @@ const button = {
     backgroundColor: '#007bff',
     color: '#fff',
   },
+  secondary: {
+    backgroundColor: '#EEEEEE',
+    color: '#868686',
+  },
 }
 
 const device = {

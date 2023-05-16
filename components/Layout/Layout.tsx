@@ -26,15 +26,11 @@ const Layout = ({ children }: LayoutProps) => {
 export default Layout
 
 const BaseLayout = styled.div`
-  width: 100wh;
   height: 100vh;
-  background-color: ${({ theme }) => theme.colors.background};
 `
 
 const ChildrenWrapper = styled.div<{ isLoginPage: boolean }>`
-  /* padding-top: ${({ isLoginPage }) => (isLoginPage ? '0' : '55px')}; */
   padding: ${({ isLoginPage }) => (isLoginPage ? '0' : '55px 180px 0 180px')};
 
-  width: 100%;
   height: 100%;
 `

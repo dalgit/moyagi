@@ -27,7 +27,7 @@ export default ListItem
 
 const StyledImage = styled(FImage)`
   border-radius: 50%;
-  width: 30px;
+  min-width: 30px;
   height: 30px;
 `
 
@@ -45,4 +45,7 @@ const ListItemLayout = styled.li`
 const Title = styled.div`
   padding: 5px;
   font-weight: bold;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 `

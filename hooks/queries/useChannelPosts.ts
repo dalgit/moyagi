@@ -1,4 +1,8 @@
-import { UseQueryResult, useQuery } from '@tanstack/react-query'
+import {
+  UseQueryResult,
+  useQuery,
+  UseQueryOptions,
+} from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 import { IPost } from '@/types/post'
 import client from '@/utils/axios/axios'
@@ -6,9 +10,12 @@ import { postKeys } from '@/utils/queryKeys/post'
 
 export const useChannelPosts = (
   channelId: string,
+  options?: UseQueryOptions<IPost[], AxiosError, IPost[], string[]>,
 ): UseQueryResult<IPost[], AxiosError> => {
-  return useQuery(postKeys.list(channelId), () =>
-    getChannelPostsById(channelId),
+  return useQuery(
+    postKeys.list(channelId),
+    () => getChannelPostsById(channelId),
+    options,
   )
 }
 

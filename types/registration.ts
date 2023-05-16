@@ -3,7 +3,7 @@ import { IUser } from './user'
 
 export enum EStatus {
   PENDING = 'pending',
-  APPROVE = 'approve',
+  APPROVE = 'approved',
   REJECT = 'reject',
 }
 

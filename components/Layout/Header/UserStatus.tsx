@@ -1,7 +1,8 @@
 import Link from 'next/link'
-import { FaUserCircle } from 'react-icons/fa'
 import { useRecoilValue } from 'recoil'
 import styled from 'styled-components'
+import FImage from '@/components/common/FImage'
+import { userDefaultImage } from '@/constants/defaultImage'
 import { useLogoutUser } from '@/hooks/mutations/useLogoutUser'
 import useClickOutside from '@/hooks/useClickOutside'
 import useToggle from '@/hooks/useToggle'
@@ -14,25 +15,28 @@ const UserStatus = () => {
     () => isMenuActive && toggleUserMenu(),
   )
 
-  const { mutate: logoutMuate } = useLogoutUser()
+  const { mutate: logoutMutate } = useLogoutUser()
 
   return (
     <div>
       {user ? (
         <UserBox ref={listRef}>
           {user.name}
-          <UserIcon onClick={toggleUserMenu} size={30} />
+          <UserIcon
+            onClick={toggleUserMenu}
+            src={user.imageUrl || userDefaultImage}
+          />
           {isMenuActive && (
             <MenuList>
               <Link href="/user/profile">
                 <li>내 정보</li>
               </Link>
-              <li onClick={() => logoutMuate()}>로그아웃</li>
+              <li onClick={logoutMutate}>로그아웃</li>
             </MenuList>
           )}
         </UserBox>
       ) : (
-        <button onClick={() => logoutMuate()}>로그아웃</button>
+        <button onClick={logoutMutate}>로그인</button>
       )}
     </div>
   )
@@ -62,14 +66,13 @@ const MenuList = styled.ul`
 
 const UserBox = styled.div`
   position: relative;
-
   display: flex;
   align-items: center;
   gap: 10px;
 `
 
-const UserIcon = styled(FaUserCircle)`
-  :hover {
-    cursor: pointer;
-  }
+const UserIcon = styled(FImage)`
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
 `

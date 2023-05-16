@@ -2,13 +2,14 @@ import { ParsedUrlQuery } from 'querystring'
 import { QueryClient, dehydrate } from '@tanstack/react-query'
 import { useRouter } from 'next/router'
 import { GetServerSideProps } from 'next/types'
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import styled from 'styled-components'
 import ChannelInfo from '@/components/Channel/ChannelInfo/ChannelInfo'
-import { MyChannelList } from '@/components/Channel/ChannelList'
+import { ChannelSideBar } from '@/components/Channel/ChannelSideBar/ChannelSideBar'
 import Button from '@/components/common/Button'
 import ModalFrame from '@/components/common/Modal/ModalFrame'
+import Spinner from '@/components/common/Spinner'
 import PostCreateForm from '@/components/Post/PostForm/PostCreateForm'
 import { ChannelPostList } from '@/components/Post/PostList'
 import RegistrationForm from '@/components/Registration/RegistrationForm/RegistrationForm'
@@ -18,7 +19,6 @@ import { IChannel } from '@/types/channel'
 import { IUser } from '@/types/user'
 import createServerInstance from '@/utils/axios/server'
 import { channelKeys } from '@/utils/queryKeys/channel'
-
 export interface IParams extends ParsedUrlQuery {
   slug: string
 }
@@ -59,11 +59,13 @@ const ChannelPage = ({ slug }: { slug: string }) => {
           <Button onClick={handleButton}>{buttonTitle}</Button>
         </ChannelInfoWrapper>
         {shouldFetchPosts ? (
-          <ChannelPostList channelId={channel._id} />
+          <Suspense fallback={<Spinner />}>
+            <ChannelPostList channelId={channel._id} />
+          </Suspense>
         ) : (
           <div>가입 후 소통해보세요</div>
         )}
-        <MyChannelList />
+        <ChannelSideBar />
       </ChannelPageLayout>
 
       <ModalFrame isModalOpen={isModalOpen} closeModal={toggleModal}>
@@ -108,8 +110,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 const ChannelPageLayout = styled.div`
   display: flex;
   justify-content: space-between;
-
-  padding-top: 50px;
+  padding: 50px 0 50px 0;
+  min-height: 100%;
 `
 
 const ChannelInfoWrapper = styled.div`

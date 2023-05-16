@@ -6,8 +6,8 @@ interface ListProps {
   className?: string
 }
 
-const List = ({ children, className }: ListProps) => {
-  return <ListLayout className={className}>{children}</ListLayout>
+const List = ({ children, ...rest }: ListProps) => {
+  return <ListLayout {...rest}>{children}</ListLayout>
 }
 
 export default List

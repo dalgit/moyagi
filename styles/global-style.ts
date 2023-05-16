@@ -2,6 +2,10 @@ import { createGlobalStyle } from 'styled-components'
 import { normalize } from 'styled-normalize'
 
 export const GlobalStyle = createGlobalStyle`
+body{
+background-color: ${({ theme }) => theme.colors.background};
+
+}
     ${normalize}
     * {
       box-sizing: border-box;

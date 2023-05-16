@@ -1,15 +1,16 @@
 import Image, { StaticImageData } from 'next/image'
+import { MouseEventHandler } from 'react'
 import styled from 'styled-components'
 
 interface FImageProps {
   src: string | StaticImageData
   alt: string
-  className?: string
+  onClick?: MouseEventHandler<HTMLDivElement>
 }
 
-const FImage = ({ src, alt, className }: FImageProps) => {
+const FImage = ({ src, alt, ...rest }: FImageProps) => {
   return (
-    <FImageLayout className={className}>
+    <FImageLayout {...rest}>
       <Image src={src} alt={alt} fill />
     </FImageLayout>
   )

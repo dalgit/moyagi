@@ -5,15 +5,16 @@ interface PostContentProps {
 }
 
 const PostContent = ({ content }: PostContentProps) => {
-  return (
-    <PostContentLayout>
-      <div dangerouslySetInnerHTML={{ __html: content }} />
-    </PostContentLayout>
-  )
+  return <PostContentLayout dangerouslySetInnerHTML={{ __html: content }} />
 }
 
 export default PostContent
 
 const PostContentLayout = styled.div`
   min-height: 50px;
+
+  img {
+    max-width: 100%;
+    max-height: 400px;
+  }
 `
