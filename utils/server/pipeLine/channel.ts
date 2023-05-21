@@ -36,14 +36,10 @@ const channelBasePipeline = [
   },
   {
     $project: {
-      _id: true,
-      name: true,
-      address: true,
-      description: true,
-      isPublic: true,
-      imageUrl: true,
-      manager: { _id: true, name: true },
-      members: { _id: true, name: true },
+      managerId: 0,
+      membersId: 0,
+      members: { email: 0, password: 0 },
+      manager: { email: 0, password: 0 },
     },
   },
 ]

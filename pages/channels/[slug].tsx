@@ -1,84 +1,70 @@
 import { ParsedUrlQuery } from 'querystring'
 import { QueryClient, dehydrate } from '@tanstack/react-query'
-import { useRouter } from 'next/router'
 import { GetServerSideProps } from 'next/types'
 import { Suspense, useState } from 'react'
-import { useRecoilValue } from 'recoil'
 import styled from 'styled-components'
 import ChannelInfo from '@/components/Channel/ChannelInfo/ChannelInfo'
 import { ChannelSideBar } from '@/components/Channel/ChannelSideBar/ChannelSideBar'
 import Button from '@/components/common/Button'
 import ModalFrame from '@/components/common/Modal/ModalFrame'
+import { NotificationBox, BoxType } from '@/components/common/NotificationBox'
 import Spinner from '@/components/common/Spinner'
 import PostCreateForm from '@/components/Post/PostForm/PostCreateForm'
 import { ChannelPostList } from '@/components/Post/PostList'
 import RegistrationForm from '@/components/Registration/RegistrationForm/RegistrationForm'
 import { useChannel } from '@/hooks/queries/useChannel'
-import { userSelector } from '@/recoil/user'
+import { useMember } from '@/hooks/useMember'
 import { IChannel } from '@/types/channel'
-import { IUser } from '@/types/user'
 import createServerInstance from '@/utils/axios/server'
 import { channelKeys } from '@/utils/queryKeys/channel'
+
 export interface IParams extends ParsedUrlQuery {
   slug: string
 }
 
 const ChannelPage = ({ slug }: { slug: string }) => {
   const [isModalOpen, setIsModalActive] = useState<boolean>(false)
-
-  const user = useRecoilValue(userSelector)
-  const { push } = useRouter()
-
   const { data: channel = {} as IChannel } = useChannel(slug)
-
-  const isMember = channel?.members.some(
-    (member: IUser) => member._id === user?._id,
-  )
+  const [isMember, checkMember] = useMember(channel)
 
   const shouldFetchPosts = channel.isPublic || isMember
   const buttonTitle = isMember ? '작성하기' : '가입하기'
 
-  const checkUser = () => {
-    if (!user) {
-      return push('/login')
-    }
-  }
-
   const toggleModal = () => setIsModalActive(!isModalOpen)
 
   const handleButton = async () => {
-    await checkUser()
+    await checkMember()
     toggleModal()
   }
 
-  return (
-    <>
-      <ChannelPageLayout>
-        <ChannelInfoWrapper>
-          <ChannelInfo channel={channel} />
-          <Button onClick={handleButton}>{buttonTitle}</Button>
-        </ChannelInfoWrapper>
-        {shouldFetchPosts ? (
-          <Suspense fallback={<Spinner />}>
-            <ChannelPostList channelId={channel._id} />
-          </Suspense>
-        ) : (
-          <div>가입 후 소통해보세요</div>
-        )}
-        <ChannelSideBar />
-      </ChannelPageLayout>
+  const modalContent = isMember ? (
+    <PostCreateForm channelId={channel._id} />
+  ) : (
+    <RegistrationForm channelId={channel._id} isPublic={channel.isPublic} />
+  )
 
-      <ModalFrame isModalOpen={isModalOpen} closeModal={toggleModal}>
-        {isMember ? (
-          <PostCreateForm channelId={channel._id} />
-        ) : (
-          <RegistrationForm
-            channelId={channel._id}
-            isPublic={channel.isPublic}
-          />
-        )}
-      </ModalFrame>
-    </>
+  return (
+    <ChannelPageLayout>
+      <ChannelInfoWrapper>
+        <ChannelInfo channel={channel} />
+        <Button onClick={handleButton}>{buttonTitle}</Button>
+        <ModalFrame isModalOpen={isModalOpen} closeModal={toggleModal}>
+          {modalContent}
+        </ModalFrame>
+      </ChannelInfoWrapper>
+      {shouldFetchPosts ? (
+        <Suspense fallback={<Spinner />}>
+          <ChannelPostList channelId={channel._id} />
+        </Suspense>
+      ) : (
+        <NotificationBox
+          title="비공개 채널입니다!"
+          description="가입후 이용해주세요"
+          type={BoxType.sorry}
+        />
+      )}
+      <ChannelSideBar />
+    </ChannelPageLayout>
   )
 }
 

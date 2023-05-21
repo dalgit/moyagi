@@ -5,93 +5,78 @@ import { userSelector } from '@/recoil/user'
 import { IChannel } from '@/types/channel'
 import List from '../common/List'
 import ListItem from '../common/ListItem'
-import DropDownItem from '../common/Tab/DropDownItem'
-import { ChannelRegistrationList } from '../Registration/RegistrationList'
+import { NotificationBox, BoxType } from '../common/NotificationBox'
+import Spinner from '../common/Spinner'
 
 interface ChannelListProps {
   channels: IChannel[]
 }
 
-export const MyChannelList = () => {
-  const { data: channels = [] } = useMyChannels()
-  return (
-    <List>
-      {channels.map((channel) => (
-        <ListItem
-          key={channel._id}
-          title={channel.name}
-          href={`/channels/${channel.address}`}
-          imageSrc={channel.imageUrl || channelDefaultImage}
-        />
-      ))}
-    </List>
-  )
+const MyChannelList = () => {
+  const { data: channels = [], isLoading } = useMyChannels({
+    select: (channels) => filterSubscribedChannels(channels, user?._id),
+  })
 }
-
 export const ManagedChannelList = () => {
   const user = useRecoilValue(userSelector)
-  const { data: channels } = useMyChannels({
+  const { data: channels = [], isLoading } = useMyChannels({
     select: (channels) => filterManagedChannels(channels, user?._id),
   })
 
-  return (
-    <List>
-      {channels?.map((channel) => (
-        <DropDownItem
-          render={() => <ChannelRegistrationList channelId={channel._id} />}
-          key={channel._id}
-        >
-          <ListItem title={channel.name} imageSrc="/assets/a.jpg" />
-        </DropDownItem>
-      ))}
-    </List>
-  )
+  if (isLoading) {
+    return <Spinner />
+  }
+
+  if (!!channels) {
+    return <EmptyBox title="관리중인 채널이 없습니다." />
+  }
+
+  return <ChannelList channels={channels} />
 }
 
 export const SubscribedChannels = () => {
   const user = useRecoilValue(userSelector)
-  const { data: channels } = useMyChannels({
+
+  const { data: channels = [], isLoading } = useMyChannels({
     select: (channels) => filterSubscribedChannels(channels, user?._id),
   })
 
-  return (
-    <List>
-      {channels?.map((channel) => (
-        <ListItem
-          key={channel._id}
-          title={channel.name}
-          imageSrc={channel.imageUrl || channelDefaultImage}
-        />
-      ))}
-    </List>
-  )
+  if (isLoading) {
+    return <Spinner />
+  }
+
+  if (!channels.length) {
+    return (
+      <NotificationBox title="가입한 채널이 없습니다." type={BoxType.empty} />
+    )
+  }
+
+  return <ChannelList channels={channels} />
 }
 
-export const ChannelList = ({ channels }: ChannelListProps) => {
-  return (
-    <List>
-      {channels.map((channel) => (
-        <ListItem
-          key={channel._id}
-          title={channel.name}
-          href={`/channels/${channel.address}`}
-          imageSrc={channel.imageUrl || channelDefaultImage}
-        />
-      ))}
-    </List>
-  )
-}
+const ChannelList = ({ channels }: ChannelListProps) => (
+  <List>
+    {channels.map((channel) => (
+      <ChannelItem key={channel._id} channel={channel} />
+    ))}
+  </List>
+)
+
+const ChannelItem = ({ channel }: { channel: IChannel }) => (
+  <ListItem
+    key={channel._id}
+    title={channel.name}
+    href={`/channels/${channel.address}`}
+    imageSrc={channel.imageUrl || channelDefaultImage}
+  />
+)
 
 const filterManagedChannels = (
   channels: IChannel[],
   userId: string | undefined,
-) => {
-  return channels.filter((channel) => channel.manager._id === userId)
-}
+) => channels.filter((channel) => channel.manager._id === userId)
 
 const filterSubscribedChannels = (
   channels: IChannel[],
   userId: string | undefined,
-) => {
-  return channels.filter((channel) => channel.manager._id !== userId)
-}
+) => channels.filter((channel) => channel.manager._id !== userId)

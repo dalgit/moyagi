@@ -20,6 +20,7 @@
     "no-var": "warn",
     "no-multiple-empty-lines": "warn",
     "no-console": ["warn", { "allow": ["warn", "error"] }],
+    "no-extra-boolean-cast": "off",
     "eqeqeq": "warn",
     "dot-notation": "warn",
     "no-unused-vars": "off",

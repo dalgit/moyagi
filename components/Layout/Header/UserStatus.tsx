@@ -28,8 +28,11 @@ const UserStatus = () => {
           />
           {isMenuActive && (
             <MenuList>
-              <Link href="/user/profile">
-                <li>내 정보</li>
+              <Link href="/profile/setting">
+                <li>내 프로필</li>
+              </Link>
+              <Link href="/profile/channels">
+                <li>채널 관리</li>
               </Link>
               <li onClick={logoutMutate}>로그아웃</li>
             </MenuList>

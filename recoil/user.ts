@@ -34,3 +34,11 @@ export const userSelector = selector<IUser | null>({
   },
   set: ({ set }, user) => set(userState, user),
 })
+
+export const userIdSelector = selector<string | null>({
+  key: 'userIdSelector',
+  get: ({ get }) => {
+    const user = get(userState)
+    return user?._id || null
+  },
+})

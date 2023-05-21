@@ -4,9 +4,10 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { connectToDatabase } from '@/utils/db/db'
 
 const loginApi = async (req: NextApiRequest, res: NextApiResponse) => {
+  console.log('hi')
+
   try {
     const db = await connectToDatabase()
-
     const { email, password } = req.body
 
     const userInfo = await db.collection('users').findOne({ email })

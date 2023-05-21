@@ -16,3 +16,15 @@ export const quillModal = css`
     height: 300px;
   }
 `
+export const flexRow = (justify: string, align: string) => css`
+  display: flex;
+  justify-content: ${justify};
+  align-items: ${align};
+`
+
+export const flexColumn = (justify: string, align: string) => css`
+  display: flex;
+  flex-direction: column;
+  justify-content: ${justify};
+  align-items: ${align};
+`

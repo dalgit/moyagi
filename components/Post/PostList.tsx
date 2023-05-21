@@ -3,7 +3,7 @@ import { useChannelPosts } from '@/hooks/queries/useChannelPosts'
 import { useMyPosts } from '@/hooks/queries/useMyPosts'
 import { IPost } from '@/types/post'
 import Post from './Post'
-import { EmptyBox } from '../common/EmptyBox'
+import { EmptyBox } from '../common/NotificationBox'
 
 interface PostListProps {
   posts: IPost[]

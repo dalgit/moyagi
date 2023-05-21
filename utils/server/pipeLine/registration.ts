@@ -42,6 +42,9 @@ const registrationBasePipeline = [
     $unwind: '$requester',
   },
   {
+    $unwind: '$channel',
+  },
+  {
     $project: {
       _id: true,
       message: true,

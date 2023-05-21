@@ -1,35 +1,35 @@
 import Link from 'next/link'
-import { useState, KeyboardEvent } from 'react'
+import { useState, KeyboardEvent, Suspense } from 'react'
 import { RxReset } from 'react-icons/rx'
 import { TiArrowRightThick as ArrowIcon } from 'react-icons/ti'
+import {
+  useRecoilState,
+  useRecoilValue,
+  useSetRecoilState,
+  useResetRecoilState,
+} from 'recoil'
 import styled from 'styled-components'
-import JoinnedChannelCards from '@/components/Channel/JoinnedChannelCards'
+import {
+  MyChannelCards,
+  ChannelCards,
+} from '@/components/Channel/ChannelCards/ChannelCards'
 import Button from '@/components/common/Button'
-import { useMyChannels } from '@/hooks/queries/useMyChannels'
+import Spinner from '@/components/common/Spinner'
 import { useSearchChannels } from '@/hooks/queries/useSearchChannels'
-
+import { keywordState } from '@/recoil/modal'
 const Home = () => {
-  const [keyword, setKeyword] = useState('')
+  // const [keyword, setKeyword] = useState('')
+  const [keyword, setKeyword] = useRecoilState(keywordState)
+  const resetKeword = useResetRecoilState(keywordState)
 
-  const { data: channels = [] } = useMyChannels()
   const {
     data: searchedChannels,
     isFetchedAfterMount: isSearched,
-    refetch,
-    remove,
+    refetch: handleSearch,
   } = useSearchChannels(keyword)
 
-  const handleSearch = () => {
-    refetch()
-  }
-
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') refetch()
-  }
-
-  const resetSearchedChannels = () => {
-    remove()
-    setKeyword('')
+    if (e.key === 'Enter') handleSearch()
   }
 
   return (
@@ -43,18 +43,20 @@ const Home = () => {
             onKeyDown={handleKeyDown}
             placeholder="채널 검색하기"
           />
-          {isSearched && (
-            <ResetIcon onClick={resetSearchedChannels} size={25} />
-          )}
+          {isSearched && <ResetIcon onClick={resetKeword} size={25} />}
         </InputWrapper>
-        <Button onClick={handleSearch}>검색</Button>
+        <Button onClick={() => handleSearch()}>검색</Button>
       </SearchBarBox>
       <StyledLink href="/create-channel">
         채널 만들기 <ArrowIcon />
       </StyledLink>
-      <JoinnedChannelCards
-        channels={isSearched ? searchedChannels : channels}
-      />
+      <Suspense fallback={<Spinner />}>
+        {isSearched ? (
+          <ChannelCards channels={searchedChannels} />
+        ) : (
+          <MyChannelCards />
+        )}
+      </Suspense>
     </HomeLayout>
   )
 }

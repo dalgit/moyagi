@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import styled from 'styled-components'
-import { channelDefaultImage } from '@/constants/defaultImage'
+import UserListItem from '@/components/User/UserListItem/UserListItem'
+import { channelDefaultImage, userDefaultImage } from '@/constants/defaultImage'
 import { IChannel } from '@/types/channel'
 import Card from '../../common/Card'
 import List from '../../common/List'
@@ -13,7 +14,7 @@ interface ChannelInfoProps {
 
 const ChannelInfo = ({ channel }: ChannelInfoProps) => {
   const { name, description, manager, address, members, imageUrl } = channel
-  const memberCount = members.length
+  const memberCount = members?.length
   const [isModalOpen, setIsModalActive] = useState<boolean>(false)
 
   const toggleModal = () => setIsModalActive(!isModalOpen)
@@ -34,10 +35,11 @@ const ChannelInfo = ({ channel }: ChannelInfoProps) => {
         <h2>Members</h2>
         <StyledList>
           {members.map((member) => (
-            <ListItem
+            <UserListItem
               key={channel._id}
-              title={member.name}
-              imageSrc="/assets/a.jpg"
+              id={member._id}
+              name={member.name}
+              image={member.imageUrl}
             />
           ))}
         </StyledList>

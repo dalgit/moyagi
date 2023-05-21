@@ -46,9 +46,9 @@ const postBasePipeline = [
   },
   {
     $project: {
-      author: { _id: true, name: true },
-      content: true,
-      channel: true,
+      authorId: 0,
+      channelId: 0,
+      author: { password: 0 },
     },
   },
 ]

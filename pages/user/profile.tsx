@@ -8,20 +8,10 @@ import {
 import { Tab } from '@/components/common/Tab'
 import { MyPostList } from '@/components/Post/PostList'
 import { MyRegistrationList } from '@/components/Registration/RegistrationList'
-import UserInformation from '@/components/User/UserInformation'
 import createServerInstance from '@/utils/axios/server'
 import { userKeys } from '@/utils/queryKeys/user'
 
 const UserProfilePage = () => {
-  const MyInfoTabPair = () => (
-    <Tab.Pair>
-      <Tab.Title>내정보</Tab.Title>
-      <Tab.Content>
-        <UserInformation />
-      </Tab.Content>
-    </Tab.Pair>
-  )
-
   const MyChannelTabPair = () => (
     <Tab.Pair>
       <Tab.Title>채널</Tab.Title>
@@ -79,7 +69,6 @@ const UserProfilePage = () => {
   return (
     <ProfilePageLayout>
       <Tab>
-        <MyInfoTabPair />
         <MyChannelTabPair />
         <MyRegistrationTabPair />
         <MyPostsTabPair />
