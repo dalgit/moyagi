@@ -9,20 +9,16 @@ interface UserListItemLayoutProps {
   image?: string
 }
 
-const UserListItem = ({
-  id,
-  name,
-  image = userDefaultImage,
-}: UserListItemLayoutProps) => {
+const UserListItem = ({ id, name, image }: UserListItemLayoutProps) => {
   const router = useRouter()
-
   const handleUserClick = () => {
     router.push(`/users/${id}`)
   }
+  const profileImage = image || userDefaultImage
 
   return (
     <S.UserListItemLayout onClick={handleUserClick}>
-      <S.ProfileImage src={image} />
+      <S.ProfileImage src={profileImage} />
       <S.Name>{name}</S.Name>
     </S.UserListItemLayout>
   )

@@ -1,6 +1,5 @@
-import { useChannelRegistrations } from '@/hooks/queries/useChannelRegistrations'
-import { useMyRegistrations } from '@/hooks/queries/useMyRegistrations'
 import { IRegistration } from '@/types/registration'
+import RegistrationListItem from '../RegistrationListItem/RegistrationListItem'
 
 interface RegistrationListProps {
   registrations: IRegistration[]
@@ -8,13 +7,14 @@ interface RegistrationListProps {
 
 const RegistrationList = ({ registrations }: RegistrationListProps) => {
   return (
-    <div>
-      {registrations.map((registration) => {
-        return (
-          <Registration key={registration._id} registration={registration} />
-        )
-      })}
-    </div>
+    <ul>
+      {registrations?.map((registration) => (
+        <RegistrationListItem
+          key={registration._id}
+          registration={registration}
+        />
+      ))}
+    </ul>
   )
 }
 

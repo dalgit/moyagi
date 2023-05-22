@@ -1,37 +1,37 @@
-import { IChannel } from '@/types/channel'
+import { IRegistration } from '@/types/registration'
+import RegistrationListItemFooter from './Footer/RegistrationListItemFooter'
+import RegistrationListItemHeader from './Header/RegistrationListItemHeader'
 import * as S from './style'
 
 interface RegistrationListItemProps {
-  id: string
-  message: string
-  status: string
-  time: Date
-  channel: IChannel
+  registration: IRegistration
 }
 
-const RegistrationListItem = ({
-  id,
-  message,
-  status,
-  time,
-  channel,
-}: RegistrationListItemProps) => {
+const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
+  const {
+    _id: registrationId,
+    message,
+    status,
+    time,
+    channel,
+    requester,
+  } = registration
   const { _id: channelId } = channel
-  const isPending = status === EStatus.PENDING
-
-  const { mutate: deleteRegistrationMutate } = useDeleteRegistration()
-
-  const handleButtonClick = () => {
-    deleteRegistrationMutate({ registrationId, channelId })
-  }
 
   return (
     <S.RegistrationLayout status={status}>
-      <S.RegistrationHeader name={channel.name} status={status} date={time} />
+      <RegistrationListItemHeader
+        name={channel.name}
+        status={status}
+        date={time}
+      />
       <S.Message>{message}</S.Message>
-      {isPending && (
-        <S.CancleButton onClick={handleButtonClick}>취소</S.CancleButton>
-      )}
+      <RegistrationListItemFooter
+        registrationId={registrationId}
+        channelId={channelId}
+        status={status}
+        requester={requester}
+      />
     </S.RegistrationLayout>
   )
 }

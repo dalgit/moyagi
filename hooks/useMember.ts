@@ -19,11 +19,11 @@ export const useMember = (channel: IChannel): any => {
     }
   }, [channel, user])
 
-  const checkMember = () => {
-    if (!isMember) {
+  const checkLogin = () => {
+    if (!user) {
       return push('/login')
     }
   }
 
-  return [isMember, checkMember]
+  return [isMember, checkLogin]
 }

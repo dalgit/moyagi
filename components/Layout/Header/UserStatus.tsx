@@ -34,6 +34,13 @@ const UserStatus = () => {
               <Link href="/profile/channels">
                 <li>채널 관리</li>
               </Link>
+              <Link href="/profile/registrations">
+                <li>가입 관리</li>
+              </Link>
+              <Link href="/profile/posts">
+                <li>게시물 관리</li>
+              </Link>
+
               <li onClick={logoutMutate}>로그아웃</li>
             </MenuList>
           )}
