@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 import Button from '@/components/common/Button'
-import Quill from '@/components/CustomQuill/Quill'
+import Quill from '@/components/common/Quill/Quill'
 import { useCreatePost } from '@/hooks/mutations/useCreaetePost'
 import { quillModal } from '@/styles/constants'
 

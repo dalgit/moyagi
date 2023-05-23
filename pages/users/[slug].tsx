@@ -3,7 +3,8 @@ import React from 'react'
 import { NotificationBox, BoxType } from '@/components/common/NotificationBox'
 import { Profile } from '@/components/User/UserProfile/UserProfile'
 import { useUser } from '@/hooks/queries/useUser'
-const UserPage = () => {
+
+const UserDetailPage = () => {
   const router = useRouter()
   const { slug } = router.query as { slug: string }
   const { data: user } = useUser(slug)
@@ -14,11 +15,7 @@ const UserPage = () => {
     )
   }
 
-  return (
-    <div>
-      <Profile user={user} />
-    </div>
-  )
+  return <Profile user={user} />
 }
 
-export default UserPage
+export default UserDetailPage

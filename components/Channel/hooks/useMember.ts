@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import { userSelector } from '@/recoil/user'
@@ -8,7 +7,6 @@ import { IUser } from '@/types/user'
 export const useMember = (channel: IChannel): any => {
   const user = useRecoilValue(userSelector)
   const [isMember, setIsMember] = useState<boolean>(false)
-  const { push } = useRouter()
 
   useEffect(() => {
     if (channel && user) {
@@ -18,12 +16,5 @@ export const useMember = (channel: IChannel): any => {
       setIsMember(foundMember)
     }
   }, [channel, user])
-
-  const checkLogin = () => {
-    if (!user) {
-      return push('/login')
-    }
-  }
-
-  return [isMember, checkLogin]
+  return [isMember]
 }

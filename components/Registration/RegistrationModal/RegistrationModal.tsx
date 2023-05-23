@@ -1,22 +1,23 @@
 import ModalFrame from '@/components/common/Modal/ModalFrame'
-import PostCreateForm from './PostCreateForm'
+import RegistrationForm from './RegistrationForm'
 
-interface PostCreateModalProps {
+interface RegistrationModalProps {
   isModalOpen: boolean
   closeModal: () => void
   channelId: string
+  isPublic: boolean
 }
 
-const PostCreateModal = ({
+const RegistrationModal = ({
   isModalOpen,
   closeModal,
   ...rest
-}: PostCreateModalProps) => {
+}: RegistrationModalProps) => {
   return (
     <ModalFrame isModalOpen={isModalOpen} closeModal={closeModal}>
-      <PostCreateForm {...rest} />
+      <RegistrationForm {...rest} />
     </ModalFrame>
   )
 }
 
-export default PostCreateModal
+export default RegistrationModal
