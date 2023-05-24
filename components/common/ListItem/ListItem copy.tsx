@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router'
+import { LiHTMLAttributes, ReactNode } from 'react'
 import styled from 'styled-components'
-import FImage from './FImage'
+import FImage from '../FImage'
 
 interface ListItemProps {
   title: string
@@ -19,6 +20,19 @@ const ListItem = ({ href, imageSrc, title }: ListItemProps) => {
     <ListItemLayout onClick={handleClick}>
       {imageSrc && <StyledImage src={imageSrc} />}
       <Title>{title}</Title>
+    </ListItemLayout>
+  )
+}
+
+interface Props extends LiHTMLAttributes<HTMLLIElement> {
+  right: ReactNode
+}
+
+const ListItem2 = ({ children, right, ...props }: Props) => {
+  return (
+    <ListItemLayout {...props}>
+      {children}
+      {right}
     </ListItemLayout>
   )
 }

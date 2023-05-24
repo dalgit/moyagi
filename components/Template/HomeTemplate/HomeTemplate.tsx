@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import SearchBar from '@/components/SearchBar/SearchBar'
+import SearchBar from '@/components/Channel/SearchBar/SearchBar'
 import * as S from './style'
 
 interface HomeTemplateProps {

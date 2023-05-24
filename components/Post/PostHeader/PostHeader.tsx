@@ -1,8 +1,8 @@
-import styled from 'styled-components'
-import FImage from '@/components/common/FImage'
+import Avatar from '@/components/common/Avatar/Avatar'
+import { userDefaultImage } from '@/constants/defaultImage'
 import { IPost } from '@/types/post'
-import tmp from '/public/assets/tmp.png'
-import PostHeaderMenu from './PostHeaderMenu'
+import PostHeaderMenu from './Components/PostHeaderMenu'
+import * as S from './style'
 
 interface PostHeaderProps {
   post: IPost
@@ -10,31 +10,14 @@ interface PostHeaderProps {
 
 const PostHeader = ({ post }: PostHeaderProps) => {
   return (
-    <PostHeaderLayout>
-      <UserBox>
-        <ProfileImage src={post.author.imageUrl || tmp} alt="logo_icon" />
-        <span>{post.author.name}</span>
-      </UserBox>
+    <S.PostHeaderLayout>
+      <Avatar
+        image={post.author.imageUrl || userDefaultImage}
+        name={post.author.name}
+      />
       <PostHeaderMenu post={post} />
-    </PostHeaderLayout>
+    </S.PostHeaderLayout>
   )
 }
 
 export default PostHeader
-
-const PostHeaderLayout = styled.div`
-  display: flex;
-  justify-content: space-between;
-`
-
-const UserBox = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 7px;
-`
-
-const ProfileImage = styled(FImage)`
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-`

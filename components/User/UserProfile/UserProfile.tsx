@@ -7,7 +7,7 @@ interface ProfileProps {
   imageUrl?: string
 }
 
-export const Profile = ({
+const UserProfile = ({
   name,
   introduction = '소개말이 없습니다.',
   imageUrl = userDefaultImage,
@@ -20,3 +20,5 @@ export const Profile = ({
     </S.UserProfileLayout>
   )
 }
+
+export default UserProfile

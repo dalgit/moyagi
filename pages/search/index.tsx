@@ -1,13 +1,7 @@
-import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
+import SeacrhedChannelCards from '@/components/Channel/SeacrhedChannelCards/SeacrhedChannelCards'
 import HomeTemplate from '@/components/Template/HomeTemplate/HomeTemplate'
 import useDidMount from '@/hooks/useDidMount'
-
-const SeacrhedChannelCards = dynamic(
-  () =>
-    import('@/components/Channel/SeacrhedChannelCards/SeacrhedChannelCards'),
-  { ssr: false },
-)
 
 const SearchPage = () => {
   const router = useRouter()

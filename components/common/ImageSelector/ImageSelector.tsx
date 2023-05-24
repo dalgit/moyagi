@@ -1,7 +1,6 @@
 import { useState, useRef } from 'react'
-import styled from 'styled-components'
-import FImage from '@/components/common/FImage'
-import { addDefaultImage, cameraIcon } from '@/constants/defaultImage'
+import { addDefaultImage } from '@/constants/defaultImage'
+import * as S from './style'
 
 interface ImageSelectorHandler {
   setFile: React.Dispatch<React.SetStateAction<File | undefined>>
@@ -36,8 +35,8 @@ const ImageSelector = ({
   }
 
   return (
-    <ImageSelectorLayout onClick={handleClickSelector} className={className}>
-      <SelectedImage src={previewImg} alt="preview" />
+    <S.ImageSelectorLayout onClick={handleClickSelector} className={className}>
+      <S.SelectedImage src={previewImg} alt="preview" />
       {label && <label htmlFor="fileInput">{label}</label>}
       <input
         id="fileInput"
@@ -46,49 +45,8 @@ const ImageSelector = ({
         ref={ref}
         onChange={handleInputChange}
       />
-    </ImageSelectorLayout>
+    </S.ImageSelectorLayout>
   )
 }
 
 export default ImageSelector
-
-const ImageSelectorLayout = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 250px;
-  gap: 10px;
-  position: relative;
-
-  label {
-    text-align: center;
-    border-radius: 5px;
-    padding: 10px;
-    background-color: #7bcfb5;
-    color: #fff;
-    cursor: pointer;
-  }
-
-  input {
-    display: none;
-  }
-`
-
-const SelectedImage = styled(FImage)`
-  width: inherit;
-  aspect-ratio: 1/1;
-  background-color: white;
-  border-radius: 50%;
-  cursor: pointer;
-
-  &::after {
-    content: '';
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 65px;
-    height: 65px;
-    background-image: url(${cameraIcon});
-    background-size: contain;
-  }
-`

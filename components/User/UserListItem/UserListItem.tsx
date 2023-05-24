@@ -1,26 +1,23 @@
-import { useRouter } from 'next/router'
-import React from 'react'
+import React, { LiHTMLAttributes, ReactNode } from 'react'
+import Avatar from '@/components/common/Avatar/Avatar'
+import ListItem from '@/components/common/ListItem/ListItem'
 import { userDefaultImage } from '@/constants/defaultImage'
-import * as S from './style'
 
-interface UserListItemLayoutProps {
+interface UserListItemLayoutProps extends LiHTMLAttributes<HTMLLIElement> {
   id: string
   name: string
   image?: string
+  right?: ReactNode
+  onClick?: () => void
 }
 
-const UserListItem = ({ id, name, image }: UserListItemLayoutProps) => {
-  const router = useRouter()
-  const handleUserClick = () => {
-    router.push(`/users/${id}`)
-  }
+const UserListItem = ({ name, image, ...props }: UserListItemLayoutProps) => {
   const profileImage = image || userDefaultImage
 
   return (
-    <S.UserListItemLayout onClick={handleUserClick}>
-      <S.ProfileImage src={profileImage} />
-      <S.Name>{name}</S.Name>
-    </S.UserListItemLayout>
+    <ListItem {...props}>
+      <Avatar image={profileImage} name={name} />
+    </ListItem>
   )
 }
 

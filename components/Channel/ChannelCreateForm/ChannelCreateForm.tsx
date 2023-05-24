@@ -6,7 +6,7 @@ import Radios from '@/components/common/Radio/Radios'
 import { useCreateChannel } from '@/hooks/mutations/useCreateChannel'
 import useForm from '@/hooks/useForm'
 import useUploadImage from '@/hooks/useUpoladImgae'
-import ImageSelector from './ImageSelector'
+import ImageSelector from '../../common/ImageSelector/ImageSelector'
 
 const initailForm = {
   name: '',

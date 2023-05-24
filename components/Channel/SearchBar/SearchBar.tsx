@@ -1,6 +1,6 @@
 import Button from '@/components/common/Button'
 import * as S from './style'
-import useSearch from './useSearch'
+import useSearch from '../hooks/useSearch'
 
 const SearchBar = () => {
   const {

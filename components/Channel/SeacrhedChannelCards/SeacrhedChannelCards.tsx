@@ -15,7 +15,7 @@ const SeacrhedChannelCards = ({ keyword }: SeacrhedChannelCardsProps) => {
 
   if (!channels.length)
     return (
-      <NotificationBox title="검색된 채널이 없습니다." type={BoxType.empty} />
+      < title="검색된 채널이 없습니다." type={BoxType.empty} />
     )
 
   return <ChannelCards channels={channels} />

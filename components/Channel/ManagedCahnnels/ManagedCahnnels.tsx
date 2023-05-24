@@ -1,9 +1,8 @@
-import useManagedChanneles from './hooks'
 import ChannelList from '../ChannelList/ChannelList'
+import useManagedChanneles from '../hooks/useManagedChannels'
 
 const ManagedCahnnels = () => {
-  const { channels } = useManagedChanneles()
-  console.log(channels)
+  const { data: channels } = useManagedChanneles()
   return <ChannelList channels={channels} />
 }
 

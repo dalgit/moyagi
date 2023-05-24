@@ -7,13 +7,11 @@ const useManagedChanneles = () => {
   const userId = useRecoilValue(userIdSelector) || ''
 
   const filterChannels = (channels: IChannel[], userId: string) =>
-    channels?.filter((channel) => channel.manager._id === userId)
+    channels.filter((channel) => channel.manager._id === userId)
 
-  const { data: channels } = useUserChannels(userId, {
+  return useUserChannels(userId, {
     select: (channels) => filterChannels(channels, userId),
   })
-
-  return [channels]
 }
 
 export default useManagedChanneles

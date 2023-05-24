@@ -1,19 +1,21 @@
+import Avatar from '@/components/common/Avatar/Avatar'
+import ListItem from '@/components/common/ListItem/ListItem'
 import { channelDefaultImage } from '@/constants/defaultImage'
-import * as S from './style'
 
 interface ChannelListItemProps {
   title: string
   image?: string
+  onClick?: () => void
 }
 
 const ChannelListItem = ({
   title,
   image = channelDefaultImage,
+  onClick,
 }: ChannelListItemProps) => (
-  <S.ChannelListItemLayout>
-    <S.ChannelImage src={image} />
-    <S.Title>{title}</S.Title>
-  </S.ChannelListItemLayout>
+  <ListItem onClick={onClick}>
+    <Avatar image={image} name={title} />
+  </ListItem>
 )
 
 export default ChannelListItem

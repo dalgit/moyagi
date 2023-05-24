@@ -20,7 +20,7 @@ const PostHeaderMenu = ({ post }: PostHeaderMenuProps) => {
       {isMyPost ? (
         <AuthorMenuList postId={post._id} channelId={channel._id} />
       ) : (
-        <UserMenuList />
+        <UserMenuList authorId={post.author._id} />
       )}
     </MoreMenu>
   )

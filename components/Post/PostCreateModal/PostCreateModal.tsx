@@ -1,5 +1,5 @@
 import ModalFrame from '@/components/common/Modal/ModalFrame'
-import PostCreateForm from './PostCreateForm'
+import PostCreateForm from './Components/PostCreateForm'
 
 interface PostCreateModalProps {
   isModalOpen: boolean

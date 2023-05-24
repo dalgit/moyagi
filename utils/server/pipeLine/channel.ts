@@ -14,6 +14,20 @@ export const channelsByUserIdPipeLine = (userId: ObjectId) => [
   ...channelBasePipeline,
 ]
 
+export const channelMembersPipeLine = (channelId: ObjectId) => [
+  {
+    $match: { _id: channelId },
+  },
+  {
+    $loopup: {
+      from: 'users',
+      foreignField: '_id',
+      localField: 'membersId',
+      as: 'members',
+    },
+  },
+]
+
 const channelBasePipeline = [
   {
     $lookup: {
