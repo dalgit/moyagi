@@ -1,5 +1,5 @@
 import { NextApiResponse, NextApiRequest } from 'next'
-import { getUserProfile } from '@/utils/server/getUserProfile'
+import getUserProfile from '@/server/api/getUserProfile'
 
 export default async function handler(
   req: NextApiRequest,

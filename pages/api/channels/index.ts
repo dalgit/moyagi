@@ -1,8 +1,8 @@
 import { NextApiResponse, NextApiRequest } from 'next'
-import authMiddleware from '@/utils/authMiddleware'
-import { createChannel } from '@/utils/server/createChannel'
-import { getChannelBySlug } from '@/utils/server/getChannelBySlug'
-import { getChannelsByKeyword } from '@/utils/server/getChannelsByKeword'
+import createChannel from '@/server/api/createChannel'
+import getChannelBySlug from '@/server/api/getChannelBySlug'
+import getChannelsByKeyword from '@/server/api/getChannelsByKeword'
+import authMiddleware from '@/server/utils/authMiddleware'
 
 export default async function handler(
   req: NextApiRequest,

@@ -1,5 +1,6 @@
 import { NextApiResponse, NextApiRequest } from 'next'
-import { deleteChannelPost } from '@/utils/server/deleteChannelPost'
+import deleteChannelPost from '@/server/api/deleteChannelPost'
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,

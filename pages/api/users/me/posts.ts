@@ -1,6 +1,6 @@
 import { NextApiResponse, NextApiRequest } from 'next'
-import authMiddleware from '@/utils/authMiddleware'
-import { getMyPosts } from '@/utils/server/getMyPosts'
+import getMyPosts from '@/server/api/getMyPosts'
+import authMiddleware from '@/server/utils/authMiddleware'
 
 export default async function handler(
   req: NextApiRequest,

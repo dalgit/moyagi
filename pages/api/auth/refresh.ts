@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { jwtVerify } from '@/utils/jwtVerify'
+import jwtVerify from '@/server/utils/jwtVerify'
 
 const refresh = async (req: NextApiRequest, res: NextApiResponse) => {
   try {

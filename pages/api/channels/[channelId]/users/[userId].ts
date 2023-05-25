@@ -1,6 +1,6 @@
 import { NextApiResponse, NextApiRequest } from 'next'
-import { deleteChannelUser } from '@/utils/server/deleteChannelUser'
-import { getChannelMembers } from '@/utils/server/getChannelMembers'
+import deleteChannelUser from '@/server/api/deleteChannelUser'
+import getChannelMembers from '@/server/api/getChannelMembers'
 
 export default async function handler(
   req: NextApiRequest,
