@@ -1,6 +1,7 @@
 import { useRecoilValue } from 'recoil'
+import Layout from '@/components/Layout/Layout'
 import { useUserRegistrations } from '@/components/Registration/hooks/useUserRegistratnions'
-import RegistrationList from '@/components/Registration/RegistrationList/RegistrationList'
+import UserRegistrationTemplate from '@/components/Template/UserRegistrationTemplate/UserRegistrationTemplate'
 import { userIdSelector } from '@/recoil/user'
 
 const UserRegistrationsPage = () => {
@@ -10,10 +11,9 @@ const UserRegistrationsPage = () => {
   if (!registrations.length) return null
 
   return (
-    <div>
-      <h2>가입 관리</h2>
-      <RegistrationList registrations={registrations} />
-    </div>
+    <Layout>
+      <UserRegistrationTemplate registrations={registrations} />
+    </Layout>
   )
 }
 

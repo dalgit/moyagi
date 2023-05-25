@@ -9,10 +9,7 @@ import { useResetRecoilState } from 'recoil'
 import { userSelector } from '@/recoil/user'
 import client from '@/utils/axios/axios'
 
-export const useLogoutUser = (): UseMutationResult<
-  AxiosResponse,
-  AxiosError
-> => {
+const useLogoutUser = (): UseMutationResult<AxiosResponse, AxiosError> => {
   const resetUser = useResetRecoilState(userSelector)
   const queryClient = useQueryClient()
   const { push } = useRouter()
@@ -25,5 +22,7 @@ export const useLogoutUser = (): UseMutationResult<
     },
   })
 }
+
+export default useLogoutUser
 
 const logoutUser = async () => await client.post('/auth/logout')

@@ -9,7 +9,6 @@ import { AppProps } from 'next/app'
 import { useState } from 'react'
 import { RecoilRoot } from 'recoil'
 import { ThemeProvider } from 'styled-components'
-import Layout from '@/components/Layout/Layout'
 import { GlobalStyle } from '@/styles/global-style'
 import theme from '@/styles/theme'
 
@@ -33,9 +32,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
           <ThemeProvider theme={theme}>
             <GlobalStyle />
             <CssBaseline />
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
+            <Component {...pageProps} />
           </ThemeProvider>
           <ReactQueryDevtools initialIsOpen={false} />
         </Hydrate>

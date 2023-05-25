@@ -1,7 +1,12 @@
-import ChannelCreateForm from '@/components/Channel/ChannelCreateForm/ChannelCreateForm'
+import Layout from '@/components/Layout/Layout'
+import CreateChannelTemplate from '@/components/Template/CreateChannelTemplate/CreateChannelTemplate'
 
 const CreateChannelPage = () => {
-  return <ChannelCreateForm />
+  return (
+    <Layout>
+      <CreateChannelTemplate />
+    </Layout>
+  )
 }
 
 export default CreateChannelPage

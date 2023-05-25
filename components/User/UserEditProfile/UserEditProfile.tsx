@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useRecoilValue } from 'recoil'
-import ImageSelector from '@/components/common/ImageSelector/ImageSelector'
 import Button from '@/components/common/Button/Button'
+import ImageSelector from '@/components/common/ImageSelector/ImageSelector'
 import Input from '@/components/common/Input/Input'
 import { userDefaultImage } from '@/constants/defaultImage'
 import { useUpdateUser } from '@/hooks/mutations/useUpdateUser'

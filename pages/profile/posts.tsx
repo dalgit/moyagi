@@ -1,7 +1,7 @@
 import { useRecoilValue } from 'recoil'
+import Layout from '@/components/Layout/Layout'
 import { useUserPosts } from '@/components/Post/hooks/useUserPosts'
-import { PostList } from '@/components/Post/PostList'
-import RegistrationList from '@/components/Registration/RegistrationList/RegistrationList'
+import PostList from '@/components/Post/PostList/PostList'
 import { userIdSelector } from '@/recoil/user'
 
 const UserPostsPage = () => {
@@ -11,10 +11,10 @@ const UserPostsPage = () => {
   if (!posts.length) return null
 
   return (
-    <div>
+    <Layout>
       <h2>내 게시물</h2>
       <PostList posts={posts} />
-    </div>
+    </Layout>
   )
 }
 

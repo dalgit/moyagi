@@ -1,10 +1,9 @@
 import { useRouter } from 'next/router'
-import React from 'react'
 import {
   NotificationBox,
   BoxType,
 } from '@/components/common/NotificationBox/NotificationBox'
-import UserProfile from '@/components/User/UserProfile/UserProfile'
+import UserProfileTemplate from '@/components/Template/UserProfileTemplate/UserProfileTemplate'
 import { useUser } from '@/hooks/queries/useUser'
 
 const UserDetailPage = () => {
@@ -18,7 +17,7 @@ const UserDetailPage = () => {
     )
   }
 
-  return <UserProfile user={user} />
+  return <UserProfileTemplate user={user} />
 }
 
 export default UserDetailPage

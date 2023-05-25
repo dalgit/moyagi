@@ -14,6 +14,12 @@ const RegistrationList = ({ registrations }: RegistrationListProps) => {
           registration={registration}
         />
       ))}
+      {registrations?.map((registration) => (
+        <RegistrationListItem
+          key={registration._id}
+          registration={registration}
+        />
+      ))}
     </ul>
   )
 }

@@ -8,7 +8,7 @@ import { IChannel } from '@/types/channel'
 import client from '@/utils/axios/axios'
 import { channelKeys } from '@/utils/queryKeys/channel'
 
-export const useChannelsByKeword = (
+const useChannelsByKeword = (
   keyword: string,
   options?: UseQueryOptions<IChannel[], AxiosError>,
 ): UseQueryResult<IChannel[], AxiosError> => {
@@ -18,6 +18,8 @@ export const useChannelsByKeword = (
     options,
   )
 }
+
+export default useChannelsByKeword
 
 const searchChannelsByKeword = async (keyword: string): Promise<IChannel[]> =>
   await client.get('/channels', { params: { keyword } }).then((res) => res.data)

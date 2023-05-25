@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router'
 import SeacrhedChannelCards from '@/components/Channel/SeacrhedChannelCards/SeacrhedChannelCards'
+import Layout from '@/components/Layout/Layout'
 import HomeTemplate from '@/components/Template/HomeTemplate/HomeTemplate'
 import useDidMount from '@/hooks/useDidMount'
 
@@ -13,9 +14,11 @@ const SearchPage = () => {
   }
 
   return (
-    <HomeTemplate>
-      <SeacrhedChannelCards keyword={keyword as string} />
-    </HomeTemplate>
+    <Layout>
+      <HomeTemplate>
+        <SeacrhedChannelCards keyword={keyword as string} />
+      </HomeTemplate>
+    </Layout>
   )
 }
 

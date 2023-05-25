@@ -2,6 +2,7 @@ import { ParsedUrlQuery } from 'querystring'
 import { QueryClient, dehydrate } from '@tanstack/react-query'
 import { GetServerSideProps } from 'next/types'
 import { useMember } from '@/components/Channel/hooks/useMember'
+import Layout from '@/components/Layout/Layout'
 import ChannelTemplate from '@/components/Template/ChannelTemplate/ChannelTemplate'
 import { useChannel } from '@/hooks/queries/useChannel'
 import { IChannel } from '@/types/channel'
@@ -18,7 +19,9 @@ const ChannelPage = ({ slug }: { slug: string }) => {
   const shouldFetchPosts = channel.isPublic || isMember
 
   return (
-    <ChannelTemplate channel={channel} shouldFetchPosts={shouldFetchPosts} />
+    <Layout>
+      <ChannelTemplate channel={channel} shouldFetchPosts={shouldFetchPosts} />
+    </Layout>
   )
 }
 

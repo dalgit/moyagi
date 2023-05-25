@@ -1,7 +1,10 @@
 import React from 'react'
-import { BoxType, NotificationBox } from '@/components/common/NotificationBox/NotificationBox'
+import {
+  BoxType,
+  NotificationBox,
+} from '@/components/common/NotificationBox/NotificationBox'
 import Spinner from '@/components/common/Spinner/Spinner'
-import { useChannelsByKeword } from '@/hooks/queries/useChannelsByKeword'
+import useChannelsByKeword from '@/hooks/queries/useChannelsByKeword'
 import ChannelCards from '../ChannelCards/ChannelCards'
 
 interface SeacrhedChannelCardsProps {
@@ -15,7 +18,7 @@ const SeacrhedChannelCards = ({ keyword }: SeacrhedChannelCardsProps) => {
 
   if (!channels.length)
     return (
-      < title="검색된 채널이 없습니다." type={BoxType.empty} />
+      <NotificationBox title="검색된 채널이 없습니다." type={BoxType.empty} />
     )
 
   return <ChannelCards channels={channels} />

@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField'
 import Link from 'next/link'
 import { useState } from 'react'
 import styled from 'styled-components'
-import { useAuthenticateUser } from '@/hooks/mutations/useAuthenticateUser'
+import useAuthenticateUser from '@/components/Auth/hooks/useAuthenticateUser'
 import useForm from '@/hooks/useForm'
 import { validateAuth } from '@/utils/authValidation'
 

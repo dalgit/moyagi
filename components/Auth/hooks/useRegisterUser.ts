@@ -10,7 +10,7 @@ interface RegisterUserArgs {
   passwordConfirm: string
 }
 
-export const useRegisterUser = (): UseMutationResult<
+const useRegisterUser = (): UseMutationResult<
   AxiosResponse,
   AxiosError,
   RegisterUserArgs
@@ -25,7 +25,9 @@ export const useRegisterUser = (): UseMutationResult<
   })
 }
 
-export const registerUser = async ({
+export default useRegisterUser
+
+const registerUser = async ({
   name,
   email,
   password,

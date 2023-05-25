@@ -1,9 +1,10 @@
+import { Button } from '@mui/material'
 import Link from 'next/link'
 import { useRecoilValue } from 'recoil'
 import styled from 'styled-components'
+import LogoutButton from '@/components/Auth/LogoutButton/LogoutButton'
 import FImage from '@/components/common/FImage/FImage'
 import { userDefaultImage } from '@/constants/defaultImage'
-import { useLogoutUser } from '@/hooks/mutations/useLogoutUser'
 import useClickOutside from '@/hooks/useClickOutside'
 import useToggle from '@/hooks/useToggle'
 import { userSelector } from '@/recoil/user'
@@ -14,8 +15,6 @@ const UserStatus = () => {
   const listRef = useClickOutside<HTMLDivElement>(
     () => isMenuActive && toggleUserMenu(),
   )
-
-  const { mutate: logoutMutate } = useLogoutUser()
 
   return (
     <div>
@@ -40,13 +39,12 @@ const UserStatus = () => {
               <Link href="/profile/posts">
                 <li>게시물 관리</li>
               </Link>
-
-              <li onClick={logoutMutate}>로그아웃</li>
+              <LogoutButton />
             </MenuList>
           )}
         </UserBox>
       ) : (
-        <button onClick={logoutMutate}>로그인</button>
+        <Button>로그인</Button>
       )}
     </div>
   )

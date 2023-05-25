@@ -10,7 +10,7 @@ interface useAuthenticateUserArgs {
   password: string
 }
 
-export const useAuthenticateUser = (): UseMutationResult<
+const useAuthenticateUser = (): UseMutationResult<
   AxiosResponse,
   AxiosError,
   useAuthenticateUserArgs
@@ -25,6 +25,8 @@ export const useAuthenticateUser = (): UseMutationResult<
     },
   })
 }
+
+export default useAuthenticateUser
 
 const authenticateUser = async ({
   email,
