@@ -6,7 +6,6 @@ interface ListItemProps extends LiHTMLAttributes<HTMLLIElement> {
 }
 
 const ListItem = ({ children, right, ...props }: ListItemProps) => {
-  console.log(props)
   return (
     <S.ListItemLayout {...props}>
       {children}

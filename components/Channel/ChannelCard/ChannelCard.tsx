@@ -1,4 +1,4 @@
-import Card from '@/components/common/Card'
+import Card from '@/components/common/Card/Card'
 import { channelDefaultImage } from '@/constants/defaultImage'
 import { IChannel } from '@/types/channel'
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Button from '@/components/common/Button'
+import Button from '@/components/common/Button/Button'
 import PostCreateModal from '@/components/Post/PostCreateModal/PostCreateModal'
 import RegistrationModal from '@/components/Registration/RegistrationModal/RegistrationModal'
 

@@ -3,7 +3,7 @@ import { channelDefaultImage } from '@/constants/defaultImage'
 import { IChannel } from '@/types/channel'
 import ButtonWithModal from './ButtonWithModal/ButtonWithModal'
 import * as S from './style'
-import Card from '../../common/Card'
+import Card from '../../common/Card/Card'
 import ChannelMembersModal from '../ChannelMembersModal/ChannelMembersModal'
 import { useMember } from '../hooks/useMember'
 

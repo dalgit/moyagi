@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import Button from '@/components/common/Button'
+import Button from '@/components/common/Button/Button'
 
 export const RegistrationLayout = styled.div<{ status: string }>`
   padding: 10px;

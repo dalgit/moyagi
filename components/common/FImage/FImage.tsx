@@ -1,6 +1,6 @@
 import Image, { StaticImageData } from 'next/image'
 import { MouseEventHandler } from 'react'
-import styled from 'styled-components'
+import * as S from './style'
 
 interface FImageProps {
   src: string | StaticImageData
@@ -10,9 +10,9 @@ interface FImageProps {
 
 const FImage = ({ src, alt, ...rest }: FImageProps) => {
   return (
-    <FImageLayout {...rest}>
+    <S.FImageLayout {...rest}>
       <Image src={src} alt={alt} fill />
-    </FImageLayout>
+    </S.FImageLayout>
   )
 }
 
@@ -21,10 +21,3 @@ export default FImage
 FImage.defaultProps = {
   alt: 'image',
 }
-
-const FImageLayout = styled.div`
-  position: relative;
-  img {
-    border-radius: inherit;
-  }
-`

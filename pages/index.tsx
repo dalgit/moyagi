@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic'
 import { Suspense } from 'react'
-import Spinner from '@/components/common/Spinner'
+import Spinner from '@/components/common/Spinner/Spinner'
 import HomeTemplate from '@/components/Template/HomeTemplate/HomeTemplate'
 
 const UserChannelCards = dynamic(

@@ -1,6 +1,9 @@
 import { useRouter } from 'next/router'
 import React from 'react'
-import { NotificationBox, BoxType } from '@/components/common/NotificationBox'
+import {
+  NotificationBox,
+  BoxType,
+} from '@/components/common/NotificationBox/NotificationBox'
 import UserProfile from '@/components/User/UserProfile/UserProfile'
 import { useUser } from '@/hooks/queries/useUser'
 

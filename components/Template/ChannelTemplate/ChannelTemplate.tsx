@@ -1,9 +1,12 @@
 import { Suspense } from 'react'
 import ChannelDetailCard from '@/components/Channel/ChannelDetailCard/ChannelDetailCard'
 import ChannelPostList from '@/components/Channel/ChannelPostList/ChannelPostList'
-import { ChannelSideBar } from '@/components/Channel/ChannelSideBar/ChannelSideBar'
-import { BoxType, NotificationBox } from '@/components/common/NotificationBox'
-import Spinner from '@/components/common/Spinner'
+import ChannelSideBar from '@/components/Channel/ChannelSideBar/ChannelSideBar'
+import {
+  BoxType,
+  NotificationBox,
+} from '@/components/common/NotificationBox/NotificationBox'
+import Spinner from '@/components/common/Spinner/Spinner'
 import { IChannel } from '@/types/channel'
 import * as S from './style'
 

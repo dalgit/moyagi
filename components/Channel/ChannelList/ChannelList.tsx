@@ -12,8 +12,7 @@ const ChannelList = ({ channels, onItemClick }: ChannelListProps) => (
     {channels?.map((channel) => (
       <ChannelListItem
         key={channel._id}
-        title={channel.name}
-        image={channel.imageUrl}
+        {...channel}
         onClick={() => onItemClick?.(channel._id)}
       />
     ))}

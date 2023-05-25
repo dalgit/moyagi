@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { baseHover } from '@/styles/constants'
-import FImage from '../../common/FImage'
+import FImage from '../../common/FImage/FImage'
 
 export const UserListItemLayout = styled.li`
   display: flex;

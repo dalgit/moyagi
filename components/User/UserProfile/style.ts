@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import FImage from '@/components/common/FImage'
+import FImage from '@/components/common/FImage/FImage'
 
 export const UserProfileLayout = styled.div`
   display: flex;

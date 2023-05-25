@@ -4,7 +4,6 @@ import ListItem from '@/components/common/ListItem/ListItem'
 import { userDefaultImage } from '@/constants/defaultImage'
 
 interface UserListItemLayoutProps extends LiHTMLAttributes<HTMLLIElement> {
-  id: string
   name: string
   image?: string
   right?: ReactNode

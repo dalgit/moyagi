@@ -1,6 +1,6 @@
 import Image from 'next/image'
-import styled from 'styled-components'
 import { empty, sorry } from '@/constants/icon'
+import * as S from './style'
 
 interface NotificationBoxProps {
   title: string
@@ -20,11 +20,11 @@ export const NotificationBox = ({
 }: NotificationBoxProps) => {
   const src = getSrc(type)
   return (
-    <NotificationBoxLayout>
+    <S.NotificationBoxLayout>
       <Image src={src} alt={type} width={250} height={250} />
       <h2>{title}</h2>
       <h4>{description}</h4>
-    </NotificationBoxLayout>
+    </S.NotificationBoxLayout>
   )
 }
 
@@ -38,13 +38,3 @@ const getSrc = (type: BoxType) => {
       throw new Error()
   }
 }
-
-const NotificationBoxLayout = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: auto;
-  opacity: 0.7;
-  height: 100%;
-`

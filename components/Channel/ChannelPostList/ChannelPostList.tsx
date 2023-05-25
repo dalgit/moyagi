@@ -1,5 +1,8 @@
 import React from 'react'
-import { BoxType, NotificationBox } from '@/components/common/NotificationBox'
+import {
+  BoxType,
+  NotificationBox,
+} from '@/components/common/NotificationBox/NotificationBox'
 import PostList from '@/components/Post/PostList/PostList'
 import { useChannelPosts } from '@/hooks/queries/useChannelPosts'
 

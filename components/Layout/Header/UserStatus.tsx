@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { useRecoilValue } from 'recoil'
 import styled from 'styled-components'
-import FImage from '@/components/common/FImage'
+import FImage from '@/components/common/FImage/FImage'
 import { userDefaultImage } from '@/constants/defaultImage'
 import { useLogoutUser } from '@/hooks/mutations/useLogoutUser'
 import useClickOutside from '@/hooks/useClickOutside'

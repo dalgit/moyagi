@@ -1,6 +1,6 @@
 import React from 'react'
 import useDeleteChannelMember from '@/components/Channel/hooks/useDeleteChannelMember'
-import Button from '@/components/common/Button'
+import Button from '@/components/common/Button/Button'
 
 interface UserBanButtonProps {
   userId: string

@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import Button from '@/components/common/Button'
-import Input from '@/components/common/Input'
+import Button from '@/components/common/Button/Button'
+import Input from '@/components/common/Input/Input'
 import Radio from '@/components/common/Radio/Radio'
 import Radios from '@/components/common/Radio/Radios'
 import { useCreateChannel } from '@/hooks/mutations/useCreateChannel'

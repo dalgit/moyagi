@@ -1,6 +1,6 @@
 import React from 'react'
-import { BoxType, NotificationBox } from '@/components/common/NotificationBox'
-import Spinner from '@/components/common/Spinner'
+import { BoxType, NotificationBox } from '@/components/common/NotificationBox/NotificationBox'
+import Spinner from '@/components/common/Spinner/Spinner'
 import { useChannelsByKeword } from '@/hooks/queries/useChannelsByKeword'
 import ChannelCards from '../ChannelCards/ChannelCards'
 

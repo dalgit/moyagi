@@ -1,4 +1,4 @@
-import Button from '@/components/common/Button'
+import Button from '@/components/common/Button/Button'
 import * as S from './style'
 import useSearch from '../hooks/useSearch'
 

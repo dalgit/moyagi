@@ -1,4 +1,7 @@
-import { BoxType, NotificationBox } from '@/components/common/NotificationBox'
+import {
+  BoxType,
+  NotificationBox,
+} from '@/components/common/NotificationBox/NotificationBox'
 import { useChannelRegistrations } from '../hooks/useChannelRegistrations'
 import RegistrationList from '../RegistrationList/RegistrationList'
 
