@@ -1,10 +1,10 @@
 import { useRecoilValue } from 'recoil'
 import MoreMenu from 'components/common/MoreMenu/MoreMenu'
-import { ChannelCards } from 'features/Channel'
 import { userSelector } from 'recoil/user'
 import { IPost } from 'types/post'
 import AuthorMenuList from './AuthorMenuList'
 import UserMenuList from './UserMenuList'
+
 interface PostHeaderMenuProps {
   post: IPost
 }

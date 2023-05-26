@@ -8,7 +8,10 @@ export { default as Input } from './Input/Input'
 export { default as ListItem } from './ListItem/ListItem'
 export { default as ModalFrame } from './Modal/ModalFrame'
 export { default as MoreMenu } from './MoreMenu/MoreMenu'
-export { default as NotificationBox } from './NotificationBox/NotificationBox'
+export {
+  default as NotificationBox,
+  BoxType,
+} from './NotificationBox/NotificationBox'
 export { default as Quill } from './Quill/Quill'
 export { default as Radio } from './Radio/Radio'
 export { default as Radios } from './Radio/Radios'

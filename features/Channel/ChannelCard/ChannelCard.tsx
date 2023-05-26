@@ -1,7 +1,7 @@
-import { NotificationBox, BoxType } from 'components/common'
-import Card from 'components/common/Card/Card'
+import { Card } from 'components/common'
 import { channelDefaultImage } from 'constants/defaultImage'
 import { IChannel } from 'types/channel'
+
 interface ChannelCardProps {
   channel: IChannel
 }

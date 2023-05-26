@@ -1,5 +1,5 @@
-import AuthTemplate from 'components/Template/AuthTemplate/AuthTemplate'
-import LoginForm from 'features/Auth/LoginForm/LoginForm'
+import { AuthTemplate } from 'components/Template'
+import { LoginForm } from 'features/Auth'
 
 const LoginPage = () => {
   return (

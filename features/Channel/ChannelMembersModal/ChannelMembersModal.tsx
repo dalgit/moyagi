@@ -1,6 +1,5 @@
-import UserList from 'components/User/UserList/UserList'
-import React from 'react'
-import ModalFrame from 'components/common/Modal/ModalFrame'
+import { ModalFrame } from 'components/common'
+import { UserList } from 'features/User'
 import { IUser } from 'types/user'
 
 interface ChannelMembersModalProps {

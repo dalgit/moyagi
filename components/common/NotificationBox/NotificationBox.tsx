@@ -29,6 +29,7 @@ const NotificationBox = ({
 }
 
 export { NotificationBox, BoxType }
+
 export default NotificationBox
 
 const getSrc = (type: string) => {

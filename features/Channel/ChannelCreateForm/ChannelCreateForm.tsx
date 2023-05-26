@@ -1,13 +1,9 @@
-import Button from 'components/common/Button/Button'
-import ImageSelector from 'components/common/ImageSelector/ImageSelector'
-import Input from 'components/common/Input/Input'
-import Radio from 'components/common/Radio/Radio'
-import Radios from 'components/common/Radio/Radios'
+import { Button, ImageSelector, Input, Radio, Radios } from 'components/common'
 import { useCreateChannel } from 'hooks/mutations/useCreateChannel'
 import useForm from 'hooks/useForm'
 import useUploadImage from 'hooks/useUpoladImgae'
 import * as S from './style'
-import ChannelCard from '../ChannelCard'
+
 const initailForm = {
   name: '',
   address: '',

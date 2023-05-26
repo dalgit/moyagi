@@ -1,6 +1,6 @@
-import { RegistrationListItem } from 'features/Registration'
 import { IRegistration } from 'types/registration'
-import { useChannelRegistrations } from '..'
+import RegistrationListItem from '../RegistrationListItem/RegistrationListItem'
+
 interface RegistrationListProps {
   registrations: IRegistration[]
 }

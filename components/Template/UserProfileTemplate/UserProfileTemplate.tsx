@@ -1,6 +1,6 @@
-import UserProfile from 'components/Features/User/UserProfile/UserProfile'
 import { useRecoilValue } from 'recoil'
-import Button from 'components/common/Button/Button'
+import { Button } from 'components/common'
+import { UserProfile } from 'features/User'
 import { userIdSelector } from 'recoil/user'
 import { IUser } from 'types/user'
 import * as S from './style'

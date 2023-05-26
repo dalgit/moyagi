@@ -5,6 +5,7 @@ import { useState } from 'react'
 import styled from 'styled-components'
 import useForm from 'hooks/useForm'
 import { validateAuth } from 'utils/authValidation'
+import useRegisterUser from '../hooks/useRegisterUser'
 
 const SignUpForm = () => {
   const [isBlurred, setIsBlurred] = useState<{ [key: string]: boolean }>({})

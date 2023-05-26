@@ -3,8 +3,7 @@ import {
   NotificationBox,
   BoxType,
 } from 'components/common/NotificationBox/NotificationBox'
-import Layout from 'components/Layout/Layout'
-import UserProfileTemplate from 'components/Template/UserProfileTemplate/UserProfileTemplate'
+import { Layout, UserProfileTemplate } from 'components/Template'
 import { useUser } from 'hooks/queries/useUser'
 
 const UserDetailPage = () => {

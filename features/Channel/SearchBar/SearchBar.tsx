@@ -1,6 +1,7 @@
-import Button from 'components/common/Button/Button'
+import { Button } from 'components/common'
 import * as S from './style'
 import useSearch from '../hooks/useSearch'
+
 const SearchBar = () => {
   const {
     keyword,

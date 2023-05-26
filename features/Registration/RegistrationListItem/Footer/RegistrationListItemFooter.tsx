@@ -1,4 +1,3 @@
-import React from 'react'
 import { useRecoilValue } from 'recoil'
 import { userIdSelector } from 'recoil/user'
 import { EStatus } from 'types/registration'

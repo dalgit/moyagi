@@ -1,5 +1,4 @@
-import React from 'react'
-import Button from 'components/common/Button/Button'
+import { Button } from 'components/common'
 import useDeleteChannelMember from 'features/Channel/hooks/useDeleteChannelMember'
 
 interface UserBanButtonProps {

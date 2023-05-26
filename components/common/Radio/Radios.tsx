@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
-import styled from 'styled-components'
 import { RadioContext, IRadioContextProps } from './RadioContext'
+import * as S from './style'
 
 interface RadiosProps extends IRadioContextProps {
   label: string
@@ -10,28 +10,12 @@ interface RadiosProps extends IRadioContextProps {
 const Radios = ({ label, children, ...rest }: RadiosProps) => {
   return (
     <>
-      <LabelStyled>{label}</LabelStyled>
+      <S.RadiosTitle>{label}</S.RadiosTitle>
       <RadioContext.Provider value={rest}>
-        <RadiosLayout>{children}</RadiosLayout>
+        <S.RadiosLayout>{children}</S.RadiosLayout>
       </RadioContext.Provider>
     </>
   )
 }
 
 export default Radios
-
-const RadiosLayout = styled.div`
-  display: flex;
-  justify-content: space-around;
-  border: 1px solid red;
-  background-color: white;
-  border: 0.8px solid #a6afb8;
-  border-radius: 4px;
-`
-
-const LabelStyled = styled.label`
-  display: block;
-  font-size: 15px;
-  margin-left: 5px;
-  font-weight: bolder;
-`

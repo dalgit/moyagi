@@ -1,11 +1,10 @@
-import React from 'react'
 import {
   BoxType,
   NotificationBox,
 } from 'components/common/NotificationBox/NotificationBox'
-import ChannelCard from 'features/Channel/ChannelCard/ChannelCard'
-import PostList from 'features/Post/PostList/PostList'
+import { PostList } from 'features/Post'
 import { useChannelPosts } from 'hooks/queries/useChannelPosts'
+
 interface ChannelPostListProps {
   channelId: string
 }

@@ -1,10 +1,8 @@
 import { useRouter } from 'next/router'
-import ChannelCards from 'features/Channel/ChannelCards/ChannelCards'
-import ChannelDetailCard from 'features/Channel/ChannelDetailCard/ChannelDetailCard'
+import ChannelList from 'features/Channel/ChannelList/ChannelList'
+import ChannelListItem from 'features/Channel/ChannelListItem/ChannelListItem'
 import { useMyChannels } from 'hooks/queries/useMyChannels'
 import * as S from './style'
-import ChannelList from '../../../Channel/ChannelList/ChannelList'
-import ChannelListItem from '../ChannelListItem/ChannelListItem'
 
 const ChannelSideBar = () => {
   const { data: channels = [] } = useMyChannels()

@@ -1,6 +1,7 @@
+import ChannelListItem from 'features/Channel/ChannelListItem/ChannelListItem'
 import { IChannel } from 'types/channel'
 import * as S from './style'
-import ChannelListItem from '../../../../features/Channel/ChannelListItem/ChannelListItem'
+
 interface ChannelListProps {
   channels: IChannel[]
   onItemClick?: (channelId: string) => void

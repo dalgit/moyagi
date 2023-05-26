@@ -1,11 +1,10 @@
 import { useRouter } from 'next/router'
-import Avatar from 'components/common/Avatar/Avatar'
+import { Avatar } from 'components/common'
 import { userDefaultImage } from 'constants/defaultImage'
-import { ChannelSideBar } from 'features/Channel'
+import PostHeaderMenu from 'features/Post/PostHeader/Components/PostHeaderMenu'
 import { IPost } from 'types/post'
-import PostHeaderMenu from './Components/PostHeaderMenu'
 import * as S from './style'
-import ChannelCa
+
 interface PostHeaderProps {
   post: IPost
 }

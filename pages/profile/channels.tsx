@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router'
-import Layout from 'components/Layout/Layout'
-import UserChannelsTemplate from 'components/Template/UserChannelsTemplate/UserChannelsTemplate'
+import { Layout, UserChannelsTemplate } from 'components/Template'
 import useManagedChanneles from 'features/Channel/hooks/useManagedChannels'
 
 const UserChannelsPage = () => {
@@ -9,6 +8,7 @@ const UserChannelsPage = () => {
   const channelId = router.query.channelId
 
   const handleChannelClick = () => {}
+
   return (
     <Layout>
       <UserChannelsTemplate channels={channels} channelId={channelId} />

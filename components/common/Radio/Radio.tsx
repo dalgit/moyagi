@@ -1,5 +1,5 @@
-import styled from 'styled-components'
 import { useRadioContext } from './RadioContext'
+import * as S from './style'
 
 interface RadioProps {
   id: string
@@ -12,9 +12,9 @@ const Radio = ({ id, label, value }: RadioProps) => {
   const isCheck = currentValue === value
 
   return (
-    <RadioLayout>
-      <LabelStyled htmlFor={id}>{label}</LabelStyled>
-      <InputStyled
+    <S.RadioLayout>
+      <S.StyledLabel htmlFor={id}>{label}</S.StyledLabel>
+      <S.StyledInput
         type="radio"
         id={id}
         name={name}
@@ -22,30 +22,8 @@ const Radio = ({ id, label, value }: RadioProps) => {
         onChange={onChange}
         checked={isCheck}
       />
-    </RadioLayout>
+    </S.RadioLayout>
   )
 }
 
 export default Radio
-
-const RadioLayout = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 5px;
-`
-
-const LabelStyled = styled.label`
-  font-size: 15px;
-  margin-left: 5px;
-  white-space: nowrap;
-  text-align: center;
-`
-
-const InputStyled = styled.input`
-  width: 100%;
-  border-radius: 4px;
-  height: 40px;
-  padding: 12px 15px;
-  font-size: 15px;
-  border: 0.8px solid #a6afb8;
-`

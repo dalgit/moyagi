@@ -1,7 +1,7 @@
 import { IPost } from 'types/post'
 import * as S from './style'
-import PostHeader from '../../../Post/PostHeader/PostHeader'
 import PostContent from '../PostContent/PostContent'
+import PostHeader from '../PostHeader/PostHeader'
 
 interface PostProps {
   post: IPost

@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import { ReactNode } from 'react'
 import * as S from './style'
 import bg from '/public/assets/login_page_background.png'
 

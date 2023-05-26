@@ -1,4 +1,4 @@
-import ChannelCreateForm from 'components/Channel/ChannelCreateForm/ChannelCreateForm'
+import { ChannelCreateForm } from 'features/Channel'
 import * as S from './style'
 
 const CreateChannelTemplate = () => {

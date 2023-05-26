@@ -1,5 +1,5 @@
-import UserEditProfile from 'components/User/UserEditProfile/UserEditProfile'
-import Layout from 'components/Layout/Layout'
+import { Layout } from 'components/Template'
+import { UserEditProfile } from 'features/User'
 
 const settingPage = () => {
   return (

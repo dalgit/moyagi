@@ -1,7 +1,6 @@
-import React from 'react'
 import useChannelMembers from 'features/Channel/hooks/useChannelMembers'
-import UserListItem from '../../../User/UserListItem/UserListItem'
 import UserBanButton from '../UserBanButton/UserBanButton'
+import UserListItem from '../UserListItem/UserListItem'
 
 interface AdminUserListProps {
   channelId: string

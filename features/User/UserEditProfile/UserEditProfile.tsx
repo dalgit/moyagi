@@ -1,15 +1,12 @@
 import { useState } from 'react'
 import { useRecoilValue } from 'recoil'
-import Button from 'components/common/Button/Button'
-import ImageSelector from 'components/common/ImageSelector/ImageSelector'
-import Input from 'components/common/Input/Input'
+import { Button, ImageSelector, Input } from 'components/common'
 import { userDefaultImage } from 'constants/defaultImage'
 import { useUpdateUser } from 'hooks/mutations/useUpdateUser'
 import { useUser } from 'hooks/queries/useUser'
 import useUploadImage from 'hooks/useUpoladImgae'
 import { userIdSelector } from 'recoil/user'
 import * as S from './style'
-import { ChannelSideBar } from '../../Channel'
 
 const UserEditProfile = () => {
   const userId = useRecoilValue(userIdSelector)

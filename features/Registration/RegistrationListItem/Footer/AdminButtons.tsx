@@ -1,4 +1,4 @@
-import Button from 'components/common/Button/Button'
+import { Button } from 'components/common'
 import { usePatchRegistrationStatus } from 'hooks/mutations/usePatchRegistrationStatus'
 import { EStatus } from 'types/registration'
 

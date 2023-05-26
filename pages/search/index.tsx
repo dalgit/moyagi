@@ -1,7 +1,6 @@
-import SeacrhedChannelCards from 'components/Channel/SeacrhedChannelCards/SeacrhedChannelCards'
 import { useRouter } from 'next/router'
-import Layout from 'components/Layout/Layout'
-import HomeTemplate from 'components/Template/HomeTemplate/HomeTemplate'
+import { HomeTemplate, Layout } from 'components/Template'
+import { SearchedChannelCards } from 'features/Channel'
 import useDidMount from 'hooks/useDidMount'
 
 const SearchPage = () => {
@@ -16,7 +15,7 @@ const SearchPage = () => {
   return (
     <Layout>
       <HomeTemplate>
-        <SeacrhedChannelCards keyword={keyword as string} />
+        <SearchedChannelCards keyword={keyword as string} />
       </HomeTemplate>
     </Layout>
   )

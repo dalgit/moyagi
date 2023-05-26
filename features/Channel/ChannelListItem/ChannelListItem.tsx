@@ -1,6 +1,5 @@
 import { LiHTMLAttributes } from 'react'
-import Avatar from 'components/common/Avatar/Avatar'
-import ListItem from 'components/common/ListItem/ListItem'
+import { Avatar, ListItem } from 'components/common'
 import { channelDefaultImage } from 'constants/defaultImage'
 
 interface ChannelListItemProps extends LiHTMLAttributes<HTMLLIElement> {

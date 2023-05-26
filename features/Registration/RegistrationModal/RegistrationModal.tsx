@@ -1,4 +1,4 @@
-import ModalFrame from 'components/common/Modal/ModalFrame'
+import { ModalFrame } from 'components/common'
 import RegistrationForm from './RegistrationForm'
 
 interface RegistrationModalProps {

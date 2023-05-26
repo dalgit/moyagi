@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode, ButtonHTMLAttributes } from 'react'
+import { ReactElement, ReactNode, ButtonHTMLAttributes } from 'react'
 import * as S from './style'
 
 export interface ButtonStyle {

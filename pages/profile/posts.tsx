@@ -1,7 +1,7 @@
-import { useUserPosts } from 'components/Post/hooks/useUserPosts'
 import { useRecoilValue } from 'recoil'
-import Layout from 'components/Layout/Layout'
-import PostList from 'features/Post/PostList/PostList'
+import { Layout } from 'components/Template'
+import { PostList } from 'features/Post'
+import { useUserPosts } from 'features/Post/hooks/useUserPosts'
 import { userIdSelector } from 'recoil/user'
 
 const UserPostsPage = () => {

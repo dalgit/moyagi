@@ -1,12 +1,17 @@
-import { ChannelDetailCard } from 'features/Channel/ChannelDetailCard'
 import { Suspense } from 'react'
-import { NotificationBox } from 'components/common/NotificationBox/NotificationBox'
+import {
+  BoxType,
+  NotificationBox,
+} from 'components/common/NotificationBox/NotificationBox'
 import Spinner from 'components/common/Spinner/Spinner'
-// import ChannelDetailCard from 'features/Channel'
-import ChannelPostList from 'features/Channel/ChannelPostList/ChannelPostList'
-import ChannelSideBar from 'features/Channel/ChannelSideBar/ChannelSideBar'
+import {
+  ChannelDetailCard,
+  ChannelPostList,
+  ChannelSideBar,
+} from 'features/Channel'
 import { IChannel } from 'types/channel'
 import * as S from './style'
+
 interface ChannelTemplateProps {
   channel: IChannel
   shouldFetchPosts: boolean

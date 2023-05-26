@@ -1,6 +1,5 @@
 import React, { LiHTMLAttributes, ReactNode } from 'react'
-import Avatar from 'components/common/Avatar/Avatar'
-import ListItem from 'components/common/ListItem/ListItem'
+import { Avatar, ListItem } from 'components/common'
 import { userDefaultImage } from 'constants/defaultImage'
 
 interface UserListItemLayoutProps extends LiHTMLAttributes<HTMLLIElement> {

@@ -1,8 +1,7 @@
-import PostCreateModal from 'components/Features/Post/PostCreateModal/PostCreateModal'
-import React, { useState } from 'react'
-import Button from 'components/common/Button/Button'
-import RegistrationModal from 'features/Registration/RegistrationModal/RegistrationModal'
-import { ChannelCards } from '../../index'
+import { useState } from 'react'
+import { Button } from 'components/common'
+import { PostCreateModal } from 'features/Post'
+import { RegistrationModal } from 'features/Registration'
 
 interface ButtonWithModalProps {
   isMember: boolean

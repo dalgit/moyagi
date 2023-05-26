@@ -1,6 +1,7 @@
+import ChannelCard from 'features/Channel/ChannelCard/ChannelCard'
 import { IChannel } from 'types/channel'
 import * as S from './style'
-import ChannelCa
+
 interface ChannelCardsProps {
   channels: IChannel[]
 }

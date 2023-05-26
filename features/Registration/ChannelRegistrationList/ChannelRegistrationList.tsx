@@ -1,8 +1,6 @@
-import {
-  BoxType,
-  NotificationBox,
-} from 'components/common/NotificationBox/NotificationBox'
+import { BoxType, NotificationBox } from 'components/common'
 import { useChannelRegistrations } from '../hooks/useChannelRegistrations'
+import RegistrationList from '../RegistrationList/RegistrationList'
 
 interface ChannelRegistrationListProps {
   channelId: string
