@@ -4,9 +4,9 @@ import {
   useQueryClient,
 } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
-import { IRegistration } from '@/types/registration'
-import client from '@/utils/axios/axios'
-import { registrationKeys } from '@/utils/queryKeys/registration'
+import { IRegistration } from 'types/registration'
+import client from 'utils/axios/axios'
+import { registrationKeys } from 'utils/queryKeys/registration'
 
 interface PatchRegistrationStatusProps {
   channelId: string

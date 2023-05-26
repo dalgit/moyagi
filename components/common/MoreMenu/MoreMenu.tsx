@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 import { FiMoreHorizontal as MoreIcon } from 'react-icons/fi'
-import useMenu from '@/hooks/useMenu'
+import useMenu from 'hooks/useMenu'
 import * as S from './style'
 
 interface MoreMenuProps {

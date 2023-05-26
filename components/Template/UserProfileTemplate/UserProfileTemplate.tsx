@@ -1,8 +1,8 @@
+import UserProfile from 'components/Features/User/UserProfile/UserProfile'
 import { useRecoilValue } from 'recoil'
-import Button from '@/components/common/Button/Button'
-import UserProfile from '@/components/User/UserProfile/UserProfile'
-import { userIdSelector } from '@/recoil/user'
-import { IUser } from '@/types/user'
+import Button from 'components/common/Button/Button'
+import { userIdSelector } from 'recoil/user'
+import { IUser } from 'types/user'
 import * as S from './style'
 
 interface UserProfileTemplateProps {

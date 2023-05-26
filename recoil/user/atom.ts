@@ -1,5 +1,5 @@
 import { atom } from 'recoil'
-import { IUser } from '@/types/user'
+import { IUser } from 'types/user'
 import sessionStorageEffect from './effect'
 
 const userAtom = atom<IUser | null>({

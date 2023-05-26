@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import createPost from '@/server/api/createPost'
-import getChannelPosts from '@/server/api/getChannelPosts'
-import authMiddleware from '@/server/utils/authMiddleware'
+import createPost from 'server/api/createPost'
+import getChannelPosts from 'server/api/getChannelPosts'
+import authMiddleware from 'server/utils/authMiddleware'
 
 interface ExtendedNextApiRequest extends NextApiRequest {
   query: {

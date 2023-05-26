@@ -1,5 +1,5 @@
 import { NextApiResponse, NextApiRequest } from 'next'
-import getUserChannels from '@/server/api/getUserChannels'
+import getUserChannels from 'server/api/getUserChannels'
 
 export default async function handler(
   req: NextApiRequest,

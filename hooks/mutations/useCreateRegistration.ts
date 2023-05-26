@@ -4,10 +4,10 @@ import {
   useQueryClient,
 } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
-import { IRegistration, EStatus } from '@/types/registration'
-import client from '@/utils/axios/axios'
-import { channelKeys } from '@/utils/queryKeys/channel'
-import { registrationKeys } from '@/utils/queryKeys/registration'
+import { IRegistration, EStatus } from 'types/registration'
+import client from 'utils/axios/axios'
+import { channelKeys } from 'utils/queryKeys/channel'
+import { registrationKeys } from 'utils/queryKeys/registration'
 
 interface createRegistrationArgs {
   channelId: string

@@ -9,8 +9,8 @@ import { AppProps } from 'next/app'
 import { useState } from 'react'
 import { RecoilRoot } from 'recoil'
 import { ThemeProvider } from 'styled-components'
-import { GlobalStyle } from '@/styles/global-style'
-import theme from '@/styles/theme'
+import { GlobalStyle } from 'styles/global-style'
+import theme from 'styles/theme'
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const [queryClient] = useState(

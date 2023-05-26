@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { cameraIcon } from '@/constants/defaultImage'
+import { cameraIcon } from 'constants/defaultImage'
 import FImage from '../FImage/FImage'
 
 export const ImageSelectorLayout = styled.div`

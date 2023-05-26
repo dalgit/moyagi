@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import Header from '@/components/Layout/Header/Header'
+import Header from 'components/Layout/Header/Header'
 import * as S from './style'
 
 interface LayoutProps {

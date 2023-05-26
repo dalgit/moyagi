@@ -1,5 +1,5 @@
 import { RecoilEnv, AtomEffect } from 'recoil'
-import { IUser } from '@/types/user'
+import { IUser } from 'types/user'
 
 RecoilEnv.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED = false
 

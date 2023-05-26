@@ -1,5 +1,5 @@
-import SignUpForm from '@/components/Auth/SignUpForm/SignUpForm'
-import AuthTemplate from '@/components/Template/AuthTemplate/AuthTemplate'
+import SignUpForm from 'components/Auth/SignUpForm/SignUpForm'
+import AuthTemplate from 'components/Template/AuthTemplate/AuthTemplate'
 
 const SignUpPage = () => {
   return (

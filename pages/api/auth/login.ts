@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { NextApiRequest, NextApiResponse } from 'next'
-import connectToDatabase from '@/server/utils/connectToDatabase'
+import connectToDatabase from 'server/utils/connectToDatabase'
 
 const loginApi = async (req: NextApiRequest, res: NextApiResponse) => {
   try {

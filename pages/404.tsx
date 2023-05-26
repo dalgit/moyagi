@@ -1,5 +1,5 @@
-import Layout from '@/components/Layout/Layout'
-import NotFoundTemplate from '@/components/Template/NotFoundTemplate/NotFoundTemplate'
+import Layout from 'components/Layout/Layout'
+import NotFoundTemplate from 'components/Template/NotFoundTemplate/NotFoundTemplate'
 
 const NotFoundPage = () => {
   return (

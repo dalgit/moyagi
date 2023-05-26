@@ -1,8 +1,8 @@
+import ChannelList from 'components/Channel/ChannelList/ChannelList'
+import ChannelRegistrationList from 'components/Features/Registration/ChannelRegistrationList/ChannelRegistrationList'
 import { useState } from 'react'
 import styled from 'styled-components'
-import ChannelList from '@/components/Channel/ChannelList/ChannelList'
-import ChannelRegistrationList from '@/components/Registration/ChannelRegistrationList/ChannelRegistrationList'
-import AdminUserList from '@/components/User/AdminUserList/AdminUserList'
+import AdminUserList from 'features/User/AdminUserList/AdminUserList'
 import * as S from './style'
 
 const UserChannelsTemplate = ({ channels }: any) => {

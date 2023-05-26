@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import { addDefaultImage } from '@/constants/defaultImage'
+import { addDefaultImage } from 'constants/defaultImage'
 import * as S from './style'
 
 interface ImageSelectorHandler {

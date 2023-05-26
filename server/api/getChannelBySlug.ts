@@ -1,5 +1,5 @@
 import { NextApiResponse } from 'next'
-import { NextApiRequestWithUser } from '@/types/types'
+import { NextApiRequestWithUser } from 'types/types'
 import { channelsByAddressPipeLine } from '../../server/pipeLine/channel'
 import connectToDatabase from '../utils/connectToDatabase'
 

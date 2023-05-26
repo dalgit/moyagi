@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { baseHover } from '@/styles/constants'
+import { baseHover } from 'styles/constants'
 import FImage from '../FImage/FImage'
 
 export const AvatarLayout = styled.div`

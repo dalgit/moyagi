@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
-import useManagedChanneles from '@/components/Channel/hooks/useManagedChannels'
-import Layout from '@/components/Layout/Layout'
-import UserChannelsTemplate from '@/components/Template/UserChannelsTemplate/UserChannelsTemplate'
+import Layout from 'components/Layout/Layout'
+import UserChannelsTemplate from 'components/Template/UserChannelsTemplate/UserChannelsTemplate'
+import useManagedChanneles from 'features/Channel/hooks/useManagedChannels'
 
 const UserChannelsPage = () => {
   const { data: channels } = useManagedChanneles()

@@ -1,7 +1,7 @@
 import { NextApiResponse } from 'next'
-import getMyJoinedChannels from '@/server/api/getMyJoinedChannels'
-import authMiddleware from '@/server/utils/authMiddleware'
-import { NextApiRequestWithUser } from '@/types/types'
+import getMyJoinedChannels from 'server/api/getMyJoinedChannels'
+import authMiddleware from 'server/utils/authMiddleware'
+import { NextApiRequestWithUser } from 'types/types'
 
 export default async function handler(
   req: NextApiRequestWithUser,

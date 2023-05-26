@@ -1,7 +1,7 @@
 import 'react-quill/dist/quill.snow.css'
 import { useRef, useMemo } from 'react'
 import ReactQuill from 'react-quill'
-import { uploadImage } from '@/utils/uploadImage'
+import { uploadImage } from 'utils/uploadImage'
 
 const useQuill = () => {
   const quillRef = useRef<ReactQuill>(null)

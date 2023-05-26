@@ -5,9 +5,9 @@ import {
 } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 import { useRouter } from 'next/router'
-import { IChannel } from '@/types/channel'
-import client from '@/utils/axios/axios'
-import { channelKeys } from '@/utils/queryKeys/channel'
+import { IChannel } from 'types/channel'
+import client from 'utils/axios/axios'
+import { channelKeys } from 'utils/queryKeys/channel'
 
 interface createChannelArgs {
   name: string

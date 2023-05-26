@@ -1,13 +1,13 @@
 import { Button } from '@mui/material'
+import LogoutButton from 'components/Auth/LogoutButton/LogoutButton'
 import Link from 'next/link'
 import { useRecoilValue } from 'recoil'
 import styled from 'styled-components'
-import LogoutButton from '@/components/Auth/LogoutButton/LogoutButton'
-import FImage from '@/components/common/FImage/FImage'
-import { userDefaultImage } from '@/constants/defaultImage'
-import useClickOutside from '@/hooks/useClickOutside'
-import useToggle from '@/hooks/useToggle'
-import { userSelector } from '@/recoil/user'
+import FImage from 'components/common/FImage/FImage'
+import { userDefaultImage } from 'constants/defaultImage'
+import useClickOutside from 'hooks/useClickOutside'
+import useToggle from 'hooks/useToggle'
+import { userSelector } from 'recoil/user'
 
 const UserStatus = () => {
   const user = useRecoilValue(userSelector)

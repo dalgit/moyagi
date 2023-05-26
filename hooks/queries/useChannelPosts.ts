@@ -4,9 +4,9 @@ import {
   UseQueryOptions,
 } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
-import { IPost } from '@/types/post'
-import client from '@/utils/axios/axios'
-import { postKeys } from '@/utils/queryKeys/post'
+import { IPost } from 'types/post'
+import client from 'utils/axios/axios'
+import { postKeys } from 'utils/queryKeys/post'
 
 export const useChannelPosts = (
   channelId: string,

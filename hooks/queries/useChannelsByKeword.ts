@@ -4,9 +4,9 @@ import {
   UseQueryResult,
 } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
-import { IChannel } from '@/types/channel'
-import client from '@/utils/axios/axios'
-import { channelKeys } from '@/utils/queryKeys/channel'
+import { IChannel } from 'types/channel'
+import client from 'utils/axios/axios'
+import { channelKeys } from 'utils/queryKeys/channel'
 
 const useChannelsByKeword = (
   keyword: string,

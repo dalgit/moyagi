@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb'
 import { NextApiResponse } from 'next'
-import { NextApiRequestWithUser } from '@/types/types'
+import { NextApiRequestWithUser } from 'types/types'
 import authMiddleware from '../utils/authMiddleware'
 import connectToDatabase from '../utils/connectToDatabase'
 

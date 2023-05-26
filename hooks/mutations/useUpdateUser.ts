@@ -4,9 +4,9 @@ import {
   useQueryClient,
 } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
-import { IUser } from '@/types/user'
-import client from '@/utils/axios/axios'
-import { userKeys } from '@/utils/queryKeys/user'
+import { IUser } from 'types/user'
+import client from 'utils/axios/axios'
+import { userKeys } from 'utils/queryKeys/user'
 
 interface updateUserArgs {
   imageUrl?: string

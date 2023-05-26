@@ -1,4 +1,4 @@
-import RegistrationList from '@/components/Registration/RegistrationList/RegistrationList'
+import RegistrationList from 'components/Features/Registration/RegistrationList/RegistrationList'
 import * as S from './style'
 
 const UserRegistrationTemplate = ({ registrations }: any) => {

@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import connectToDatabase from '@/server/utils/connectToDatabase'
-import getHashedPassword from '@/server/utils/passwordUtils'
+import connectToDatabase from 'server/utils/connectToDatabase'
+import getHashedPassword from 'server/utils/passwordUtils'
 
 const createUserApi = async (req: NextApiRequest, res: NextApiResponse) => {
   try {

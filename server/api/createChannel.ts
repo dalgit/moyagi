@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb'
 import { NextApiResponse } from 'next'
-import { NextApiRequestWithUser } from '@/types/types'
+import { NextApiRequestWithUser } from 'types/types'
 import { channelsByAddressPipeLine } from '../pipeLine/channel'
 import connectToDatabase from '../utils/connectToDatabase'
 

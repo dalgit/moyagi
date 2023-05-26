@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import Button from '@/components/common/Button/Button'
+import Button from 'components/common/Button/Button'
 import * as S from './style'
 
 const NotFoundTemplate = () => {

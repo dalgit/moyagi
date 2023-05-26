@@ -1,5 +1,5 @@
 import { NextApiResponse, NextApiRequest } from 'next'
-import getUserPosts from '@/server/api/getUserPosts'
+import getUserPosts from 'server/api/getUserPosts'
 
 export default async function handler(
   req: NextApiRequest,

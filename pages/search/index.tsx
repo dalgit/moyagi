@@ -1,8 +1,8 @@
+import SeacrhedChannelCards from 'components/Channel/SeacrhedChannelCards/SeacrhedChannelCards'
 import { useRouter } from 'next/router'
-import SeacrhedChannelCards from '@/components/Channel/SeacrhedChannelCards/SeacrhedChannelCards'
-import Layout from '@/components/Layout/Layout'
-import HomeTemplate from '@/components/Template/HomeTemplate/HomeTemplate'
-import useDidMount from '@/hooks/useDidMount'
+import Layout from 'components/Layout/Layout'
+import HomeTemplate from 'components/Template/HomeTemplate/HomeTemplate'
+import useDidMount from 'hooks/useDidMount'
 
 const SearchPage = () => {
   const router = useRouter()

@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import getMyInfo from '@/server/api/getMyInfo'
-import updateProfile from '@/server/api/updateProfile'
-import authMiddleware from '@/server/utils/authMiddleware'
+import getMyInfo from 'server/api/getMyInfo'
+import updateProfile from 'server/api/updateProfile'
+import authMiddleware from 'server/utils/authMiddleware'
 
 export default async function handler(
   req: NextApiRequest,

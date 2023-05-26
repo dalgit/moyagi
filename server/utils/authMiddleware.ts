@@ -1,6 +1,6 @@
 import { JsonWebTokenError, TokenExpiredError } from 'jsonwebtoken'
 import { NextApiHandler, NextApiResponse } from 'next'
-import { NextApiRequestWithUser } from '@/types/types'
+import { NextApiRequestWithUser } from 'types/types'
 import jwtVerify from './jwtVerify'
 
 const authMiddleware =

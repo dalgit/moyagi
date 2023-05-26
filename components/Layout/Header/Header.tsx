@@ -2,7 +2,7 @@ import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import Link from 'next/link'
 import styled from 'styled-components'
-import { logo } from '@/constants/defaultImage'
+import { logo } from 'constants/defaultImage'
 
 const UserStatus = dynamic(() => import('./UserStatus'), {
   ssr: false,

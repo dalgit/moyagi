@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import FImage from '@/components/common/FImage/FImage'
+import FImage from 'components/common/FImage/FImage'
 
 export const AuthTemplateLayout = styled.div`
   display: flex;

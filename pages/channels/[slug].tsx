@@ -1,13 +1,13 @@
 import { ParsedUrlQuery } from 'querystring'
 import { QueryClient, dehydrate } from '@tanstack/react-query'
 import { GetServerSideProps } from 'next/types'
-import { useMember } from '@/components/Channel/hooks/useMember'
-import Layout from '@/components/Layout/Layout'
-import ChannelTemplate from '@/components/Template/ChannelTemplate/ChannelTemplate'
-import { useChannel } from '@/hooks/queries/useChannel'
-import { IChannel } from '@/types/channel'
-import createServerInstance from '@/utils/axios/server'
-import { channelKeys } from '@/utils/queryKeys/channel'
+import Layout from 'components/Layout/Layout'
+import ChannelTemplate from 'components/Template/ChannelTemplate/ChannelTemplate'
+import { useMember } from 'features/Channel/hooks/useMember'
+import { useChannel } from 'hooks/queries/useChannel'
+import { IChannel } from 'types/channel'
+import createServerInstance from 'utils/axios/server'
+import { channelKeys } from 'utils/queryKeys/channel'
 
 export interface IParams extends ParsedUrlQuery {
   slug: string

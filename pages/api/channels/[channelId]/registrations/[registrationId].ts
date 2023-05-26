@@ -1,6 +1,6 @@
 import { NextApiResponse, NextApiRequest } from 'next'
-import deleteRegistration from '@/server/api/deleteRegistration'
-import updateRegistration from '@/server/api/updateRegistration'
+import deleteRegistration from 'server/api/deleteRegistration'
+import updateRegistration from 'server/api/updateRegistration'
 
 export default async function handler(
   req: NextApiRequest,

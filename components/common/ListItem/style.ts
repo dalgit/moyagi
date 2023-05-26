@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { baseHover } from '@/styles/constants'
+import { baseHover } from 'styles/constants'
 
 export const ListItemLayout = styled.li`
   display: flex;
