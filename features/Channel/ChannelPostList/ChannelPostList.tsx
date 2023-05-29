@@ -3,7 +3,7 @@ import {
   NotificationBox,
 } from 'components/common/NotificationBox/NotificationBox'
 import { PostList } from 'features/Post'
-import { useChannelPosts } from 'hooks/queries/useChannelPosts'
+import { useChannelPosts } from 'hooks/post'
 
 interface ChannelPostListProps {
   channelId: string

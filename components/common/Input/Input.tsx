@@ -1,34 +1,22 @@
+import { InputHTMLAttributes } from 'react'
 import * as S from './style'
 
-interface InputProps {
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string
   id?: string
   name?: string
-  type?: string
-  value?: string
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-const Input = ({ label, id, name, type, value, onChange }: InputProps) => {
+const Input = ({ label, id, name, ...rest }: InputProps) => {
+  const inputName = name || id
+
   return label ? (
     <S.StyledLabel htmlFor={id}>
       {label}
-      <S.StyledInput
-        type={type}
-        id={id}
-        name={name || id}
-        value={value}
-        onChange={onChange}
-      />
+      <S.StyledInput {...rest} id={id} name={inputName} />
     </S.StyledLabel>
   ) : (
-    <S.StyledInput
-      type={type}
-      id={id}
-      name={name || id}
-      value={value}
-      onChange={onChange}
-    />
+    <S.StyledInput {...rest} id={id} name={inputName} />
   )
 }
 

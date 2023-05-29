@@ -1,5 +1,5 @@
 import { NotificationBox, BoxType, Spinner } from 'components/common'
-import useChannelsByKeword from 'hooks/queries/useChannelsByKeword'
+import useChannelsByKeword from 'hooks/channel/useChannelsByKeword'
 import ChannelCards from '../ChannelCards/ChannelCards'
 
 interface SearchedChannelCardsProps {

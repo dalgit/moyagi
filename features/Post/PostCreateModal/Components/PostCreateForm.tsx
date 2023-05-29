@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Quill from 'components/common/Quill/Quill'
-import { useCreatePost } from 'hooks/mutations/useCreaetePost'
+import { useCreatePost } from 'hooks/post/useCreatePost'
 import * as S from '../style'
 
 const PostCreateForm = ({ channelId }: { channelId: string }) => {

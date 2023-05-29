@@ -1,5 +1,5 @@
 import { Button } from 'components/common'
-import { usePatchRegistrationStatus } from 'hooks/mutations/usePatchRegistrationStatus'
+import { usePatchRegistrationStatus } from 'hooks/registration/usePatchRegistrationStatus'
 import { EStatus } from 'types/registration'
 
 interface AdminButtonsProps {

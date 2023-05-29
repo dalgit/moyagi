@@ -1,10 +1,7 @@
 import { useRouter } from 'next/router'
-import {
-  NotificationBox,
-  BoxType,
-} from 'components/common/NotificationBox/NotificationBox'
+import { NotificationBox, BoxType } from 'components/common'
 import { Layout, UserProfileTemplate } from 'components/Template'
-import { useUser } from 'hooks/queries/useUser'
+import { useUser } from 'hooks/user/useUser'
 
 const UserDetailPage = () => {
   const router = useRouter()

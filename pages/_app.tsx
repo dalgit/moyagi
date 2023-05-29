@@ -1,4 +1,3 @@
-import CssBaseline from '@mui/material/CssBaseline'
 import {
   Hydrate,
   QueryClient,
@@ -31,7 +30,6 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
         <Hydrate state={pageProps.dehydratedProps}>
           <ThemeProvider theme={theme}>
             <GlobalStyle />
-            <CssBaseline />
             <Component {...pageProps} />
           </ThemeProvider>
           <ReactQueryDevtools initialIsOpen={false} />

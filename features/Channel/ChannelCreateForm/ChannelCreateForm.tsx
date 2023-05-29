@@ -1,7 +1,6 @@
 import { Button, ImageSelector, Input, Radio, Radios } from 'components/common'
-import { useCreateChannel } from 'hooks/mutations/useCreateChannel'
-import useForm from 'hooks/useForm'
-import useUploadImage from 'hooks/useUpoladImgae'
+import { useCreateChannel } from 'hooks/channel'
+import { useForm, useUploadImage } from 'hooks/common'
 import * as S from './style'
 
 const initailForm = {

@@ -1,5 +1,5 @@
-import { useCreateRegistration } from 'hooks/mutations/useCreateRegistration'
-import useForm from 'hooks/useForm'
+import { useForm } from 'hooks/common'
+import { useCreateRegistration } from 'hooks/registration'
 
 interface RegistrationFormProps {
   channelId: string

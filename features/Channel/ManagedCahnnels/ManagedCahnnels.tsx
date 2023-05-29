@@ -1,5 +1,5 @@
 import { ChannelList } from 'features/Channel'
-import useManagedChanneles from '../hooks/useManagedChannels'
+import useManagedChanneles from 'hooks/channel/useManagedChannels'
 
 const ManagedCahnnels = () => {
   const { data: channels } = useManagedChanneles()

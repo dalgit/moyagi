@@ -1,6 +1,6 @@
 import { Button } from 'components/common'
+import { useSearch } from 'hooks/channel'
 import * as S from './style'
-import useSearch from '../hooks/useSearch'
 
 const SearchBar = () => {
   const {

@@ -1,5 +1,5 @@
-import { ServerStyleSheets } from '@mui/styles'
 import Document, { Html, Head, Main, NextScript } from 'next/document'
+import { ServerStyleSheet } from 'styled-components'
 
 export default class MyDocument extends Document {
   render() {
@@ -17,13 +17,12 @@ export default class MyDocument extends Document {
 }
 
 MyDocument.getInitialProps = async (ctx) => {
-  const materialSheets = new ServerStyleSheets()
+  const sheet = new ServerStyleSheet()
   const originalRenderPage = ctx.renderPage
 
   ctx.renderPage = () =>
     originalRenderPage({
-      enhanceApp: (App) => (props) =>
-        materialSheets.collect(<App {...props} />),
+      enhanceApp: (App) => (props) => sheet.collectStyles(<App {...props} />),
     })
 
   const initialProps = await Document.getInitialProps(ctx)

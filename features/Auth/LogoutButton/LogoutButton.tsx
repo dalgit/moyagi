@@ -1,4 +1,4 @@
-import useLogoutUser from '../hooks/useLogoutUser'
+import { useLogoutUser } from 'hooks/auth'
 
 const LogoutButton = () => {
   const { mutate: logoutMutate } = useLogoutUser()

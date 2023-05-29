@@ -1,7 +1,7 @@
 import { useRecoilValue } from 'recoil'
 import { BoxType, NotificationBox } from 'components/common'
 import ChannelCards from 'features/Channel/ChannelCards/ChannelCards'
-import { useUserChannels } from 'hooks/queries/useUserChannels'
+import { useUserChannels } from 'hooks/channel'
 import { userIdSelector } from 'recoil/user'
 
 const UserChannelCards = () => {

@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import ChannelList from 'features/Channel/ChannelList/ChannelList'
 import ChannelListItem from 'features/Channel/ChannelListItem/ChannelListItem'
-import { useMyChannels } from 'hooks/queries/useMyChannels'
+import { useMyChannels } from 'hooks/channel'
 import * as S from './style'
 
 const ChannelSideBar = () => {

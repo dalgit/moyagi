@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { Card } from 'components/common'
 import { channelDefaultImage } from 'constants/defaultImage'
+import { useMember } from 'hooks/channel'
 import { IChannel } from 'types/channel'
 import ButtonWithModal from './ButtonWithModal/ButtonWithModal'
 import * as S from './style'
 import ChannelMembersModal from '../ChannelMembersModal/ChannelMembersModal'
-import useMember from '../hooks/useMember'
 
 interface ChannelInfoProps {
   channel: IChannel

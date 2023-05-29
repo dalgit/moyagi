@@ -1,5 +1,5 @@
 import { Button } from 'components/common'
-import useDeleteChannelMember from 'features/Channel/hooks/useDeleteChannelMember'
+import { useDeleteChannelMember } from 'hooks/channel'
 
 interface UserBanButtonProps {
   userId: string

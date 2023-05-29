@@ -1,4 +1,4 @@
-import useChannelMembers from 'features/Channel/hooks/useChannelMembers'
+import useChannelMembers from 'hooks/channel/useChannelMembers'
 import UserBanButton from '../UserBanButton/UserBanButton'
 import UserListItem from '../UserListItem/UserListItem'
 
