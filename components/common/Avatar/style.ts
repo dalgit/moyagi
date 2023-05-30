@@ -7,6 +7,7 @@ export const AvatarLayout = styled.div`
   background-color: white;
   padding: 5px;
   gap: 5px;
+  font-weight: bold;
 
   ${baseHover}
 `
@@ -19,7 +20,6 @@ export const AvatarImage = styled(FImage)`
 
 export const AvatarName = styled.span`
   padding: 5px;
-  font-weight: bold;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;

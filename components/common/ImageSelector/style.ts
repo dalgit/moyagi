@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { cameraIcon } from 'constants/defaultImage'
+import { camera } from 'constants/icon'
 import FImage from '../FImage/FImage'
 
 export const ImageSelectorLayout = styled.div`
@@ -38,7 +38,7 @@ export const SelectedImage = styled(FImage)`
     bottom: 0;
     width: 65px;
     height: 65px;
-    background-image: url(${cameraIcon});
+    background-image: url(${camera});
     background-size: contain;
   }
 `

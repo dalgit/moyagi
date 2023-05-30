@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useRecoilValue } from 'recoil'
-import { Button, ImageSelector, Input } from 'components/common'
+import { Button, ImageSelector, Input, BackButton } from 'components/common'
 import { userDefaultImage } from 'constants/defaultImage'
 import { useUploadImage } from 'hooks/common'
 import { useUpdateUser, useUser } from 'hooks/user'

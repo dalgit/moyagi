@@ -4,3 +4,7 @@ export { default as UserEditProfile } from './UserEditProfile/UserEditProfile'
 export { default as UserList } from './UserList/UserList'
 export { default as UserListItem } from './UserListItem/UserListItem'
 export { default as UserProfile } from './UserProfile/UserProfile'
+export { default as UserNavList } from './UserNavList/UserNavList'
+export { default as UserNav } from './UserNav/UserNav'
+
+export { default as UserEditProfileModal } from './UserEditProfileModal/UserEditProfileModal'

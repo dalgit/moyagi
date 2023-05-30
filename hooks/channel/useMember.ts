@@ -16,7 +16,7 @@ const useMember = (channel: IChannel): any => {
       setIsMember(foundMember)
     }
   }, [channel, user])
-  return [isMember]
+  return isMember
 }
 
 export default useMember

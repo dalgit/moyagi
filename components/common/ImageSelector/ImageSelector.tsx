@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import { addDefaultImage } from 'constants/defaultImage'
+import { picture } from 'constants/icon'
 import * as S from './style'
 
 interface ImageSelectorHandler {
@@ -12,7 +12,7 @@ interface ImageSelectorHandler {
 const ImageSelector = ({
   setFile,
   label,
-  defaultImage = addDefaultImage,
+  defaultImage = picture,
   className,
 }: ImageSelectorHandler) => {
   const ref = useRef<HTMLInputElement>(null)

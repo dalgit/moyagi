@@ -1,20 +1,15 @@
-import { ParsedUrlQuery } from 'querystring'
 import { QueryClient, dehydrate } from '@tanstack/react-query'
-import useMember from 'features/Channel/hooks/useMember'
 import { GetServerSideProps } from 'next/types'
 import { ChannelTemplate, Layout } from 'components/Template'
-import { useChannel } from 'hooks/channel'
+import { useChannel, useMember } from 'hooks/channel'
 import { IChannel } from 'types/channel'
+import { IParams } from 'types/common'
 import createServerInstance from 'utils/axios/server'
 import { channelKeys } from 'utils/queryKeys/channel'
 
-export interface IParams extends ParsedUrlQuery {
-  slug: string
-}
-
 const ChannelPage = ({ slug }: { slug: string }) => {
   const { data: channel = {} as IChannel } = useChannel(slug)
-  const [isMember] = useMember(channel)
+  const isMember = useMember(channel)
   const shouldFetchPosts = channel.isPublic || isMember
 
   return (
@@ -27,11 +22,8 @@ const ChannelPage = ({ slug }: { slug: string }) => {
 export default ChannelPage
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { params } = context
-  const { slug } = params as IParams
-
+  const { slug } = context.params as IParams
   const server = createServerInstance(context)
-
   const queryClient = new QueryClient()
 
   try {

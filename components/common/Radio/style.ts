@@ -25,7 +25,6 @@ export const StyledInput = styled.input`
 export const RadiosLayout = styled.div`
   display: flex;
   justify-content: space-around;
-  border: 1px solid red;
   background-color: white;
   border: 0.8px solid #a6afb8;
   border-radius: 4px;

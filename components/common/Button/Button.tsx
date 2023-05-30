@@ -21,7 +21,7 @@ const Button = ({ children, ...rest }: ButtonProps): ReactElement => {
 export default Button
 
 Button.defaultProps = {
-  width: 'auto',
+  width: '100%',
   height: 'auto',
   fontSize: '14px',
   variant: 'primary',

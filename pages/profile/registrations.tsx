@@ -1,6 +1,6 @@
 import { useRecoilValue } from 'recoil'
 import { Layout, UserRegistrationTemplate } from 'components/Template'
-import { useUserRegistrations } from 'features/Registration/hooks/useUserRegistratnions'
+import { useUserRegistrations } from 'hooks/registration'
 import { userIdSelector } from 'recoil/user'
 
 const UserRegistrationsPage = () => {

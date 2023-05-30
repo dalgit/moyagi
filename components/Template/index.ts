@@ -7,4 +7,4 @@ export { default as UserChannelsTemplate } from './UserChannelsTemplate/UserChan
 export { default as UserProfileTemplate } from './UserProfileTemplate/UserProfileTemplate'
 export { default as UserRegistrationTemplate } from './UserRegistrationTemplate/UserRegistrationTemplate'
 
-export { default as Layout } from '../Layout/Layout'
+export { default as Layout } from '../Layout/Layout/Layout'

@@ -15,7 +15,7 @@ const ChannelDetailCard = ({ channel }: ChannelInfoProps) => {
   const { name, description, manager, address, isPublic, members, imageUrl } =
     channel
   const [isModalOpen, setIsModalActive] = useState<boolean>(false)
-  const [isMember] = useMember(channel)
+  const isMember = useMember(channel)
   const toggleModal = () => setIsModalActive(!isModalOpen)
 
   return (
