@@ -1,21 +1,25 @@
+import useModal from 'hooks/common/useModal'
+import { ModalKeys } from 'recoil/modal/modalTypes'
 import Portal from './Portal'
 import * as S from './style'
 
 interface ModalFrameProps {
   children: React.ReactNode
-  isModalOpen: boolean
-  closeModal: () => void
+  modalKey: ModalKeys
 }
 
-const ModalFrame = ({ children, isModalOpen, closeModal }: ModalFrameProps) => {
-  if (!isModalOpen) return null
+const ModalFrame = ({ children, modalKey }: ModalFrameProps) => {
+  const { closeModal } = useModal()
 
+  const handleModalClose = () => {
+    closeModal(modalKey)
+  }
   return (
     <Portal>
-      <S.Blur onClick={closeModal} />
+      <S.Blur onClick={handleModalClose} />
       <S.ChildrenWrapper>
         {children}
-        <S.ExitIcon onClick={closeModal} />
+        <S.ExitIcon onClick={handleModalClose} />
       </S.ChildrenWrapper>
     </Portal>
   )
