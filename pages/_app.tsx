@@ -8,6 +8,7 @@ import { AppProps } from 'next/app'
 import { useState } from 'react'
 import { RecoilRoot } from 'recoil'
 import { ThemeProvider } from 'styled-components'
+import ModalContainer from 'components/common/ModalContainer/ModalContainer'
 import { GlobalStyle } from 'styles/global-style'
 import theme from 'styles/theme'
 
@@ -31,6 +32,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
           <ThemeProvider theme={theme}>
             <GlobalStyle />
             <Component {...pageProps} />
+            <ModalContainer />
           </ThemeProvider>
           <ReactQueryDevtools initialIsOpen={false} />
         </Hydrate>

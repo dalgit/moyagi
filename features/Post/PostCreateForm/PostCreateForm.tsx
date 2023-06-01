@@ -1,9 +1,12 @@
 import { useState } from 'react'
+import { useRecoilValue } from 'recoil'
 import Quill from 'components/common/Quill/Quill'
-import { useCreatePost } from 'hooks/post/useCreatePost'
-import * as S from '../style'
+import { useCreatePost } from 'hooks/post'
+import channelAtom from 'recoil/channel/channelAtom'
+import * as S from './style'
 
-const PostCreateForm = ({ channelId }: { channelId: string }) => {
+const PostCreateForm = () => {
+  const { _id: channelId } = useRecoilValue(channelAtom)
   const { mutate: createPostMutate } = useCreatePost(channelId)
   const [content, setContent] = useState<string>('')
 

@@ -4,7 +4,7 @@ export { default as ChannelCreateForm } from './ChannelCreateForm/ChannelCreateF
 export { default as ChannelDetailCard } from './ChannelDetailCard/ChannelDetailCard'
 export { default as ChannelList } from './ChannelList/ChannelList'
 export { default as ChannelListItem } from './ChannelListItem/ChannelListItem'
-export { default as ChannelMembersModal } from './ChannelMembersModal/ChannelMembersModal'
+export { default as ChannelMemberList } from './ChannelMemberList/ChannelMembersList'
 export { default as ChannelPostList } from './ChannelPostList/ChannelPostList'
 export { default as ChannelSideBar } from './ChannelSideBar/ChannelSideBar'
 

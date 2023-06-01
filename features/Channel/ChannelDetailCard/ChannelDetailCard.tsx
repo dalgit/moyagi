@@ -1,46 +1,54 @@
-import { useState } from 'react'
-import { Card } from 'components/common'
+import { useRecoilValue } from 'recoil'
+import { Button, Card } from 'components/common'
 import { channelDefaultImage } from 'constants/defaultImage'
-import { useMember } from 'hooks/channel'
+import useModal from 'hooks/common/useModal'
+import { isMemberSelector } from 'recoil/channel/isMemberSelector'
 import { IChannel } from 'types/channel'
-import ButtonWithModal from './ButtonWithModal/ButtonWithModal'
 import * as S from './style'
-import ChannelMembersModal from '../ChannelMembersModal/ChannelMembersModal'
 
 interface ChannelInfoProps {
   channel: IChannel
 }
 
 const ChannelDetailCard = ({ channel }: ChannelInfoProps) => {
-  const { name, description, manager, address, isPublic, members, imageUrl } =
-    channel
-  const [isModalOpen, setIsModalActive] = useState<boolean>(false)
-  const isMember = useMember(channel)
-  const toggleModal = () => setIsModalActive(!isModalOpen)
+  const { name, description, manager, address, members, imageUrl } = channel
+  const isMember = useRecoilValue(isMemberSelector)
+  const { openModal } = useModal()
+
+  const handlePostCreateModalOpen = () => {
+    openModal('PostCreateForm')
+  }
+
+  const handleRegistrationModalOpen = () => {
+    openModal('RegistrationForm')
+  }
+
+  const handleMembersModalOpen = () => {
+    openModal('channelMemberList')
+  }
 
   return (
-    <S.ChannelDetailCardLayout>
-      <Card
-        width="100%"
-        title={name}
-        href={address}
-        imageSrc={imageUrl || channelDefaultImage}
-        hasBoxShadow={false}
-      />
-      <S.Description>{description}</S.Description>
-      <S.Member>매니저 {manager.name}</S.Member>
-      <S.Member onClick={toggleModal}>멤버 {members?.length}명</S.Member>
-      <ChannelMembersModal
-        members={members}
-        isModalOpen={isModalOpen}
-        closeModal={toggleModal}
-      />
-      <ButtonWithModal
-        isMember={isMember}
-        channelId={channel._id}
-        isPublic={isPublic}
-      />
-    </S.ChannelDetailCardLayout>
+    <div>
+      <S.ChannelDetailCardLayout>
+        <Card
+          width="100%"
+          title={name}
+          href={address}
+          imageSrc={imageUrl || channelDefaultImage}
+          hasBoxShadow={false}
+        />
+        <S.Description>{description}</S.Description>
+        <S.Member>매니저 {manager.name}</S.Member>
+        <S.Member onClick={handleMembersModalOpen}>
+          멤버 {members?.length}명
+        </S.Member>
+        {isMember ? (
+          <Button onClick={handlePostCreateModalOpen}>작성하기</Button>
+        ) : (
+          <Button onClick={handleRegistrationModalOpen}>가입하기</Button>
+        )}
+      </S.ChannelDetailCardLayout>
+    </div>
   )
 }
 

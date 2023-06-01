@@ -1,13 +1,12 @@
+import { useRecoilValue } from 'recoil'
 import { useForm } from 'hooks/common'
 import { useCreateRegistration } from 'hooks/registration'
+import channelAtom from 'recoil/channel/channelAtom'
 
-interface RegistrationFormProps {
-  channelId: string
-  isPublic: boolean
-}
-
-const RegistrationForm = ({ channelId, isPublic }: RegistrationFormProps) => {
+const RegistrationForm = () => {
+  const { _id: channelId, isPublic } = useRecoilValue(channelAtom)
   const { mutate: createRegistrationMutate } = useCreateRegistration()
+
   const { form, updateForm } = useForm<{ [key: string]: string }>({
     message: '',
   })
