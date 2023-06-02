@@ -9,6 +9,7 @@ import { useState } from 'react'
 import { RecoilRoot } from 'recoil'
 import { ThemeProvider } from 'styled-components'
 import ModalContainer from 'components/common/ModalContainer/ModalContainer'
+import Toast from 'components/common/Toast/ToastList/ToastList'
 import { GlobalStyle } from 'styles/global-style'
 import theme from 'styles/theme'
 
@@ -33,6 +34,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
             <GlobalStyle />
             <Component {...pageProps} />
             <ModalContainer />
+            <Toast />
           </ThemeProvider>
           <ReactQueryDevtools initialIsOpen={false} />
         </Hydrate>
