@@ -1,30 +1,26 @@
-import useChannelMembers from 'hooks/channel/useChannelMembers'
+import { useRecoilValue } from 'recoil'
+import { NotificationBox } from 'components/common'
+import membersExceptManagerSelector from 'recoil/channel/channelMemberSelector'
 import UserBanButton from '../UserBanButton/UserBanButton'
 import UserListItem from '../UserListItem/UserListItem'
 
-interface AdminUserListProps {
-  channelId: string
-}
+const AdminChannelUserList = () => {
+  const members = useRecoilValue(membersExceptManagerSelector)
 
-const AdminUserList = ({ channelId }: AdminUserListProps) => {
-  const { data: users = [] } = useChannelMembers(channelId)
-
-  if (!users.length) {
-    return <div>1</div>
+  if (!members.length) {
+    return <NotificationBox title="관리중인 멤버가 없습니다." type="empty" />
   }
-
   return (
     <div>
-      {users?.map((user) => (
+      {members?.map((member) => (
         <UserListItem
-          key={user._id}
-          id={user._id}
-          right={<UserBanButton channelId={channelId} userId={user._id} />}
-          {...user}
+          key={member._id}
+          right={<UserBanButton userId={member._id} />}
+          {...member}
         />
       ))}
     </div>
   )
 }
 
-export default AdminUserList
+export default AdminChannelUserList

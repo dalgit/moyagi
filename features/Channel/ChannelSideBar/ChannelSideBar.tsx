@@ -1,24 +1,44 @@
-import { useRouter } from 'next/router'
-import ChannelList from 'features/Channel/ChannelList/ChannelList'
-import ChannelListItem from 'features/Channel/ChannelListItem/ChannelListItem'
-import { useMyChannels } from 'hooks/channel'
+import {
+  AiOutlineSetting as SettingIcon,
+  AiOutlinePaperClip as ClipIcon,
+  AiOutlineExclamation as NoticeIcon,
+} from 'react-icons/ai'
+import { useRecoilValue } from 'recoil'
+import { baseUrl } from 'constants/baseUrl'
+import useModal from 'hooks/common/useModal'
+import useToast from 'hooks/common/useToast'
+import channelAtom from 'recoil/channel/channelAtom'
+import { isChannelManagerSelector } from 'recoil/channel/isChannelManagerSelector'
 import * as S from './style'
 
 const ChannelSideBar = () => {
-  const { data: channels = [] } = useMyChannels()
-  const router = useRouter()
+  const { openModal } = useModal()
+  const { onToast } = useToast()
+  const { address } = useRecoilValue(channelAtom)
+  const isManager = useRecoilValue(isChannelManagerSelector)
 
-  const handleChannelClick = (address: string) => {
-    router.push(`/channels/${address}`)
+  const handleSettingModal = () => {
+    if (isManager) {
+      openModal('ChannelManageMenus')
+    } else {
+      onToast({ content: '권한이 없습니다.', type: 'error' })
+    }
+  }
+
+  const handleCopyAddress = () => {
+    navigator.clipboard.writeText(`${baseUrl}/channels/${address}`)
+    onToast({ content: '복사가 완료되었습니다.', type: 'success' })
+  }
+
+  const handleNoticeModal = () => {
+    alert('준비중입니다.')
   }
 
   return (
     <S.ChannelSideBarLayout>
-      <h3>my channels</h3>
-      {channels.map((channel) => (
-        <ChannelListItem />
-      ))}
-      <ChannelList channels={channels} />
+      <SettingIcon onClick={handleSettingModal} />
+      <ClipIcon onClick={handleCopyAddress} />
+      <NoticeIcon onClick={handleNoticeModal} />
     </S.ChannelSideBarLayout>
   )
 }
