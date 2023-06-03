@@ -1,6 +1,6 @@
 import { useRecoilValue } from 'recoil'
 import MoreMenu from 'components/common/MoreMenu/MoreMenu'
-import { userSelector } from 'recoil/user'
+import userIdSelector from 'recoil/user/userIdSelector'
 import { IPost } from 'types/post'
 import AuthorMenuList from './AuthorMenuList'
 import UserMenuList from './UserMenuList'
@@ -12,8 +12,8 @@ interface PostHeaderMenuProps {
 const PostHeaderMenu = ({ post }: PostHeaderMenuProps) => {
   const { author, channel } = post
 
-  const user = useRecoilValue(userSelector)
-  const isMyPost = author._id === user?._id
+  const userId = useRecoilValue(userIdSelector)
+  const isMyPost = author._id === userId
 
   return (
     <MoreMenu>

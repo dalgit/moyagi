@@ -1,17 +1,11 @@
 import { ReactElement, ReactNode, ButtonHTMLAttributes } from 'react'
 import * as S from './style'
 
-export interface ButtonStyle {
-  width?: string
-  height?: string
-  fontSize?: string
-  variant?: string
-}
+export type ButtonVariant = 'primary' | 'secondary' | 'sub'
 
-interface ButtonProps
-  extends ButtonHTMLAttributes<HTMLButtonElement>,
-    ButtonStyle {
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode
+  variant: ButtonVariant
 }
 
 const Button = ({ children, ...rest }: ButtonProps): ReactElement => {
@@ -21,8 +15,5 @@ const Button = ({ children, ...rest }: ButtonProps): ReactElement => {
 export default Button
 
 Button.defaultProps = {
-  width: '100%',
-  height: 'auto',
-  fontSize: '14px',
   variant: 'primary',
 }

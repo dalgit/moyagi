@@ -1,4 +1,5 @@
 import { IRegistration } from 'types/registration'
+import * as S from './style'
 import RegistrationListItem from '../RegistrationListItem/RegistrationListItem'
 
 interface RegistrationListProps {
@@ -7,20 +8,14 @@ interface RegistrationListProps {
 
 const RegistrationList = ({ registrations }: RegistrationListProps) => {
   return (
-    <ul>
+    <S.RegistrationListLayout>
       {registrations?.map((registration) => (
         <RegistrationListItem
           key={registration._id}
           registration={registration}
         />
       ))}
-      {registrations?.map((registration) => (
-        <RegistrationListItem
-          key={registration._id}
-          registration={registration}
-        />
-      ))}
-    </ul>
+    </S.RegistrationListLayout>
   )
 }
 

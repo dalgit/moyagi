@@ -2,7 +2,7 @@ import { useMutation, UseMutationResult } from '@tanstack/react-query'
 import { AxiosError, AxiosResponse } from 'axios'
 import { useRouter } from 'next/router'
 import { useSetRecoilState } from 'recoil'
-import { userSelector } from 'recoil/user'
+import userSelector from 'recoil/user/userSelector'
 import client from 'utils/axios/axios'
 
 interface useAuthenticateUserArgs {

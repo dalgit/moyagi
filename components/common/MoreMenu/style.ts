@@ -1,3 +1,4 @@
+import { FiMoreHorizontal } from 'react-icons/fi'
 import styled from 'styled-components'
 import { baseHover } from 'styles/constants'
 
@@ -18,5 +19,11 @@ export const MenuList = styled.ul`
   li {
     text-align: center;
     ${baseHover}
+  }
+`
+
+export const MoreIcon = styled(FiMoreHorizontal)`
+  :hover {
+    cursor: pointer;
   }
 `

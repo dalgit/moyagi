@@ -1,5 +1,4 @@
 import { ReactNode } from 'react'
-import { FiMoreHorizontal as MoreIcon } from 'react-icons/fi'
 import { useMenu } from 'hooks/common'
 import * as S from './style'
 
@@ -12,7 +11,7 @@ const MoreMenu = ({ children }: MoreMenuProps) => {
 
   return (
     <S.MoreMenuLayout ref={ref}>
-      <MoreIcon onClick={handleMenuClick} />
+      <S.MoreIcon onClick={handleMenuClick} />
       {isMenuOpen && <S.MenuList>{children}</S.MenuList>}
     </S.MoreMenuLayout>
   )

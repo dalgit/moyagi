@@ -1,25 +1,18 @@
-import { useRouter } from 'next/router'
 import { IUser } from 'types/user'
 import UserListItem from '../UserListItem/UserListItem'
 
 interface UserListProps {
   users: IUser[]
+  onItemClick: (user: IUser) => void
 }
 
-const UserList = ({ users }: UserListProps) => {
-  const router = useRouter()
-
-  const handleUserClick = (id: string) => {
-    router.push(`/users/${id}`)
-  }
-
+const UserList = ({ users, onItemClick }: UserListProps) => {
   return (
     <div>
       {users.map((user) => (
         <UserListItem
           key={user._id}
-          id={user._id}
-          onClick={() => handleUserClick(user._id)}
+          onClick={() => onItemClick(user)}
           {...user}
         />
       ))}

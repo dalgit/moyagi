@@ -7,7 +7,6 @@ interface ToastItemProps {
 
 const ToastItem = ({ toast }: ToastItemProps) => {
   const { content, type = 'success' } = toast
-
   return <S.ToastItemLayout type={type}>{content}</S.ToastItemLayout>
 }
 

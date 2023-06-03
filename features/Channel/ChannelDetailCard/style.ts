@@ -3,7 +3,6 @@ import styled from 'styled-components'
 export const ChannelDetailCardLayout = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100%;
   border: 1px solid #f2f3f5;
   background-color: white;
   border-radius: 12px;
@@ -14,12 +13,14 @@ export const ChannelDetailCardLayout = styled.div`
 
 export const Description = styled.span`
   font-size: 14px;
+  line-height: 1.5;
 `
 
 export const Member = styled.span`
+  display: flex;
+  width: fit-content;
+  margin-left: auto;
   font-size: 12px;
-  width: 100%;
-  text-align: right;
   color: gray;
   cursor: pointer;
 `

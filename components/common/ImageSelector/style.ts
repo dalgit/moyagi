@@ -9,6 +9,7 @@ export const ImageSelectorLayout = styled.div`
   width: 250px;
   gap: 10px;
   position: relative;
+  margin: 0 auto;
 
   label {
     text-align: center;

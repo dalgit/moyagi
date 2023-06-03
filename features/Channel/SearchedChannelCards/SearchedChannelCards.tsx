@@ -1,4 +1,4 @@
-import { NotificationBox, BoxType, Spinner } from 'components/common'
+import { NotificationBox, Spinner } from 'components/common'
 import useChannelsByKeword from 'hooks/channel/useChannelsByKeword'
 import ChannelCards from '../ChannelCards/ChannelCards'
 
@@ -12,9 +12,7 @@ const SearchedChannelCards = ({ keyword }: SearchedChannelCardsProps) => {
   if (isLoading) return <Spinner />
 
   if (!channels.length)
-    return (
-      <NotificationBox title="검색된 채널이 없습니다." type={BoxType.empty} />
-    )
+    return <NotificationBox title="검색된 채널이 없습니다." type="empty" />
 
   return <ChannelCards channels={channels} />
 }

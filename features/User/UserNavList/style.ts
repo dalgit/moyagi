@@ -12,6 +12,7 @@ export const UserNavListLayout = styled.ul`
 
   li {
     text-align: center;
+    margin: 5px 0;
 
     :hover {
       cursor: pointer;

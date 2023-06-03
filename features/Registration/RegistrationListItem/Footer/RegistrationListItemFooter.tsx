@@ -1,5 +1,5 @@
 import { useRecoilValue } from 'recoil'
-import { userIdSelector } from 'recoil/user'
+import userIdSelector from 'recoil/user/userIdSelector'
 import { EStatus } from 'types/registration'
 import { IUser } from 'types/user'
 import AdminButtons from './AdminButtons'

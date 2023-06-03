@@ -1,22 +1,36 @@
-import {
-  BoxType,
-  NotificationBox,
-} from 'components/common/NotificationBox/NotificationBox'
+import { useRecoilValue } from 'recoil'
+import { NotificationBox } from 'components/common'
 import { PostList } from 'features/Post'
 import { useChannelPosts } from 'hooks/post'
+import shouldFetchPostsSelector from 'recoil/channel/shouldFetchPostSelector'
 
 interface ChannelPostListProps {
   channelId: string
 }
+
 const ChannelPostList = ({ channelId }: ChannelPostListProps) => {
-  const { data: posts = [] } = useChannelPosts(channelId, { suspense: true })
+  const shouldFetchPosts = useRecoilValue(shouldFetchPostsSelector)
+  const { data: posts = [] } = useChannelPosts(channelId, {
+    suspense: true,
+    enabled: shouldFetchPosts,
+  })
+
+  if (!shouldFetchPosts) {
+    return (
+      <NotificationBox
+        title="비공개 채널입니다."
+        description="가입후 이용해주세요"
+        type="sorry"
+      />
+    )
+  }
 
   if (!posts.length) {
     return (
       <NotificationBox
         title="작성된 게시물이 없습니다."
         description="첫 글을 작성해보세요"
-        type={BoxType.empty}
+        type="empty"
       />
     )
   }

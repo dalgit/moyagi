@@ -1,4 +1,4 @@
-import { useDeletePost } from 'hooks/post/useDeletePost'
+import { useDeletePost } from 'hooks/post'
 
 interface AuthorMenuListProps {
   postId: string

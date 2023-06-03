@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { NotificationBox as Box } from 'components/common'
 
 export const UserRegistrationTemplateLayout = styled.div`
   display: flex;
@@ -7,4 +8,8 @@ export const UserRegistrationTemplateLayout = styled.div`
   padding: 25px 0;
   width: 700px;
   margin: auto;
+`
+
+export const NotificationBox = styled(Box)`
+  height: 100%;
 `

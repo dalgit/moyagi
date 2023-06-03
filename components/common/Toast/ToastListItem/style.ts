@@ -3,19 +3,21 @@ import { ToastStatus } from 'recoil/toast/toastAtom'
 
 export const ToastItemLayout = styled.div<{ type: ToastStatus }>`
   color: white;
-  background-color: rgba(123, 192, 128, 0.8);
   font-size: 15px;
   padding: 15px;
   margin: 5px 0;
   border-radius: 5px;
-  transform: translateX(-50%);
+  text-align: center;
+  min-width: 200px;
 
   ${({ type }) => {
-    if (type === 'success') successStyle
+    if (type === 'success') {
+      return successStyle
+    }
 
-    if (type === 'error') errorStyle
-
-    return ''
+    if (type === 'error') {
+      return errorStyle
+    }
   }}
 `
 

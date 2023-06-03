@@ -9,12 +9,12 @@ interface RadiosProps extends IRadioContextProps {
 
 const Radios = ({ label, children, ...rest }: RadiosProps) => {
   return (
-    <>
+    <div>
       <S.RadiosTitle>{label}</S.RadiosTitle>
       <RadioContext.Provider value={rest}>
         <S.RadiosLayout>{children}</S.RadiosLayout>
       </RadioContext.Provider>
-    </>
+    </div>
   )
 }
 

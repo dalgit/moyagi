@@ -1,7 +1,7 @@
 import { QueryClient, dehydrate } from '@tanstack/react-query'
 import { GetServerSideProps } from 'next/types'
 import { ChannelTemplate, Layout } from 'components/Template'
-import { useChannel, useMember } from 'hooks/channel'
+import { useChannel } from 'hooks/channel'
 import { IChannel } from 'types/channel'
 import { IParams } from 'types/common'
 import createServerInstance from 'utils/axios/server'
@@ -9,12 +9,10 @@ import { channelKeys } from 'utils/queryKeys/channel'
 
 const ChannelPage = ({ slug }: { slug: string }) => {
   const { data: channel = {} as IChannel } = useChannel(slug)
-  const isMember = useMember(channel)
-  const shouldFetchPosts = channel.isPublic || isMember
 
   return (
     <Layout>
-      <ChannelTemplate channel={channel} shouldFetchPosts={shouldFetchPosts} />
+      <ChannelTemplate channel={channel} />
     </Layout>
   )
 }

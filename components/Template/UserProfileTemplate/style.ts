@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { Button as CommonButton } from 'components/common'
 
 export const UserProfileTemplateLayout = styled.div`
-  padding: 25px;
+  padding-top: 100px;
   width: 250px;
   margin: auto;
 `

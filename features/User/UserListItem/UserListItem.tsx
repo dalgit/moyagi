@@ -6,7 +6,6 @@ interface UserListItemLayoutProps extends LiHTMLAttributes<HTMLLIElement> {
   name: string
   image?: string
   right?: ReactNode
-  onClick?: () => void
 }
 
 const UserListItem = ({ name, image, ...props }: UserListItemLayoutProps) => {

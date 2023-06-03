@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const StyledLabel = styled.label`
   display: block;
   font-size: 15px;
-  margin-left: 5px;
+  margin: 0 0 4px 4px;
   font-weight: bolder;
 `
 

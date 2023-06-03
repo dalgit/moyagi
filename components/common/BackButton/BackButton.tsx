@@ -1,7 +1,12 @@
 import { useRouter } from 'next/router'
+import { ReactNode } from 'react'
 import { Button } from '..'
 
-const BackButton = ({ children }) => {
+interface BackButtonProps {
+  children: ReactNode
+}
+
+const BackButton = ({ children }: BackButtonProps) => {
   const router = useRouter()
 
   const handleButtonClick = () => {

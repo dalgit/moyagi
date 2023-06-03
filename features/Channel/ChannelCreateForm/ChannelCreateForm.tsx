@@ -16,9 +16,7 @@ const ChannelCreateForm = () => {
   const { mutate: createChannelMutate } = useCreateChannel()
   const { setFile, handleImageUpload } = useUploadImage()
 
-  const handleCreateChannel = async (
-    e: React.FormEvent<HTMLFormElement>,
-  ): Promise<void> => {
+  const handleCreateChannel = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const imageUrl = await handleImageUpload()
 
@@ -34,21 +32,20 @@ const ChannelCreateForm = () => {
   return (
     <S.Form onSubmit={handleCreateChannel}>
       <ImageSelector setFile={setFile} />
-      <S.Wrapper>
-        <Input label="이름" id="name" onChange={updateForm} />
-        <Input label="주소" id="address" onChange={updateForm} />
-        <Input label="설명" id="description" onChange={updateForm} />
-        <Radios
-          label="공개 여부"
-          name="isPublic"
-          currentValue={form.isPublic}
-          onChange={updateForm}
-        >
-          <Radio label="공개" id="public" value="true" />
-          <Radio label="비공개" id="private" value="false" />
-        </Radios>
-        <Button type="submit">생성</Button>
-      </S.Wrapper>
+
+      <Input label="이름" id="name" onChange={updateForm} />
+      <Input label="주소" id="address" onChange={updateForm} />
+      <Input label="설명" id="description" onChange={updateForm} />
+      <Radios
+        label="공개 여부"
+        name="isPublic"
+        currentValue={form.isPublic}
+        onChange={updateForm}
+      >
+        <Radio label="공개" id="public" value="true" />
+        <Radio label="비공개" id="private" value="false" />
+      </Radios>
+      <Button type="submit">생성</Button>
     </S.Form>
   )
 }

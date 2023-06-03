@@ -1,10 +1,10 @@
 import { useRecoilValue } from 'recoil'
-import { useUserChannels } from 'hooks/channel/useUserChannels'
-import { userIdSelector } from 'recoil/user'
+import userIdSelector from 'recoil/user/userIdSelector'
 import { IChannel } from 'types/channel'
+import useUserChannels from './useUserChannels'
 
-const useManagedChanneles = () => {
-  const userId = useRecoilValue(userIdSelector) || ''
+const useManagedChannels = () => {
+  const userId = useRecoilValue(userIdSelector)
 
   const filterChannels = (channels: IChannel[], userId: string) =>
     channels.filter((channel) => channel.manager._id === userId)
@@ -14,4 +14,4 @@ const useManagedChanneles = () => {
   })
 }
 
-export default useManagedChanneles
+export default useManagedChannels

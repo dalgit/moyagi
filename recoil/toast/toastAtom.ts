@@ -3,7 +3,7 @@ import { atom } from 'recoil'
 export type ToastStatus = 'success' | 'error'
 
 export interface IToast {
-  id: string
+  id?: string
   content: string
   type: ToastStatus
 }

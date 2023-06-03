@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import { useRecoilValue } from 'recoil'
 import { Button, Card } from 'components/common'
 import { channelDefaultImage } from 'constants/defaultImage'
@@ -12,8 +13,9 @@ interface ChannelInfoProps {
 
 const ChannelDetailCard = ({ channel }: ChannelInfoProps) => {
   const { name, description, manager, address, members, imageUrl } = channel
-  const isMember = useRecoilValue(isMemberSelector)
   const { openModal } = useModal()
+  const isMember = useRecoilValue(isMemberSelector)
+  const router = useRouter()
 
   const handlePostCreateModalOpen = () => {
     openModal('PostCreateForm')
@@ -27,6 +29,10 @@ const ChannelDetailCard = ({ channel }: ChannelInfoProps) => {
     openModal('channelMemberList')
   }
 
+  const handleManagerClick = () => {
+    router.push(`/users/${manager._id}`)
+  }
+
   return (
     <div>
       <S.ChannelDetailCardLayout>
@@ -38,7 +44,7 @@ const ChannelDetailCard = ({ channel }: ChannelInfoProps) => {
           hasBoxShadow={false}
         />
         <S.Description>{description}</S.Description>
-        <S.Member>매니저 {manager.name}</S.Member>
+        <S.Member onClick={handleManagerClick}>매니저 {manager.name}</S.Member>
         <S.Member onClick={handleMembersModalOpen}>
           멤버 {members?.length}명
         </S.Member>

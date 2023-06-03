@@ -4,7 +4,7 @@ import * as S from './style'
 
 interface ChannelListProps {
   channels: IChannel[]
-  onItemClick?: (channelId: string) => void
+  onItemClick: (channel: IChannel) => void
 }
 
 const ChannelList = ({ channels, onItemClick }: ChannelListProps) => (
@@ -12,8 +12,8 @@ const ChannelList = ({ channels, onItemClick }: ChannelListProps) => (
     {channels?.map((channel) => (
       <ChannelListItem
         key={channel._id}
-        {...channel}
-        onClick={() => onItemClick?.(channel._id)}
+        channel={channel}
+        onClick={() => onItemClick(channel)}
       />
     ))}
   </S.ChannelListLayout>

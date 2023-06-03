@@ -11,17 +11,6 @@ const colors = {
   background: '#F8F9F9',
 }
 
-const button = {
-  primary: {
-    backgroundColor: '#007bff',
-    color: '#fff',
-  },
-  secondary: {
-    backgroundColor: '#EEEEEE',
-    color: '#868686',
-  },
-}
-
 const device = {
   mobile: `screen and (max-width: ${deviceSizes.mobile})`,
   tablet: `screen and (min-width:${deviceSizes.mobile}) and (max-width: ${deviceSizes.tablet})`,
@@ -32,7 +21,6 @@ const device = {
 const theme: DefaultTheme = {
   device,
   colors,
-  button,
 }
 
 export default theme

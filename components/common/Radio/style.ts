@@ -33,6 +33,6 @@ export const RadiosLayout = styled.div`
 export const RadiosTitle = styled.label`
   display: block;
   font-size: 15px;
-  margin-left: 5px;
+  margin: 0 0 4px 4px;
   font-weight: bolder;
 `

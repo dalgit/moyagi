@@ -1,7 +1,7 @@
 import { LiHTMLAttributes, ReactNode } from 'react'
 import * as S from './style'
 
-interface ListItemProps extends LiHTMLAttributes<HTMLLIElement> {
+export interface ListItemProps extends LiHTMLAttributes<HTMLLIElement> {
   right?: ReactNode
 }
 

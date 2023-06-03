@@ -1,4 +1,4 @@
-import { useDeleteRegistration } from 'hooks/registration/useDeleteRegistration'
+import { useDeleteRegistration } from 'hooks/registration'
 import * as S from './style'
 
 interface UserButtonsProps {

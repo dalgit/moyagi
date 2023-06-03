@@ -1,14 +1,24 @@
 import Link from 'next/link'
-import { Button } from 'components/common'
+import { Button, BackButton, NotificationBox } from 'components/common'
 import * as S from './style'
+interface NotFoundTemplateProps {
+  description?: string
+}
 
-const NotFoundTemplate = () => {
+const NotFoundTemplate = ({ description }: NotFoundTemplateProps) => {
   return (
     <S.NotFoundPageLayout>
-      <h1>페이지를 찾을 수 없습니다!</h1>
-      <Link href="/">
-        <Button>메인으로 가기</Button>
-      </Link>
+      <NotificationBox
+        title="페이지를 찾을 수 없습니다"
+        description={description}
+        type="sorry"
+      />
+      <S.Buttons>
+        <BackButton>이전</BackButton>
+        <Link href="/">
+          <Button>메인</Button>
+        </Link>
+      </S.Buttons>
     </S.NotFoundPageLayout>
   )
 }

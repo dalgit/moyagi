@@ -11,10 +11,10 @@ const Input = ({ label, id, name, ...rest }: InputProps) => {
   const inputName = name || id
 
   return label ? (
-    <S.StyledLabel htmlFor={id}>
-      {label}
+    <div>
+      <S.StyledLabel htmlFor={id}>{label}</S.StyledLabel>
       <S.StyledInput {...rest} id={id} name={inputName} />
-    </S.StyledLabel>
+    </div>
   ) : (
     <S.StyledInput {...rest} id={id} name={inputName} />
   )

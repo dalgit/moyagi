@@ -4,5 +4,9 @@ export const CreateChannelTemplateLayout = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  padding: 50px 0;
+  gap: 15px;
+
+  width: 450px;
+  margin: 0 auto;
 `

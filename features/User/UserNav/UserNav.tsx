@@ -4,7 +4,7 @@ import { userDefaultImage } from 'constants/defaultImage'
 import { UserNavList } from 'features/User'
 import { useToggle } from 'hooks/common'
 import useClickOutside from 'hooks/common/useClickOutside'
-import { userSelector } from 'recoil/user'
+import userSelector from 'recoil/user/userSelector'
 import * as S from './style'
 
 const UserNav = () => {
