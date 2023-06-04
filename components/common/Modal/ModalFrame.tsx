@@ -1,4 +1,5 @@
 import useModal from 'hooks/common/useModal'
+import useRouterEffect from 'hooks/common/useRouterEffect'
 import { ModalKeys } from 'recoil/modal/modalTypes'
 import Portal from './Portal'
 import * as S from './style'
@@ -14,6 +15,11 @@ const ModalFrame = ({ children, modalKey }: ModalFrameProps) => {
   const handleModalClose = () => {
     closeModal(modalKey)
   }
+
+  useRouterEffect(() => {
+    handleModalClose()
+  })
+
   return (
     <Portal>
       <S.Blur onClick={handleModalClose} />

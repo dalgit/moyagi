@@ -1,5 +1,6 @@
 import { useRef, ReactNode } from 'react'
 import { useUploadImage } from 'hooks/common'
+import useRouterEffect from 'hooks/common/useRouterEffect'
 import * as S from './style'
 
 interface ImageInputContainerProps {
@@ -13,7 +14,7 @@ const ImageInputContainer = ({
   ...rest
 }: ImageInputContainerProps) => {
   const ref = useRef<HTMLInputElement>(null)
-  const { setFile } = useUploadImage()
+  const { setFile, removeFile } = useUploadImage()
 
   const handleInputChange = () => {
     if (!ref.current?.files) return
@@ -24,6 +25,10 @@ const ImageInputContainer = ({
   const handleImageInput = () => {
     ref.current && ref.current.click()
   }
+
+  useRouterEffect(() => {
+    removeFile(atomKey)
+  })
 
   return (
     <S.ImageInputContainerLayout onClick={handleImageInput} {...rest}>
