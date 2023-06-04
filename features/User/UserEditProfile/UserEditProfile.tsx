@@ -3,23 +3,25 @@ import { useRecoilValue } from 'recoil'
 import { Button, ImageSelector, Input } from 'components/common'
 import { userDefaultImage } from 'constants/defaultImage'
 import { useUploadImage } from 'hooks/common'
-import { useUpdateUser, useUser } from 'hooks/user'
-import userIdSelector from 'recoil/user/userIdSelector'
+import { useUpdateUser } from 'hooks/user'
+import userAtom from 'recoil/user/userAtom'
 import * as S from './style'
 
 const UserEditProfile = () => {
-  const userId = useRecoilValue(userIdSelector)
-  const { data: user } = useUser(userId)
-  const { setFile, handleImageUpload } = useUploadImage()
+  const {
+    name,
+    introduction: intro,
+    imageUrl: profileImage = userDefaultImage,
+  } = useRecoilValue(userAtom)
+
+  const { getUplodedImageUrl } = useUploadImage()
   const { mutateAsync: updateUserMutate } = useUpdateUser()
-  const [introduction, setIntroduction] = useState<string>(
-    user?.introduction || '',
-  )
+  const [introduction, setIntroduction] = useState(intro || '')
 
   const handleProfileUpdate = async () => {
     await updateUserMutate({
       introduction,
-      imageUrl: await handleImageUpload(),
+      imageUrl: await getUplodedImageUrl(),
     })
   }
 
@@ -29,11 +31,8 @@ const UserEditProfile = () => {
 
   return (
     <S.UserEditProfileLayout>
-      <ImageSelector
-        setFile={setFile}
-        defaultImage={user?.imageUrl || userDefaultImage}
-      />
-      <h2>{user?.name}</h2>
+      <ImageSelector defaultImage={profileImage} />
+      <h2>{name}</h2>
       <Input value={introduction} onChange={handleInputChange} />
       <Button onClick={handleProfileUpdate}>변경</Button>
     </S.UserEditProfileLayout>

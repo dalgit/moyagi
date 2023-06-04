@@ -14,24 +14,23 @@ const initailForm = {
 const ChannelCreateForm = () => {
   const { form, updateForm } = useForm<{ [key: string]: string }>(initailForm)
   const { mutate: createChannelMutate } = useCreateChannel()
-  const { setFile, handleImageUpload } = useUploadImage()
+  const { getUplodedImageUrl } = useUploadImage()
 
   const handleCreateChannel = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const imageUrl = await handleImageUpload()
 
     createChannelMutate({
       name: form.name,
       address: form.address,
       description: form.description,
       isPublic: JSON.parse(form.isPublic),
-      imageUrl: imageUrl,
+      imageUrl: await getUplodedImageUrl(),
     })
   }
 
   return (
     <S.Form onSubmit={handleCreateChannel}>
-      <ImageSelector setFile={setFile} />
+      <ImageSelector />
 
       <Input label="이름" id="name" onChange={updateForm} />
       <Input label="주소" id="address" onChange={updateForm} />

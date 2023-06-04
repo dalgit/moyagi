@@ -1,33 +1,20 @@
-import { useState, useRef } from 'react'
-import { picture } from 'constants/icon'
+import { useRef } from 'react'
+import { useUploadImage } from 'hooks/common'
+import ImagePreviewer from './ImagePreviewer'
 import * as S from './style'
 
 interface ImageSelectorHandler {
-  setFile: React.Dispatch<React.SetStateAction<File | undefined>>
-  label?: string
   defaultImage?: string
-  className?: string
 }
 
-const ImageSelector = ({
-  setFile,
-  label,
-  defaultImage = picture,
-  className,
-}: ImageSelectorHandler) => {
+const ImageSelector = ({ defaultImage, ...rest }: ImageSelectorHandler) => {
+  const { handleFileSet } = useUploadImage()
   const ref = useRef<HTMLInputElement>(null)
-  const [previewImg, setPreviewImg] = useState<string>(defaultImage)
 
   const handleInputChange = () => {
     if (!ref.current?.files) return
     const [file] = ref.current.files
-
-    const reader = new FileReader()
-    reader.readAsDataURL(file)
-    reader.onload = () => {
-      setPreviewImg(reader.result as string)
-      setFile(file)
-    }
+    handleFileSet(file)
   }
 
   const handleClickSelector = () => {
@@ -35,9 +22,8 @@ const ImageSelector = ({
   }
 
   return (
-    <S.ImageSelectorLayout onClick={handleClickSelector} className={className}>
-      <S.SelectedImage src={previewImg} alt="preview" />
-      {label && <label htmlFor="fileInput">{label}</label>}
+    <S.ImageSelectorLayout onClick={handleClickSelector} {...rest}>
+      <ImagePreviewer defaultImage={defaultImage} />
       <input
         id="fileInput"
         type="file"

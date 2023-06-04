@@ -1,17 +1,21 @@
-import { useState } from 'react'
+import { useRecoilState } from 'recoil'
+import { fileAtom } from 'recoil/file/fileAtom'
 import { uploadImage } from 'utils/uploadImage'
 
 const useUploadImage = () => {
-  const [file, setFile] = useState<File>()
+  const [file, setFile] = useRecoilState(fileAtom)
 
-  const handleImageUpload = async () => {
+  const getUplodedImageUrl = async () => {
     if (!file) return
-    const imageUrl = await uploadImage(file)
 
-    return imageUrl
+    return await uploadImage(file)
   }
 
-  return { setFile, handleImageUpload }
+  const handleFileSet = (file: File) => {
+    setFile(file)
+  }
+
+  return { handleFileSet, getUplodedImageUrl }
 }
 
 export default useUploadImage
