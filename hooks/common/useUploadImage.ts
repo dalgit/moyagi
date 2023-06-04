@@ -1,21 +1,34 @@
-import { useRecoilState } from 'recoil'
-import { fileAtom } from 'recoil/file/fileAtom'
-import { uploadImage } from 'utils/uploadImage'
+import { useRecoilCallback } from 'recoil'
+import fileSelector from 'recoil/file/fileSelector'
+import fileUrlSelector from 'recoil/file/fileUrlSelector'
 
 const useUploadImage = () => {
-  const [file, setFile] = useRecoilState(fileAtom)
+  const getFileUrl = useRecoilCallback(
+    ({ snapshot }) =>
+      (key: string) => {
+        removeFile(key)
+        return snapshot.getPromise(fileUrlSelector(key))
+      },
+    [],
+  )
 
-  const getUplodedImageUrl = async () => {
-    if (!file) return
+  const removeFile = useRecoilCallback(
+    ({ reset }) =>
+      (key: string) => {
+        reset(fileSelector(key))
+      },
+    [],
+  )
 
-    return await uploadImage(file)
-  }
+  const setFile = useRecoilCallback(
+    ({ set }) =>
+      (key: string, value: File) => {
+        set(fileSelector(key), value)
+      },
+    [],
+  )
 
-  const handleFileSet = (file: File) => {
-    setFile(file)
-  }
-
-  return { handleFileSet, getUplodedImageUrl }
+  return { getFileUrl, setFile, removeFile }
 }
 
 export default useUploadImage

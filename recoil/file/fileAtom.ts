@@ -1,6 +1,8 @@
-import { atom } from 'recoil'
+import { atomFamily } from 'recoil'
 
-export const fileAtom = atom<File | null>({
+const fileAtom = atomFamily<File | null, string>({
   key: 'fileAtom',
   default: null,
 })
+
+export default fileAtom
