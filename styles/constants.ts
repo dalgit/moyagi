@@ -28,3 +28,11 @@ export const flexColumn = (justify: string, align: string) => css`
   justify-content: ${justify};
   align-items: ${align};
 `
+
+export const hideScrollbar = css`
+  -ms-overflow-style: none;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`

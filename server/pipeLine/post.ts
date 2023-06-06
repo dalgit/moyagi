@@ -21,7 +21,7 @@ export const postByUserIdPipeLine = (userId: ObjectId) => [
   ...postBasePipeline,
 ]
 
-const postBasePipeline = [
+const authorPipeline = [
   {
     $lookup: {
       from: 'users',
@@ -31,6 +31,18 @@ const postBasePipeline = [
     },
   },
   {
+    $unwind: '$author',
+  },
+  {
+    $project: {
+      authorId: 0,
+      author: { password: 0 },
+    },
+  },
+]
+
+const channelPipeline = [
+  {
     $lookup: {
       from: 'channels',
       foreignField: '_id',
@@ -39,16 +51,53 @@ const postBasePipeline = [
     },
   },
   {
-    $unwind: '$author',
-  },
-  {
     $unwind: '$channel',
   },
   {
     $project: {
-      authorId: 0,
       channelId: 0,
-      author: { password: 0 },
     },
   },
+]
+
+const postCommentsPipeline = [
+  {
+    $lookup: {
+      from: 'comments',
+      foreignField: 'postId',
+      localField: '_id',
+      as: 'comments',
+    },
+  },
+  {
+    $lookup: {
+      from: 'users',
+      foreignField: '_id',
+      localField: 'comments.authorId',
+      as: 'commentsAuthor',
+    },
+  },
+  {
+    $unwind: '$commentsAuthor',
+  },
+  {
+    $addFields: {
+      'comments.author': '$commentsAuthor',
+    },
+  },
+  {
+    $project: {
+      commentsAuthor: 0,
+      'comments.authorId': 0,
+      'comments.channelId': 0,
+      'comments.postId': 0,
+      'comments.author.password': 0,
+    },
+  },
+]
+
+const postBasePipeline = [
+  ...authorPipeline,
+  ...channelPipeline,
+  ...postCommentsPipeline,
 ]

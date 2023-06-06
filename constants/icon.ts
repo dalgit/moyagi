@@ -7,3 +7,8 @@ export const camera = '/assets/camera.png'
 export const logo = '/assets/logo.png'
 
 export const picture = '/assets/picture.svg'
+
+export const blank =
+  'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='
+
+export const send = '/assets/send.svg'

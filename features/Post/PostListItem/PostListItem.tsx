@@ -1,5 +1,7 @@
 import { IPost } from 'types/post'
 import * as S from './style'
+import PostCommentForm from '../PostCommentForm/PostCommentForm'
+import PostCommentList from '../PostCommentList/PostCommentList'
 import PostContent from '../PostContent/PostContent'
 import PostHeader from '../PostHeader/PostHeader'
 
@@ -12,6 +14,8 @@ const PostListItem = ({ post }: PostProps) => {
     <S.PostListItemLayout>
       <PostHeader post={post} />
       <PostContent content={post.content} />
+      <PostCommentList comments={post.comments} />
+      <PostCommentForm postId={post._id} />
     </S.PostListItemLayout>
   )
 }
