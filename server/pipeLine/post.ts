@@ -78,7 +78,10 @@ const postCommentsPipeline = [
     },
   },
   {
-    $unwind: '$commentsAuthor',
+    $unwind: {
+      path: '$commentsAuthor',
+      preserveNullAndEmptyArrays: true,
+    },
   },
   {
     $addFields: {
