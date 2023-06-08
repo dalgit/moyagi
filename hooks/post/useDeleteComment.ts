@@ -4,32 +4,40 @@ import {
   useQueryClient,
 } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
-import { IPost } from 'types/post'
+import { IComment, IPost } from 'types/post'
 import client from 'utils/axios/axios'
 import { postKeys } from 'utils/queryKeys/post'
 
-interface deletePostArgs {
+interface deleteCommentArgs {
   postId: string
   channelId: string
+  commentId: string
 }
 
-const useDeletePost = (): UseMutationResult<
-  IPost,
+const useDeleteComment = (): UseMutationResult<
+  IComment,
   AxiosError,
-  deletePostArgs
+  deleteCommentArgs
 > => {
   const queryClient = useQueryClient()
 
-  return useMutation(deletePost, {
-    onMutate: ({ channelId, postId }) => {
+  return useMutation(deleteComment, {
+    onMutate: ({ channelId, postId, commentId }) => {
       const previousPosts = queryClient.getQueryData<IPost[]>(
         postKeys.list(channelId),
       )
 
-      const updatedPosts = previousPosts?.filter((post) => post._id !== postId)
+      const updatedPosts = previousPosts?.map((post) => {
+        if (post._id === postId) {
+          const updatedComments = post.comments.filter(
+            (comment) => comment._id !== commentId,
+          )
+          return { ...post, comments: updatedComments }
+        }
+        return post
+      })
 
       queryClient.setQueryData<IPost[]>(postKeys.list(channelId), updatedPosts)
-
       return { previousPosts }
     },
 
@@ -44,12 +52,13 @@ const useDeletePost = (): UseMutationResult<
   })
 }
 
-export default useDeletePost
+export default useDeleteComment
 
-const deletePost = async ({
+const deleteComment = async ({
   channelId,
   postId,
-}: deletePostArgs): Promise<IPost> =>
+  commentId,
+}: deleteCommentArgs): Promise<IComment> =>
   await client
-    .delete(`/channels/${channelId}/posts/${postId}`)
+    .delete(`/channels/${channelId}/posts/${postId}/comments/${commentId}`)
     .then((res) => res.data)

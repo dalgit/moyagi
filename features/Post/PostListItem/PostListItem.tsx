@@ -14,7 +14,7 @@ const PostListItem = ({ post }: PostProps) => {
     <S.PostListItemLayout>
       <PostHeader post={post} />
       <PostContent content={post.content} />
-      <PostCommentList comments={post.comments} />
+      <PostCommentList postId={post._id} comments={post.comments} />
       <PostCommentForm postId={post._id} />
     </S.PostListItemLayout>
   )
