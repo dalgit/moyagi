@@ -7,8 +7,8 @@ interface PostCommentItemProps {
   comment: IComment
 }
 
-const PostCommentItem = ({ comment }: PostCommentItemProps) => {
-  const { author, content } = comment
+  const { author, content, createdAt } = comment
+  const FormattedDate = getFormattedDate(createdAt)
   const router = useRouter()
 
   const handleUserClick = () => {
@@ -25,6 +25,7 @@ const PostCommentItem = ({ comment }: PostCommentItemProps) => {
         <S.AtuhorName>{author.name}</S.AtuhorName>
         <S.StyledComment>{content}</S.StyledComment>
       </S.Wrapper>
+        <S.CommentDate>{FormattedDate}</S.CommentDate>
     </S.PostCommentItemLayout>
   )
 }

@@ -27,6 +27,7 @@ const createPost = async (
       channelId: channelId,
       authorId: userId,
       content,
+      createdAt: new Date(),
     })
 
     const post = await postsCollection

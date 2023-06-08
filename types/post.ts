@@ -7,10 +7,12 @@ export interface IPost {
   author: IUser
   content: string
   comments: IComment[]
+  createdAt: Date
 }
 
 export interface IComment {
   _id: string
   content: string
   author: IUser
+  createdAt: Date
 }
