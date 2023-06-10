@@ -7,7 +7,7 @@ interface TooltipProps extends TooltipIconProps {
 }
 
 const ToolTip = ({ content, type }: TooltipProps) => {
-  const [hover, setHover] = useState<boolean>(true)
+  const [hover, setHover] = useState<boolean>(false)
 
   const handleMouseEnter = () => {
     setHover(true)

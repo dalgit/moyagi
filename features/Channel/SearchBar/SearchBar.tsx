@@ -2,7 +2,7 @@ import { Button } from 'components/common'
 import { useSearch } from 'hooks/channel'
 import * as S from './style'
 
-const SearchBar = () => {
+const SearchBar = ({ ...rest }) => {
   const {
     keyword,
     setKeyword,
@@ -13,7 +13,7 @@ const SearchBar = () => {
   } = useSearch()
 
   return (
-    <S.SearchBarLayout>
+    <S.SearchBarLayout {...rest}>
       <S.InputWrapper>
         <input
           type="text"
