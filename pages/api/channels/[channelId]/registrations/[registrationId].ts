@@ -1,5 +1,4 @@
 import { NextApiResponse, NextApiRequest } from 'next'
-import deleteRegistration from 'server/api/deleteRegistration'
 import updateRegistration from 'server/api/updateRegistration'
 
 export default async function handler(
@@ -11,10 +10,6 @@ export default async function handler(
   switch (requestMethod) {
     case 'PATCH':
       await updateRegistration(req, res)
-      break
-
-    case 'DELETE':
-      await deleteRegistration(req, res)
       break
 
     default:

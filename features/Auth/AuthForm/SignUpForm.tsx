@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { Button, Input, ErrorText } from 'components/common'
 import { useRegisterUser } from 'hooks/auth'
 import { useForm, useBlur } from 'hooks/common'
-import authValidation from 'utils/authValidation'
+import authValidation from 'utils/common/authValidation'
 import * as S from './style'
 
 const initialState = {
@@ -19,6 +19,15 @@ const SignUpForm = () => {
 
   const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    const isValid = [
+      authValidation.name(form.name),
+      authValidation.email(form.email),
+      authValidation.password(form.password),
+      authValidation.passwordConfirm(form.password, form.passwordConfirm),
+    ].every((condition) => condition)
+
+    if (!isValid) return
 
     registerUserMutate({
       name: form.name,
@@ -89,10 +98,7 @@ const SignUpForm = () => {
         <ErrorText
           start={isBlurred.passwordConfirm}
           error={
-            !authValidation.passwordConfirm(
-              form.password,
-              form.passwordCoinfont,
-            )
+            !authValidation.passwordConfirm(form.password, form.passwordConfirm)
           }
           text="비밀번호와 같지 않습니다."
         />

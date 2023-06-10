@@ -12,6 +12,6 @@ export interface IRegistration {
   requester: IUser
   channel: IChannel
   status: EStatus
-  time: Date
+  createdAt: Date
   message: string
 }

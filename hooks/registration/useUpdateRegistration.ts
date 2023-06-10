@@ -8,20 +8,20 @@ import { IRegistration } from 'types/registration'
 import client from 'utils/axios/axios'
 import { registrationKeys } from 'utils/queryKeys/registration'
 
-interface PatchRegistrationStatusProps {
+interface UpdateRegistrationProps {
   channelId: string
   registrationId: string
   status: string
 }
 
-const usePatchRegistrationStatus = (): UseMutationResult<
+const useUpdateRegistration = (): UseMutationResult<
   IRegistration,
   AxiosError,
-  PatchRegistrationStatusProps
+  UpdateRegistrationProps
 > => {
   const queryClient = useQueryClient()
 
-  return useMutation(patchRegistrationStatus, {
+  return useMutation(updateRegistration, {
     onSuccess: (updatedRegistration, { channelId }) => {
       queryClient.setQueryData<IRegistration[]>(
         registrationKeys.list(channelId),
@@ -36,13 +36,13 @@ const usePatchRegistrationStatus = (): UseMutationResult<
   })
 }
 
-export default usePatchRegistrationStatus
+export default useUpdateRegistration
 
-const patchRegistrationStatus = async ({
+const updateRegistration = async ({
   channelId,
   registrationId,
   status,
-}: PatchRegistrationStatusProps): Promise<IRegistration> =>
+}: UpdateRegistrationProps): Promise<IRegistration> =>
   await client.patch(`/channels/${channelId}/registrations/${registrationId}`, {
     status,
   })

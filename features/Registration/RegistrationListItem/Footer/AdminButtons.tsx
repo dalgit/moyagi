@@ -1,14 +1,16 @@
+import { useRecoilValue } from 'recoil'
 import { Button } from 'components/common'
-import { usePatchRegistrationStatus } from 'hooks/registration/usePatchRegistrationStatus'
+import { useUpdateRegistration } from 'hooks/registration'
+import channelIdSelector from 'recoil/channel/channelIdSelector'
 import { EStatus } from 'types/registration'
 
 interface AdminButtonsProps {
   registrationId: string
-  channelId: string
 }
 
-const AdminButtons = ({ registrationId, channelId }: AdminButtonsProps) => {
-  const { mutate: patchRegistrationStatusMutate } = usePatchRegistrationStatus()
+const AdminButtons = ({ registrationId }: AdminButtonsProps) => {
+  const { mutate: patchRegistrationStatusMutate } = useUpdateRegistration()
+  const channelId = useRecoilValue(channelIdSelector)
 
   const handleButtonClick = async (status: EStatus) => {
     patchRegistrationStatusMutate({

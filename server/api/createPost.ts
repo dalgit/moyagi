@@ -1,7 +1,7 @@
 import { ObjectId } from 'mongodb'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { NextApiRequestWithUser } from 'types/types'
-import { postByIdPipeLine } from '../../server/pipeLine/post'
+import { postMatchPipeline } from '../../server/pipeLine/post'
 import connectToDatabase from '../utils/connectToDatabase'
 
 interface ExtendedNextApiRequest extends NextApiRequest {
@@ -31,7 +31,7 @@ const createPost = async (
     })
 
     const post = await postsCollection
-      .aggregate(postByIdPipeLine(insertedId))
+      .aggregate(postMatchPipeline({ _id: insertedId }))
       .next()
 
     res.status(200).json(post)

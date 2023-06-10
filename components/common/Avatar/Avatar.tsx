@@ -1,12 +1,13 @@
 import { HtmlHTMLAttributes } from 'react'
+import { blank } from 'constants/icon'
 import * as S from './style'
 
-interface AvatarProps extends HtmlHTMLAttributes<HTMLDivElement> {
-  image: string
+export interface AvatarProps extends HtmlHTMLAttributes<HTMLDivElement> {
+  image?: string
   name: string
 }
 
-const Avatar = ({ image, name, ...rest }: AvatarProps) => {
+const Avatar = ({ image = blank, name, ...rest }: AvatarProps) => {
   return (
     <S.AvatarLayout {...rest}>
       <S.AvatarImage src={image} alt="avatar" />

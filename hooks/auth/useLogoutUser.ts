@@ -6,16 +6,16 @@ import {
 import { AxiosError, AxiosResponse } from 'axios'
 import { useRouter } from 'next/router'
 import { useResetRecoilState } from 'recoil'
-import userSelector from 'recoil/user/userSelector'
+import userAtom from 'recoil/user/userAtom'
 import client from 'utils/axios/axios'
 
 const useLogoutUser = (): UseMutationResult<AxiosResponse, AxiosError> => {
-  const resetUser = useResetRecoilState(userSelector)
+  const resetUser = useResetRecoilState(userAtom)
   const queryClient = useQueryClient()
   const { push } = useRouter()
 
   return useMutation(logoutUser, {
-    onSuccess: () => {
+    onMutate: () => {
       push('/login')
       resetUser()
       queryClient.clear()

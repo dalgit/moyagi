@@ -12,7 +12,7 @@ const ChannelRegistrationList = () => {
     return (
       <NotificationBox
         title="채널의 가입신청서가 존재하지 않습니다."
-        type="sorry"
+        type="empty"
       />
     )
   }

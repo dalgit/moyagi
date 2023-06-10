@@ -4,6 +4,9 @@ import {
   useQueryClient,
 } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
+import { useRecoilValue } from 'recoil'
+import { useToast } from 'hooks/common'
+import userIdSelector from 'recoil/user/userIdSelector'
 import { IRegistration, EStatus } from 'types/registration'
 import client from 'utils/axios/axios'
 import { channelKeys } from 'utils/queryKeys/channel'
@@ -21,6 +24,8 @@ const useCreateRegistration = (): UseMutationResult<
   createRegistrationArgs
 > => {
   const queryClient = useQueryClient()
+  const userId = useRecoilValue(userIdSelector)
+  const { onToast } = useToast()
 
   return useMutation(createRegistration, {
     onSuccess: (newRegistration: IRegistration) => {
@@ -28,15 +33,15 @@ const useCreateRegistration = (): UseMutationResult<
         const slug = newRegistration.channel.address
 
         queryClient.invalidateQueries(channelKeys.detail(slug))
-        alert('가입이 완료되었습니다.')
+        onToast({ content: '가입이 완료되었습니다.', type: 'success' })
       }
 
       if (newRegistration.status === EStatus.PENDING) {
-        alert('가입 요청이 완료되었습니다.')
+        onToast({ content: '가입 요청이 완료되었습니다.', type: 'success' })
       }
 
       queryClient.setQueryData<IRegistration[]>(
-        registrationKeys.me(),
+        registrationKeys.users(userId),
         (previousRegistrations = []) => [
           newRegistration,
           ...previousRegistrations,

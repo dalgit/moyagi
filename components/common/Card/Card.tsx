@@ -2,22 +2,20 @@ import Link from 'next/link'
 import * as S from './style'
 
 export interface CardStyle {
-  width?: string
-  padding?: string
   hasBoxShadow?: boolean
 }
 
 interface CardProps extends CardStyle {
   href: string
-  imageSrc: string
+  image: string
   title: string
 }
 
-const Card = ({ href, imageSrc, title, ...rest }: CardProps) => {
+const Card = ({ href, image, title, ...rest }: CardProps) => {
   return (
     <S.CardLayout {...rest}>
       <Link href={href}>
-        <S.StyledImage src={imageSrc} />
+        <S.StyledImage src={image} />
         <S.Title>{title}</S.Title>
       </Link>
     </S.CardLayout>
@@ -27,7 +25,5 @@ const Card = ({ href, imageSrc, title, ...rest }: CardProps) => {
 export default Card
 
 Card.defaultProps = {
-  width: '160px',
-  padding: '5px',
   hasBoxShadow: true,
 }

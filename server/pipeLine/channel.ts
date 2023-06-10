@@ -1,42 +1,14 @@
-import { ObjectId } from 'mongodb'
+import { TFilter } from 'server/type/pipeline'
 
-export const channelsByAddressPipeLine = (address: string) => [
+export const channelMatchPipeline = (filter: TFilter) => [
   {
-    $match: { address: address },
+    $match: filter,
   },
-  ...channelBasePipeline,
+  ...managerPipeline,
+  ...membersPipeline,
 ]
 
-export const channelsByUserIdPipeLine = (userId: ObjectId) => [
-  {
-    $match: { membersId: userId },
-  },
-  ...channelBasePipeline,
-]
-
-export const channelMembersPipeLine = (channelId: ObjectId) => [
-  {
-    $match: { _id: channelId },
-  },
-  {
-    $loopup: {
-      from: 'users',
-      foreignField: '_id',
-      localField: 'membersId',
-      as: 'members',
-    },
-  },
-]
-
-const channelBasePipeline = [
-  {
-    $lookup: {
-      from: 'users',
-      foreignField: '_id',
-      localField: 'membersId',
-      as: 'members',
-    },
-  },
+const managerPipeline = [
   {
     $lookup: {
       from: 'users',
@@ -51,9 +23,24 @@ const channelBasePipeline = [
   {
     $project: {
       managerId: 0,
+      manager: { password: 0 },
+    },
+  },
+]
+
+const membersPipeline = [
+  {
+    $lookup: {
+      from: 'users',
+      foreignField: '_id',
+      localField: 'membersId',
+      as: 'members',
+    },
+  },
+  {
+    $project: {
       membersId: 0,
       members: { email: 0, password: 0 },
-      manager: { email: 0, password: 0 },
     },
   },
 ]

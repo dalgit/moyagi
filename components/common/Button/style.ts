@@ -26,10 +26,11 @@ const buttonStyle: Record<ButtonVariant, ReturnType<typeof css>> = {
   `,
 
   sub: css`
-    width: 'fit-content';
-    background-color: 'inherit';
+    background-color: inherit;
+    width: fit-content;
     font-size: '12px';
-    color: 'gray';
+    color: gray;
     display: 'inline-block';
+    padding: 0;
   `,
 }

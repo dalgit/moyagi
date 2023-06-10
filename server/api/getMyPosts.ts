@@ -1,7 +1,7 @@
 import { ObjectId } from 'mongodb'
 import { NextApiResponse } from 'next'
 import { NextApiRequestWithUser } from 'types/types'
-import { postByUserIdPipeLine } from '../../server/pipeLine/post'
+import { postMatchPipeline } from '../../server/pipeLine/post'
 import connectToDatabase from '../utils/connectToDatabase'
 
 const getMyPosts = async (
@@ -15,7 +15,7 @@ const getMyPosts = async (
     const postsCollection = db.collection('posts')
 
     const posts = await postsCollection
-      .aggregate(postByUserIdPipeLine(userId))
+      .aggregate(postMatchPipeline({ authorId: userId }))
       .toArray()
 
     return res.status(200).json(posts)

@@ -4,7 +4,7 @@ import { IUser } from 'types/user'
 RecoilEnv.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED = false
 
 const sessionStorageEffect =
-  (key: string): AtomEffect<IUser> =>
+  (key: string): AtomEffect<IUser | null> =>
   ({ setSelf, onSet }) => {
     if (typeof window !== 'undefined') {
       const savedValue = sessionStorage.getItem(key)

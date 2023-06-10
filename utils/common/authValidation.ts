@@ -21,6 +21,7 @@ const authValidation: AuthValidation = {
   },
 
   passwordConfirm: (password: string, passwordConfirm: string) => {
+    console.log(passwordConfirm)
     return password === passwordConfirm
   },
 }

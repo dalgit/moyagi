@@ -12,23 +12,21 @@ const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
     _id: registrationId,
     message,
     status,
-    time,
+    createdAt,
     channel,
     requester,
   } = registration
-  const { _id: channelId } = channel
 
   return (
     <S.RegistrationLayout status={status}>
       <RegistrationListItemHeader
         name={channel.name}
         status={status}
-        date={time}
+        date={createdAt}
       />
       <S.Message>{message}</S.Message>
       <RegistrationListItemFooter
         registrationId={registrationId}
-        channelId={channelId}
         status={status}
         requester={requester}
       />

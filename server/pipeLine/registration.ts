@@ -1,27 +1,14 @@
-import { ObjectId } from 'mongodb'
+import { TFilter } from 'server/type/pipeline'
 
-export const registrationByIdPipeLine = (id: ObjectId) => [
+export const registrationMatchPipeline = (filter: TFilter) => [
   {
-    $match: { _id: id },
+    $match: filter,
   },
-  ...registrationBasePipeline,
+  ...requesterPipeline,
+  ...channelIdPipeline,
 ]
 
-export const registrationByUserIdPipeLine = (userId: ObjectId) => [
-  {
-    $match: { requesterId: userId },
-  },
-  ...registrationBasePipeline,
-]
-
-export const registrationByChannelIdPipeLine = (channelId: ObjectId) => [
-  {
-    $match: { channelId },
-  },
-  ...registrationBasePipeline,
-]
-
-const registrationBasePipeline = [
+const requesterPipeline = [
   {
     $lookup: {
       from: 'users',
@@ -31,6 +18,17 @@ const registrationBasePipeline = [
     },
   },
   {
+    $unwind: '$requester',
+  },
+  {
+    $project: {
+      requester: { password: 0 },
+    },
+  },
+]
+
+const channelIdPipeline = [
+  {
     $lookup: {
       from: 'channels',
       foreignField: '_id',
@@ -39,19 +37,6 @@ const registrationBasePipeline = [
     },
   },
   {
-    $unwind: '$requester',
-  },
-  {
     $unwind: '$channel',
-  },
-  {
-    $project: {
-      _id: true,
-      message: true,
-      status: true,
-      time: true,
-      requester: { _id: true, name: true },
-      channel: true,
-    },
   },
 ]

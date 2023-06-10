@@ -1,7 +1,7 @@
 import { useRecoilValue } from 'recoil'
 import userIdSelector from 'recoil/user/userIdSelector'
 import { IChannel } from 'types/channel'
-import useUserChannels from './useUserChannels'
+import useUserChannels from '../hooks/channel/useUserChannels'
 
 const useManagedChannels = () => {
   const userId = useRecoilValue(userIdSelector)

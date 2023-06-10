@@ -1,7 +1,7 @@
 import { ObjectId } from 'mongodb'
 import { NextApiResponse } from 'next'
 import { NextApiRequestWithUser } from 'types/types'
-import { registrationByIdPipeLine } from '../../server/pipeLine/registration'
+import { registrationMatchPipeline } from '../../server/pipeLine/registration'
 import connectToDatabase from '../utils/connectToDatabase'
 
 const createRegistration = async (
@@ -18,7 +18,6 @@ const createRegistration = async (
     const { message, isPublic } = req.body
 
     const status = isPublic ? 'approved' : 'pending'
-    const time = new Date()
 
     if (isPublic) {
       const channelsCollection = db.collection('channels')
@@ -34,11 +33,11 @@ const createRegistration = async (
       channelId,
       message,
       status,
-      time,
+      createdAt: new Date(),
     })
 
     const registration = await registrationsCollection
-      .aggregate(registrationByIdPipeLine(insertedId))
+      .aggregate(registrationMatchPipeline({ _id: insertedId }))
       .next()
 
     return res.status(200).json(registration)

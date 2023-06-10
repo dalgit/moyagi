@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { postByChannelIdPipeLine } from '../../server/pipeLine/post'
+import { postMatchPipeline } from '../../server/pipeLine/post'
 import connectToDatabase from '../utils/connectToDatabase'
 
 interface ExtendedNextApiRequest extends NextApiRequest {
@@ -20,7 +20,7 @@ const getChannelPosts = async (
     const postsCollection = db.collection('posts')
 
     const posts = await postsCollection
-      .aggregate(postByChannelIdPipeLine(channelId))
+      .aggregate(postMatchPipeline({ channelId }))
       .toArray()
 
     res.status(200).json(posts)

@@ -12,3 +12,7 @@ export const blank =
   'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='
 
 export const send = '/assets/send.svg'
+
+export const question = '/assets/question.svg'
+
+export const exclamation = '/assets/exclamation.svg'

@@ -1,4 +1,4 @@
-import { getSignedUrl, uploadToSignedUrl } from './api/aws'
+import { getSignedUrl, uploadToSignedUrl } from 'utils/api/aws'
 
 export const uploadImage = async (file: File): Promise<string> => {
   const { signedUrl, imageUrl } = await getSignedUrl(file.name)

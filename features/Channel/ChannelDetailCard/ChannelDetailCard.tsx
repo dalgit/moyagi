@@ -1,9 +1,11 @@
 import { useRouter } from 'next/router'
 import { useRecoilValue } from 'recoil'
-import { Button, Card } from 'components/common'
+import { Button } from 'components/common'
 import { channelDefaultImage } from 'constants/defaultImage'
 import useModal from 'hooks/common/useModal'
 import { isMemberSelector } from 'recoil/channel/isMemberSelector'
+import userAtom from 'recoil/user/userAtom'
+import userIdSelector from 'recoil/user/userIdSelector'
 import { IChannel } from 'types/channel'
 import * as S from './style'
 
@@ -16,13 +18,18 @@ const ChannelDetailCard = ({ channel }: ChannelInfoProps) => {
   const { openModal } = useModal()
   const isMember = useRecoilValue(isMemberSelector)
   const router = useRouter()
+  const userId = useRecoilValue(userIdSelector)
 
   const handlePostCreateModalOpen = () => {
     openModal('PostCreateForm')
   }
 
   const handleRegistrationModalOpen = () => {
-    openModal('RegistrationForm')
+    if (!userId) {
+      router.push(`/login`)
+    } else {
+      openModal('RegistrationForm')
+    }
   }
 
   const handleMembersModalOpen = () => {
@@ -36,11 +43,10 @@ const ChannelDetailCard = ({ channel }: ChannelInfoProps) => {
   return (
     <div>
       <S.ChannelDetailCardLayout>
-        <Card
-          width="100%"
+        <S.StyledCard
           title={name}
           href={address}
-          imageSrc={imageUrl || channelDefaultImage}
+          image={imageUrl || channelDefaultImage}
           hasBoxShadow={false}
         />
         <S.Description>{description}</S.Description>

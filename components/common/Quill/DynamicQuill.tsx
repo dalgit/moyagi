@@ -6,7 +6,7 @@ interface CustomQuillProps extends ReactQuillProps {
   forwardedRef: RefObject<ReactQuill>
 }
 
-export const DynamicQuill = dynamic(
+const DynamicQuill = dynamic(
   async () => {
     const { default: ReactQuill } = await import('react-quill')
     const CustomQuill = ({ forwardedRef, ...props }: CustomQuillProps) => (
@@ -16,3 +16,5 @@ export const DynamicQuill = dynamic(
   },
   { ssr: false },
 )
+
+export default DynamicQuill

@@ -1,7 +1,6 @@
-import { useRecoilValue } from 'recoil'
 import { UserProfile } from 'features/User'
+import useCheckMe from 'hooks/common/useCheckMe'
 import useModal from 'hooks/common/useModal'
-import userIdSelector from 'recoil/user/userIdSelector'
 import { IUser } from 'types/user'
 import * as S from './style'
 
@@ -10,8 +9,7 @@ interface UserProfileTemplateProps {
 }
 
 const UserProfileTemplate = ({ user }: UserProfileTemplateProps) => {
-  const userId = useRecoilValue(userIdSelector)
-  const isMe = userId === user._id
+  const isMe = useCheckMe(user._id)
 
   const { openModal } = useModal()
 

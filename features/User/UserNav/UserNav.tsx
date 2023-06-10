@@ -1,31 +1,36 @@
+import { useRouter } from 'next/router'
 import { useRecoilValue } from 'recoil'
 import { Button } from 'components/common'
 import { userDefaultImage } from 'constants/defaultImage'
 import { UserNavList } from 'features/User'
-import { useToggle } from 'hooks/common'
-import useClickOutside from 'hooks/common/useClickOutside'
-import userSelector from 'recoil/user/userSelector'
+import { useMenu } from 'hooks/common'
+import userAtom from 'recoil/user/userAtom'
 import * as S from './style'
-
 const UserNav = () => {
-  const user = useRecoilValue(userSelector)
-  const [isMenuActive, toggleUserMenu] = useToggle()
-  const listRef = useClickOutside<HTMLDivElement>(
-    () => isMenuActive && toggleUserMenu(),
-  )
+  const user = useRecoilValue(userAtom)
+  const { isMenuOpen, handleMenuClick, ref } = useMenu<HTMLDivElement>()
+  const router = useRouter()
 
-  if (!user) {
-    return <Button>로그인</Button>
+  const handleLoginButtonClcik = () => {
+    router.push('/login')
+  }
+
+  if (!user._id) {
+    return (
+      <Button variant="sub" onClick={handleLoginButtonClcik}>
+        로그인
+      </Button>
+    )
   }
 
   return (
-    <S.UserNavLayout ref={listRef}>
+    <S.UserNavLayout ref={ref}>
       <S.UserAvatar
         name={user.name}
         image={user.imageUrl || userDefaultImage}
-        onClick={toggleUserMenu}
+        onClick={handleMenuClick}
       />
-      {isMenuActive && <UserNavList />}
+      {isMenuOpen && <UserNavList />}
     </S.UserNavLayout>
   )
 }

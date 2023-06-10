@@ -1,8 +1,8 @@
-import { ObjectId } from 'mongodb'
+import { TFilter } from 'server/type/pipeline'
 
-export const commentByIdPipeLine = (id: ObjectId) => [
+export const commentMatchPipeline = (filter: TFilter) => [
   {
-    $match: { _id: id },
+    $match: filter,
   },
   ...commentPipeLine,
 ]
@@ -17,14 +17,14 @@ const commentPipeLine = [
     },
   },
   {
-    $unwind: { path: '$author' },
+    $unwind: '$author',
   },
   {
     $project: {
       authorId: 0,
+      author: { password: 0 },
       channelId: 0,
       postId: 0,
-      'author.password': 0,
     },
   },
 ]

@@ -2,10 +2,11 @@ import { useRouter } from 'next/router'
 import { useRecoilValue } from 'recoil'
 import { Button } from 'components/common'
 import { userDefaultImage } from 'constants/defaultImage'
+import useCheckMe from 'hooks/common/useCheckMe'
 import useDeleteComment from 'hooks/post/useDeleteComment'
 import channelIdSelector from 'recoil/channel/channelIdSelector'
 import { IComment } from 'types/post'
-import getFormattedDate from 'utils/getFormattedDate'
+import getFormattedDate from 'utils/common/getFormattedDate'
 import * as S from './style'
 
 interface PostCommentItemProps {
@@ -16,9 +17,9 @@ interface PostCommentItemProps {
 const PostCommentItem = ({ comment, postId }: PostCommentItemProps) => {
   const { author, content, createdAt } = comment
   const FormattedDate = getFormattedDate(createdAt)
-  const channelId = useRecoilValue(channelIdSelector)
   const { mutate: deleteCommentMutate } = useDeleteComment()
-
+  const channelId = useRecoilValue(channelIdSelector)
+  const isMe = useCheckMe(author._id)
   const router = useRouter()
 
   const handleUserClick = () => {
@@ -45,9 +46,11 @@ const PostCommentItem = ({ comment, postId }: PostCommentItemProps) => {
       </S.Wrapper>
       <S.RightWrapper>
         <S.CommentDate>{FormattedDate}</S.CommentDate>
-        <Button variant="sub" onClick={handleCommentDelete}>
-          삭제
-        </Button>
+        {isMe && (
+          <Button variant="sub" onClick={handleCommentDelete}>
+            삭제
+          </Button>
+        )}
       </S.RightWrapper>
     </S.PostCommentItemLayout>
   )

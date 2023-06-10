@@ -4,6 +4,7 @@ import {
   useQueryClient,
 } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
+import { useToast } from 'hooks/common'
 import { IPost } from 'types/post'
 import client from 'utils/axios/axios'
 import { postKeys } from 'utils/queryKeys/post'
@@ -19,6 +20,7 @@ const useDeletePost = (): UseMutationResult<
   deletePostArgs
 > => {
   const queryClient = useQueryClient()
+  const { onToast } = useToast()
 
   return useMutation(deletePost, {
     onMutate: ({ channelId, postId }) => {
@@ -30,6 +32,7 @@ const useDeletePost = (): UseMutationResult<
 
       queryClient.setQueryData<IPost[]>(postKeys.list(channelId), updatedPosts)
 
+      onToast({ content: '삭제가 완료되었습니다.', type: 'success' })
       return { previousPosts }
     },
 

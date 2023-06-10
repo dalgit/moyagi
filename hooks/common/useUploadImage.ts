@@ -6,7 +6,7 @@ const useUploadImage = () => {
   const getFileUrl = useRecoilCallback(
     ({ snapshot }) =>
       (key: string) => {
-        removeFile(key)
+        setTimeout(() => removeFile(key), 3000)
         return snapshot.getPromise(fileUrlSelector(key))
       },
     [],

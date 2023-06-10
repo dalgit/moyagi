@@ -38,6 +38,7 @@ const useDeleteComment = (): UseMutationResult<
       })
 
       queryClient.setQueryData<IPost[]>(postKeys.list(channelId), updatedPosts)
+
       return { previousPosts }
     },
 

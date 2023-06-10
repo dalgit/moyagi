@@ -1,7 +1,7 @@
 import { ObjectId } from 'mongodb'
 import { NextApiResponse } from 'next'
 import { NextApiRequestWithUser } from 'types/types'
-import { channelsByUserIdPipeLine } from '../../server/pipeLine/channel'
+import { channelMatchPipeline } from '../../server/pipeLine/channel'
 import connectToDatabase from '../utils/connectToDatabase'
 
 const getMyJoinedChannels = async (
@@ -15,7 +15,7 @@ const getMyJoinedChannels = async (
     const channelsCollection = db.collection('channels')
 
     const channels = await channelsCollection
-      .aggregate(channelsByUserIdPipeLine(userId))
+      .aggregate(channelMatchPipeline({ membersId: userId }))
       .toArray()
 
     res.status(200).json(channels)

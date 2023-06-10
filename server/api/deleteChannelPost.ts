@@ -1,7 +1,7 @@
 import { ObjectId } from 'mongodb'
 import { NextApiResponse } from 'next'
 import { NextApiRequestWithUser } from 'types/types'
-import { postByIdPipeLine } from '../../server/pipeLine/post'
+import { postMatchPipeline } from '../../server/pipeLine/post'
 import connectToDatabase from '../utils/connectToDatabase'
 
 const deleteChannelPost = async (
@@ -16,7 +16,7 @@ const deleteChannelPost = async (
     const postsCollection = db.collection('posts')
 
     const post = await postsCollection
-      .aggregate(postByIdPipeLine(postId))
+      .aggregate(postMatchPipeline({ _id: postId }))
       .next()
 
     await postsCollection.deleteOne({

@@ -1,5 +1,5 @@
 import 'react-quill/dist/quill.snow.css'
-import { DynamicQuill } from './DynamicQuill'
+import DynamicQuill from './DynamicQuill'
 import useQuill from './useQuill'
 
 interface QuillProps {
@@ -8,6 +8,7 @@ interface QuillProps {
 
 const Quill = ({ setContent }: QuillProps) => {
   const { quillRef, modules } = useQuill()
+
   return (
     <DynamicQuill
       onChange={setContent}

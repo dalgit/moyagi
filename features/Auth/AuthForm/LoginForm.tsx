@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { Input, Button, ErrorText } from 'components/common'
 import { useAuthenticateUser } from 'hooks/auth'
 import { useForm, useBlur } from 'hooks/common'
-import authValidation from 'utils/authValidation'
+import authValidation from 'utils/common/authValidation'
 import * as S from './style'
 
 const initialState = {
@@ -42,7 +42,6 @@ const LoginForm = () => {
           text="이메일이 올바르지 않습니다."
         />
       </div>
-
       <div>
         <Input
           required
@@ -60,6 +59,9 @@ const LoginForm = () => {
       </div>
       <Button type="submit">로그인</Button>
       <Link href="/signup">계정이 없으신가요? 회원가입</Link>
+      <Link href="/">
+        <S.StyledSpan>체험하기</S.StyledSpan>
+      </Link>
     </S.FormLayout>
   )
 }

@@ -7,14 +7,12 @@ import UserButtons from './UserButton'
 
 interface RegistrationListItemFooterProps {
   registrationId: string
-  channelId: string
   status: EStatus
   requester: IUser
 }
 
 const RegistrationListItemFooter = ({
   registrationId,
-  channelId,
   status,
   requester,
 }: RegistrationListItemFooterProps) => {
@@ -27,7 +25,7 @@ const RegistrationListItemFooter = ({
 
   const Buttons = isRequester ? UserButtons : AdminButtons
 
-  return <Buttons registrationId={registrationId} channelId={channelId} />
+  return <Buttons registrationId={registrationId} />
 }
 
 export default RegistrationListItemFooter

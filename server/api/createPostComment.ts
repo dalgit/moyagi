@@ -1,13 +1,13 @@
 import { ObjectId } from 'mongodb'
 import { NextApiRequest, NextApiResponse } from 'next'
+import { commentMatchPipeline } from 'server/pipeLine/comment'
 import { NextApiRequestWithUser } from 'types/types'
-import { postByIdPipeLine } from '../../server/pipeLine/post'
 import connectToDatabase from '../utils/connectToDatabase'
 
 interface ExtendedNextApiRequest extends NextApiRequest {
   query: {
-    channelId: string
-    postId: string
+    channelId?: string
+    postId?: string
   }
 }
 
@@ -28,10 +28,11 @@ const createPostComment = async (
       postId: new ObjectId(postId),
       authorId: new ObjectId(user?.id),
       content,
+      createdAt: new Date(),
     })
 
     const comment = await commentsCollection
-      .aggregate(postByIdPipeLine(insertedId))
+      .aggregate(commentMatchPipeline({ _id: insertedId }))
       .next()
 
     res.status(200).json(comment)

@@ -11,7 +11,7 @@ const ChannelCard = ({ channel }: ChannelCardProps) => (
     key={channel._id}
     title={channel.name}
     href={`/channels/${channel.address}`}
-    imageSrc={channel.imageUrl || channelDefaultImage}
+    image={channel.imageUrl || channelDefaultImage}
   />
 )
 

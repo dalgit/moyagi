@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { Card } from 'components/common'
 
 export const ChannelDetailCardLayout = styled.div`
   display: flex;
@@ -23,4 +24,8 @@ export const Member = styled.span`
   font-size: 12px;
   color: gray;
   cursor: pointer;
+`
+
+export const StyledCard = styled(Card)`
+  width: 100%;
 `

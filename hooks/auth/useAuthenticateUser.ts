@@ -2,7 +2,7 @@ import { useMutation, UseMutationResult } from '@tanstack/react-query'
 import { AxiosError, AxiosResponse } from 'axios'
 import { useRouter } from 'next/router'
 import { useSetRecoilState } from 'recoil'
-import userSelector from 'recoil/user/userSelector'
+import userAtom from 'recoil/user/userAtom'
 import client from 'utils/axios/axios'
 
 interface useAuthenticateUserArgs {
@@ -15,7 +15,7 @@ const useAuthenticateUser = (): UseMutationResult<
   AxiosError,
   useAuthenticateUserArgs
 > => {
-  const setUser = useSetRecoilState(userSelector)
+  const setUser = useSetRecoilState(userAtom)
   const { push } = useRouter()
 
   return useMutation(authenticateUser, {

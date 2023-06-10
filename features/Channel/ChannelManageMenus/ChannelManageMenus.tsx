@@ -13,15 +13,15 @@ const ChannelManageMenus = () => {
     openModal('AdminChannelUserList')
   }
 
-  const handleNoticeModal = () => {
-    alert('준비중입니다.')
-  }
+  // const handleNoticeModal = () => {
+  //   openModal('ChannelNoticeForm')
+  // }
 
   return (
     <S.ChannelManageMenusLayout>
       <Button onClick={handleRegistrationsModal}>가입</Button>
       <Button onClick={handleMembersModal}>멤버</Button>
-      <Button onClick={handleNoticeModal}>공지</Button>
+      {/* <Button onClick={handleNoticeModal}>공지</Button> */}
     </S.ChannelManageMenusLayout>
   )
 }

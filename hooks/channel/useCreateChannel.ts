@@ -5,6 +5,8 @@ import {
 } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 import { useRouter } from 'next/router'
+import { useRecoilValue } from 'recoil'
+import userIdSelector from 'recoil/user/userIdSelector'
 import { IChannel } from 'types/channel'
 import client from 'utils/axios/axios'
 import { channelKeys } from 'utils/queryKeys/channel'
@@ -24,6 +26,7 @@ const useCreateChannel = (): UseMutationResult<
 > => {
   const queryClient = useQueryClient()
   const { push } = useRouter()
+  const userId = useRecoilValue(userIdSelector)
 
   return useMutation(createChannel, {
     onSuccess: (newChannel) => {
@@ -35,7 +38,7 @@ const useCreateChannel = (): UseMutationResult<
       )
 
       queryClient.setQueryData<IChannel[]>(
-        channelKeys.me(),
+        channelKeys.list(userId),
         (previousChannels = []) => [newChannel, ...previousChannels],
       )
 

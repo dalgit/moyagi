@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import styled from 'styled-components'
 
 export const FormLayout = styled.form`
@@ -14,6 +15,7 @@ export const FormLayout = styled.form`
     font-size: 12px;
     color: gray;
   }
+
   & > * {
     width: 80%;
   }
@@ -22,4 +24,8 @@ export const FormLayout = styled.form`
 export const Title = styled.span`
   font-size: 45px;
   text-align: center;
+`
+
+export const StyledSpan = styled.span`
+  color: #606367;
 `

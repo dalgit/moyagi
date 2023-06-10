@@ -1,5 +1,6 @@
 import { NextApiResponse, NextApiRequest } from 'next'
 import getUserProfile from 'server/api/getUserProfile'
+import updateProfile from 'server/api/updateProfile'
 
 export default async function handler(
   req: NextApiRequest,
@@ -10,6 +11,10 @@ export default async function handler(
   switch (requestMethod) {
     case 'GET':
       await getUserProfile(req, res)
+      break
+
+    case 'PATCH':
+      await updateProfile(req, res)
       break
 
     default:

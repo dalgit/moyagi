@@ -1,7 +1,7 @@
 import { ObjectId } from 'mongodb'
 import { NextApiResponse } from 'next'
 import { NextApiRequestWithUser } from 'types/types'
-import { channelsByAddressPipeLine } from '../pipeLine/channel'
+import { channelMatchPipeline } from '../pipeLine/channel'
 import connectToDatabase from '../utils/connectToDatabase'
 
 const createChannel = async (
@@ -27,7 +27,7 @@ const createChannel = async (
     })
 
     const channel = await channelsCollection
-      .aggregate(channelsByAddressPipeLine(address))
+      .aggregate(channelMatchPipeline({ address }))
       .next()
 
     res.status(200).json(channel)

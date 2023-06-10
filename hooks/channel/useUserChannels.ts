@@ -13,7 +13,7 @@ const useUserChannels = (
   options?: UseQueryOptions<IChannel[], AxiosError>,
 ): UseQueryResult<IChannel[], AxiosError> => {
   return useQuery<IChannel[], AxiosError>(
-    channelKeys.me(),
+    channelKeys.list(id),
     () => getUserChannels(id),
     options,
   )

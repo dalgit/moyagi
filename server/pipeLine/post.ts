@@ -1,24 +1,12 @@
-import { ObjectId } from 'mongodb'
+import { TFilter } from 'server/type/pipeline'
 
-export const postByIdPipeLine = (id: ObjectId) => [
+export const postMatchPipeline = (filter: TFilter) => [
   {
-    $match: { _id: id },
+    $match: filter,
   },
-  ...postBasePipeline,
-]
-
-export const postByChannelIdPipeLine = (channelId: ObjectId) => [
-  {
-    $match: { channelId },
-  },
-  ...postBasePipeline,
-]
-
-export const postByUserIdPipeLine = (userId: ObjectId) => [
-  {
-    $match: { authorId: userId },
-  },
-  ...postBasePipeline,
+  ...authorPipeline,
+  ...channelPipeline,
+  ...postCommentsPipeline,
 ]
 
 const authorPipeline = [
@@ -97,10 +85,4 @@ const postCommentsPipeline = [
       'comments.author.password': 0,
     },
   },
-]
-
-const postBasePipeline = [
-  ...authorPipeline,
-  ...channelPipeline,
-  ...postCommentsPipeline,
 ]

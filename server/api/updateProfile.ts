@@ -18,7 +18,12 @@ const updateProfile = async (
 
     const udapteResult = await usersCollection.findOneAndUpdate(
       { _id: userId },
-      { $set: { introduction, imageUrl } },
+      {
+        $set: {
+          ...(introduction && { introduction }),
+          ...(imageUrl && { imageUrl }),
+        },
+      },
       { returnDocument: 'after' },
     )
 

@@ -34,10 +34,7 @@ export const SearchBarLayout = styled.div`
   align-items: center;
   gap: 5px;
   height: 50px;
-  width: 750px;
   max-width: 100%;
-
-  margin: 40px 0;
 
   button {
     width: 60px;

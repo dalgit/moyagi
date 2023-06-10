@@ -10,10 +10,8 @@ export const StyledImage = styled(FImage)`
 
 export const CardLayout = styled.div<CardStyle>`
   border-radius: 12px;
-
-  ${({ width }) => css`
-    width: ${width};
-  `}
+  width: 160px;
+  padding: 5px;
 
   ${StyledImage} {
     ${({ hasBoxShadow }) =>

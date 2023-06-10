@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 import { useRecoilState } from 'recoil'
 import { IToast, toastState } from 'recoil/toast/toastAtom'
-import getUniqueId from 'utils/getUniqueId'
+import getUniqueId from 'utils/common/getUniqueId'
 
 const MAX_TOASTS = 3
 

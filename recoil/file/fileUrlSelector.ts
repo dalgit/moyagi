@@ -1,5 +1,5 @@
 import { selectorFamily } from 'recoil'
-import { uploadImage } from 'utils/uploadImage'
+import { uploadImage } from 'utils/common/uploadImage'
 import fileSelector from './fileSelector'
 
 const fileUrlSelector = selectorFamily<string | undefined, string>({

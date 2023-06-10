@@ -4,6 +4,7 @@ import {
   UseMutationResult,
 } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
+import { useToast } from 'hooks/common'
 import { IPost } from 'types/post'
 import client from 'utils/axios/axios'
 import { postKeys } from 'utils/queryKeys/post'
@@ -17,7 +18,7 @@ const useCreatePost = (
   channelId: string,
 ): UseMutationResult<IPost, AxiosError, createPostArgs> => {
   const queryClient = useQueryClient()
-
+  const { onToast } = useToast()
   return useMutation(createPost, {
     onSuccess: (newPost) => {
       queryClient.setQueryData<IPost[]>(
@@ -25,12 +26,7 @@ const useCreatePost = (
         (previousPosts = []) => [newPost, ...previousPosts],
       )
 
-      queryClient.setQueryData<IPost[]>(postKeys.me(), (previousPosts = []) => [
-        newPost,
-        ...previousPosts,
-      ])
-
-      alert('작성이 완료되었습니다.')
+      onToast({ content: '작성이 완료되었습니다.', type: 'success' })
     },
   })
 }

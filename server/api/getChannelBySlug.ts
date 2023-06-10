@@ -1,6 +1,6 @@
 import { NextApiResponse } from 'next'
 import { NextApiRequestWithUser } from 'types/types'
-import { channelsByAddressPipeLine } from '../../server/pipeLine/channel'
+import { channelMatchPipeline } from '../../server/pipeLine/channel'
 import connectToDatabase from '../utils/connectToDatabase'
 
 const getChannelBySlug = async (
@@ -13,7 +13,7 @@ const getChannelBySlug = async (
     const { channelAddress: address } = req.query
 
     const channel = await channelsCollection
-      .aggregate(channelsByAddressPipeLine(address as string))
+      .aggregate(channelMatchPipeline({ address: address as string }))
       .next()
 
     if (!channel) {

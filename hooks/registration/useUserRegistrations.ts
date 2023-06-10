@@ -7,7 +7,7 @@ import { registrationKeys } from 'utils/queryKeys/registration'
 const useUserRegistrations = (
   id: string,
 ): UseQueryResult<IRegistration[], AxiosError> => {
-  return useQuery(registrationKeys.me(), () => getUserRegistrations(id))
+  return useQuery(registrationKeys.users(id), () => getUserRegistrations(id))
 }
 
 export default useUserRegistrations

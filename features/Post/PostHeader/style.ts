@@ -6,8 +6,13 @@ export const PostHeaderLayout = styled.div`
   align-items: center;
 `
 
-export const UserBox = styled.div`
+export const Wrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 7px;
+
+  span {
+    font-size: 12px;
+    color: gray;
+  }
 `

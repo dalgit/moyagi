@@ -1,7 +1,7 @@
 import { ObjectId } from 'mongodb'
 import { NextApiResponse } from 'next'
 import { NextApiRequestWithUser } from 'types/types'
-import { registrationByIdPipeLine } from '../pipeLine/registration'
+import { registrationMatchPipeline } from '../pipeLine/registration'
 import connectToDatabase from '../utils/connectToDatabase'
 
 const updateRegistration = async (
@@ -26,7 +26,7 @@ const updateRegistration = async (
     )
 
     const registration = await registrationsCollection
-      .aggregate(registrationByIdPipeLine(registrationId))
+      .aggregate(registrationMatchPipeline({ _id: registrationId }))
       .next()
 
     return res.status(200).json(registration)

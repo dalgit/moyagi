@@ -6,7 +6,17 @@ import userIdSelector from 'recoil/user/userIdSelector'
 
 const UserChannelCards = () => {
   const userId = useRecoilValue(userIdSelector)
-  const { data: channels } = useUserChannels(userId, { suspense: true })
+
+  const { data: channels } = useUserChannels(userId, {
+    suspense: true,
+    enabled: Boolean(userId),
+  })
+
+  if (!userId) {
+    return (
+      <NotificationBox title="로그인 후, 채널에 참여해 주세요." type="empty" />
+    )
+  }
 
   if (!channels?.length) {
     return (

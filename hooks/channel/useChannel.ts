@@ -1,16 +1,14 @@
 import { UseQueryResult } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 import useRecoilQuery from 'hooks/common/useRecoilQuery'
-import channelSelector from 'recoil/channel/channelSelector'
+import channelAtom from 'recoil/channel/channelAtom'
 import { IChannel } from 'types/channel'
 import client from 'utils/axios/axios'
 import { channelKeys } from 'utils/queryKeys/channel'
 
 const useChannel = (slug: string): UseQueryResult<IChannel, AxiosError> => {
-  return useRecoilQuery<IChannel>(
-    channelSelector,
-    channelKeys.detail(slug),
-    () => getChannelBySlug(slug),
+  return useRecoilQuery<IChannel>(channelAtom, channelKeys.detail(slug), () =>
+    getChannelBySlug(slug),
   )
 }
 

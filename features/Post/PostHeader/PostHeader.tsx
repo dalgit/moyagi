@@ -3,6 +3,7 @@ import { Avatar } from 'components/common'
 import { userDefaultImage } from 'constants/defaultImage'
 import PostHeaderMenu from 'features/Post/PostHeader/Components/PostHeaderMenu'
 import { IPost } from 'types/post'
+import getFormattedDate from 'utils/common/getFormattedDate'
 import * as S from './style'
 
 interface PostHeaderProps {
@@ -10,6 +11,7 @@ interface PostHeaderProps {
 }
 
 const PostHeader = ({ post }: PostHeaderProps) => {
+  const FormattedDate = getFormattedDate(post.createdAt)
   const router = useRouter()
 
   const handleAvatarClick = (id: string) => {
@@ -23,7 +25,10 @@ const PostHeader = ({ post }: PostHeaderProps) => {
         name={post.author.name}
         onClick={() => handleAvatarClick(post.author._id)}
       />
-      <PostHeaderMenu post={post} />
+      <S.Wrapper>
+        <span>{FormattedDate}</span>
+        <PostHeaderMenu post={post} />
+      </S.Wrapper>
     </S.PostHeaderLayout>
   )
 }

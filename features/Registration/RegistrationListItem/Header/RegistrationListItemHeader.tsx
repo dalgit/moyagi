@@ -1,5 +1,5 @@
 import { EStatus } from 'types/registration'
-import getFormattedDate from 'utils/getFormattedDate'
+import getFormattedDate from 'utils/common/getFormattedDate'
 import * as S from './style'
 
 interface RegistrationHeaderProps {
@@ -14,6 +14,7 @@ const RegistrationListItemHeader = ({
   status,
 }: RegistrationHeaderProps) => {
   const FormattedDate = getFormattedDate(date)
+
   const statusText = {
     [EStatus.PENDING]: '대기',
     [EStatus.APPROVE]: '승인',

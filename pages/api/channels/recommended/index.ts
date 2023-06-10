@@ -1,5 +1,5 @@
 import { NextApiResponse, NextApiRequest } from 'next'
-import deleteChannelPost from 'server/api/deleteChannelPost'
+import getChannelsByRecommendation from 'server/api/getChannelsByRecommendation'
 
 export default async function handler(
   req: NextApiRequest,
@@ -8,8 +8,8 @@ export default async function handler(
   const requestMethod = req.method
 
   switch (requestMethod) {
-    case 'DELETE':
-      await deleteChannelPost(req, res)
+    case 'GET':
+      await getChannelsByRecommendation(req, res)
       break
 
     default:

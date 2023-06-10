@@ -10,11 +10,12 @@ interface ProfileProps {
 const UserProfile = ({
   name,
   introduction = '소개말이 없습니다.',
-  imageUrl = userDefaultImage,
+  imageUrl,
 }: ProfileProps) => {
+  const userProfileImage = imageUrl || userDefaultImage
   return (
     <S.UserProfileLayout>
-      <S.ProfileImage src={imageUrl} alt="profile_image" />
+      <S.ProfileImage src={userProfileImage} alt="profile_image" />
       <h2>{name}</h2>
       <span>{introduction}</span>
     </S.UserProfileLayout>

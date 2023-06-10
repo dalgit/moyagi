@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import * as S from './style'
 import { TooltipIconProps } from './style'
+import * as S from './style'
 
 interface TooltipProps extends TooltipIconProps {
   content: string
