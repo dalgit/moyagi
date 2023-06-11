@@ -1,13 +1,14 @@
-import Link from 'next/link'
+import { UserLink } from 'components/common'
 
 interface UserMenuListProps {
   authorId: string
 }
+
 const UserMenuList = ({ authorId }: UserMenuListProps) => {
   return (
-    <Link href={`/users/${authorId}`}>
+    <UserLink href={authorId}>
       <li>작성자 정보</li>
-    </Link>
+    </UserLink>
   )
 }
 

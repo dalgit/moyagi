@@ -14,7 +14,7 @@ const useChannel = (slug: string): UseQueryResult<IChannel, AxiosError> => {
 
 export default useChannel
 
-const getChannelBySlug = async (slug: string): Promise<IChannel> =>
+export const getChannelBySlug = async (slug: string): Promise<IChannel> =>
   await client
     .get('/channels', {
       params: { channelAddress: slug },

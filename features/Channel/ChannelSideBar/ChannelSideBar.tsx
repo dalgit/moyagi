@@ -5,6 +5,7 @@ import {
 } from 'react-icons/ai'
 import { useRecoilValue } from 'recoil'
 import { baseUrl } from 'constants/baseUrl'
+import { CHANNEL_PATH } from 'constants/paths'
 import useModal from 'hooks/common/useModal'
 import useToast from 'hooks/common/useToast'
 import channelAtom from 'recoil/channel/channelAtom'
@@ -26,7 +27,7 @@ const ChannelSideBar = () => {
   }
 
   const handleCopyAddress = () => {
-    navigator.clipboard.writeText(`${baseUrl}/channels/${address}`)
+    navigator.clipboard.writeText(`${baseUrl + CHANNEL_PATH}/${address}`)
     onToast({ content: '복사가 완료되었습니다.', type: 'success' })
   }
 

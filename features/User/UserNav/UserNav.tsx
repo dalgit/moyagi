@@ -1,11 +1,12 @@
 import { useRouter } from 'next/router'
 import { useRecoilValue } from 'recoil'
 import { Button } from 'components/common'
-import { userDefaultImage } from 'constants/defaultImage'
 import { UserNavList } from 'features/User'
 import { useMenu } from 'hooks/common'
 import userAtom from 'recoil/user/userAtom'
+import { withUser } from 'utils/common/withDefaultImage'
 import * as S from './style'
+
 const UserNav = () => {
   const user = useRecoilValue(userAtom)
   const { isMenuOpen, handleMenuClick, ref } = useMenu<HTMLDivElement>()
@@ -27,7 +28,7 @@ const UserNav = () => {
     <S.UserNavLayout ref={ref}>
       <S.UserAvatar
         name={user.name}
-        image={user.imageUrl || userDefaultImage}
+        image={withUser(user.imageUrl)}
         onClick={handleMenuClick}
       />
       {isMenuOpen && <UserNavList />}

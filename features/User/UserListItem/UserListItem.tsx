@@ -1,6 +1,6 @@
 import React, { LiHTMLAttributes, ReactNode } from 'react'
 import { Avatar, ListItem } from 'components/common'
-import { userDefaultImage } from 'constants/defaultImage'
+import { withUser } from 'utils/common/withDefaultImage'
 
 interface UserListItemLayoutProps extends LiHTMLAttributes<HTMLLIElement> {
   name: string
@@ -8,14 +8,10 @@ interface UserListItemLayoutProps extends LiHTMLAttributes<HTMLLIElement> {
   right?: ReactNode
 }
 
-const UserListItem = ({ name, image, ...props }: UserListItemLayoutProps) => {
-  const profileImage = image || userDefaultImage
-
-  return (
-    <ListItem {...props}>
-      <Avatar image={profileImage} name={name} />
-    </ListItem>
-  )
-}
+const UserListItem = ({ name, image, ...props }: UserListItemLayoutProps) => (
+  <ListItem {...props}>
+    <Avatar image={withUser(image)} name={name} />
+  </ListItem>
+)
 
 export default UserListItem

@@ -1,23 +1,22 @@
 import { useState, ChangeEvent } from 'react'
 import { useRecoilValue } from 'recoil'
 import { Button, ImageSelector, Input } from 'components/common'
-import { userDefaultImage } from 'constants/defaultImage'
 import { useUploadImage } from 'hooks/common'
 import useModal from 'hooks/common/useModal'
 import { useUpdateUser } from 'hooks/user'
 import userAtom from 'recoil/user/userAtom'
 import userIdSelector from 'recoil/user/userIdSelector'
+import { withUser } from 'utils/common/withDefaultImage'
 import * as S from './style'
 
 const atomKey = 'userEditProfile'
 
 const UserEditProfile = () => {
-  const { name, introduction: intro, imageUrl } = useRecoilValue(userAtom)
+  const { name, introduction: intro = '', imageUrl } = useRecoilValue(userAtom)
+  const [introduction, setIntroduction] = useState(intro)
 
-  const profileImage = imageUrl || userDefaultImage
   const { getFileUrl, removeFile } = useUploadImage()
   const { mutateAsync: updateUserMutate } = useUpdateUser()
-  const [introduction, setIntroduction] = useState(intro || '')
   const { closeModal } = useModal()
   const userId = useRecoilValue(userIdSelector)
 
@@ -37,7 +36,7 @@ const UserEditProfile = () => {
 
   return (
     <S.UserEditProfileLayout>
-      <ImageSelector atomKey={atomKey} defaultImage={profileImage} />
+      <ImageSelector atomKey={atomKey} defaultImage={withUser(imageUrl)} />
       <h2>{name}</h2>
       <Input value={introduction} onChange={handleInputChange} />
       <Button onClick={handleProfileUpdate}>변경</Button>

@@ -1,12 +1,13 @@
 import { useRouter } from 'next/router'
 import { useRecoilValue } from 'recoil'
 import { Button } from 'components/common'
-import { userDefaultImage } from 'constants/defaultImage'
+import { USER_PATH } from 'constants/paths'
 import useCheckMe from 'hooks/common/useCheckMe'
 import useDeleteComment from 'hooks/post/useDeleteComment'
 import channelIdSelector from 'recoil/channel/channelIdSelector'
 import { IComment } from 'types/post'
 import getFormattedDate from 'utils/common/getFormattedDate'
+import { withUser } from 'utils/common/withDefaultImage'
 import * as S from './style'
 
 interface PostCommentItemProps {
@@ -23,7 +24,7 @@ const PostCommentItem = ({ comment, postId }: PostCommentItemProps) => {
   const router = useRouter()
 
   const handleUserClick = () => {
-    router.push(`/users/${author._id}`)
+    router.push(`${USER_PATH}/${author._id}`)
   }
 
   const handleCommentDelete = () => {
@@ -35,10 +36,7 @@ const PostCommentItem = ({ comment, postId }: PostCommentItemProps) => {
   return (
     <S.PostCommentItemLayout>
       <S.Wrapper>
-        <S.UserIcon
-          src={author.imageUrl || userDefaultImage}
-          onClick={handleUserClick}
-        />
+        <S.UserIcon src={withUser(author.imageUrl)} onClick={handleUserClick} />
         <S.InnerWrapper>
           <S.AtuhorName>{author.name}</S.AtuhorName>
           <S.StyledComment>{content}</S.StyledComment>

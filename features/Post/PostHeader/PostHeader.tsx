@@ -1,33 +1,36 @@
-import { useRouter } from 'next/router'
-import { Avatar } from 'components/common'
-import { userDefaultImage } from 'constants/defaultImage'
-import PostHeaderMenu from 'features/Post/PostHeader/Components/PostHeaderMenu'
-import { IPost } from 'types/post'
+import { Avatar, MoreMenu, UserLink } from 'components/common'
+import { useCheckMe } from 'hooks/common'
+import { IUser } from 'types/user'
 import getFormattedDate from 'utils/common/getFormattedDate'
+import { withUser } from 'utils/common/withDefaultImage'
+import AuthorMenuList from './AuthorMenuList/AuthorMenuList'
 import * as S from './style'
+import UserMenuList from './UserMenuList/UserMenuList'
 
 interface PostHeaderProps {
-  post: IPost
+  postId: string
+  author: IUser
+  createdAt: Date
 }
 
-const PostHeader = ({ post }: PostHeaderProps) => {
-  const FormattedDate = getFormattedDate(post.createdAt)
-  const router = useRouter()
-
-  const handleAvatarClick = (id: string) => {
-    router.push(`/users/${id}`)
-  }
+const PostHeader = ({ postId, author, createdAt }: PostHeaderProps) => {
+  const isMyPost = useCheckMe(author._id)
+  const FormattedDate = getFormattedDate(createdAt)
 
   return (
     <S.PostHeaderLayout>
-      <Avatar
-        image={post.author.imageUrl || userDefaultImage}
-        name={post.author.name}
-        onClick={() => handleAvatarClick(post.author._id)}
-      />
+      <UserLink href={author._id}>
+        <Avatar image={withUser(author.imageUrl)} name={author.name} />
+      </UserLink>
       <S.Wrapper>
         <span>{FormattedDate}</span>
-        <PostHeaderMenu post={post} />
+        <MoreMenu>
+          {isMyPost ? (
+            <AuthorMenuList postId={postId} />
+          ) : (
+            <UserMenuList authorId={author._id} />
+          )}
+        </MoreMenu>
       </S.Wrapper>
     </S.PostHeaderLayout>
   )

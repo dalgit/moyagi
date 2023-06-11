@@ -25,7 +25,3 @@ export const Member = styled.span`
   color: gray;
   cursor: pointer;
 `
-
-export const StyledCard = styled(Card)`
-  width: 100%;
-`

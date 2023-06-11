@@ -5,6 +5,7 @@ import * as S from './style'
 interface ChannelCardsProps {
   channels: IChannel[]
 }
+
 const ChannelCards = ({ channels }: ChannelCardsProps) => (
   <S.ChannelCardsLayout>
     {channels.map((channel) => (

@@ -6,6 +6,7 @@ import {
 import { AxiosError } from 'axios'
 import { useRouter } from 'next/router'
 import { useRecoilValue } from 'recoil'
+import { CHANNEL_PATH } from 'constants/paths'
 import userIdSelector from 'recoil/user/userIdSelector'
 import { IChannel } from 'types/channel'
 import client from 'utils/axios/axios'
@@ -42,7 +43,7 @@ const useCreateChannel = (): UseMutationResult<
         (previousChannels = []) => [newChannel, ...previousChannels],
       )
 
-      push(`/channels/${address}`)
+      push(`${CHANNEL_PATH}/${address}`)
       alert('채널이 개설되었습니다!')
     },
   })

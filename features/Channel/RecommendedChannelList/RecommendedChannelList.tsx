@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import { ChannelLink } from 'components/common'
 import InfiniteList from 'components/common/InfiniteList/InfiniteList'
 import ToolTip from 'components/common/ToolTIp/ToolTip'
 import useRecommendedChannels from 'hooks/channel/useRecommendedChannels'
@@ -11,9 +11,9 @@ const RecommendedChannelList = () => {
   })
 
   const channelItem = (channel: IChannel) => (
-    <Link href={`/channels/${channel.address}`} key={channel._id}>
+    <ChannelLink href={channel.address} key={channel._id}>
       {channel.name}
-    </Link>
+    </ChannelLink>
   )
 
   return (

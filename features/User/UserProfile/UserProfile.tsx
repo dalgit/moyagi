@@ -1,4 +1,4 @@
-import { userDefaultImage } from 'constants/defaultImage'
+import { withUser } from 'utils/common/withDefaultImage'
 import * as S from './style'
 
 interface ProfileProps {
@@ -12,10 +12,9 @@ const UserProfile = ({
   introduction = '소개말이 없습니다.',
   imageUrl,
 }: ProfileProps) => {
-  const userProfileImage = imageUrl || userDefaultImage
   return (
     <S.UserProfileLayout>
-      <S.ProfileImage src={userProfileImage} alt="profile_image" />
+      <S.ProfileImage src={withUser(imageUrl)} />
       <h2>{name}</h2>
       <span>{introduction}</span>
     </S.UserProfileLayout>

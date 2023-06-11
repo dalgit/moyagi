@@ -1,18 +1,13 @@
 import { QueryClient, dehydrate } from '@tanstack/react-query'
 import { GetServerSideProps } from 'next/types'
 import { ChannelTemplate, Layout } from 'components/Template'
-import { useChannel } from 'hooks/channel'
-import { IChannel } from 'types/channel'
-import { IParams } from 'types/common'
-import createServerInstance from 'utils/axios/server'
+import { getChannelBySlug } from 'hooks/channel/useChannel'
 import { channelKeys } from 'utils/queryKeys/channel'
 
-const ChannelPage = ({ slug }: { slug: string }) => {
-  const { data: channel = {} as IChannel } = useChannel(slug)
-
+const ChannelPage = () => {
   return (
     <Layout>
-      <ChannelTemplate channel={channel} />
+      <ChannelTemplate />
     </Layout>
   )
 }
@@ -20,18 +15,19 @@ const ChannelPage = ({ slug }: { slug: string }) => {
 export default ChannelPage
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { slug } = context.params as IParams
-  const server = createServerInstance(context)
-  const queryClient = new QueryClient()
+  const slug = context.params?.slug
 
   try {
+    if (typeof slug !== 'string') {
+      throw new Error()
+    }
+
+    const queryClient = new QueryClient()
+
     await queryClient.fetchQuery(channelKeys.detail(slug), () =>
-      server
-        .get('http://localhost:3000/api/channels', {
-          params: { channelAddress: slug },
-        })
-        .then((res) => res.data),
+      getChannelBySlug(slug),
     )
+
     return {
       props: { dehydratedProps: dehydrate(queryClient), slug },
     }

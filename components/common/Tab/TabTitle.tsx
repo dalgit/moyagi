@@ -5,7 +5,7 @@ import { Actions } from './hooks/useTabReducer'
 
 interface TabTitleProps {
   children: ReactNode
-  idx?: number
+  idx: number
 }
 
 const TabTitle = ({ children, idx }: TabTitleProps) => {

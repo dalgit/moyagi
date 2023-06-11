@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import * as S from './style'
 
 export interface CardStyle {
@@ -6,18 +5,15 @@ export interface CardStyle {
 }
 
 interface CardProps extends CardStyle {
-  href: string
   image: string
   title: string
 }
 
-const Card = ({ href, image, title, ...rest }: CardProps) => {
+const Card = ({ image, title, ...rest }: CardProps) => {
   return (
     <S.CardLayout {...rest}>
-      <Link href={href}>
-        <S.StyledImage src={image} />
-        <S.Title>{title}</S.Title>
-      </Link>
+      <S.StyledImage src={image} />
+      <S.Title>{title}</S.Title>
     </S.CardLayout>
   )
 }

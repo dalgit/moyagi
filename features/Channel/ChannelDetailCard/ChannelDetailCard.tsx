@@ -1,20 +1,20 @@
 import { useRouter } from 'next/router'
 import { useRecoilValue } from 'recoil'
 import { Button } from 'components/common'
-import { channelDefaultImage } from 'constants/defaultImage'
+import { USER_PATH } from 'constants/paths'
 import useModal from 'hooks/common/useModal'
 import { isMemberSelector } from 'recoil/channel/isMemberSelector'
-import userAtom from 'recoil/user/userAtom'
 import userIdSelector from 'recoil/user/userIdSelector'
 import { IChannel } from 'types/channel'
 import * as S from './style'
+import ChannelCard from '../ChannelCard/ChannelCard'
 
 interface ChannelInfoProps {
   channel: IChannel
 }
 
 const ChannelDetailCard = ({ channel }: ChannelInfoProps) => {
-  const { name, description, manager, address, members, imageUrl } = channel
+  const { description, manager, members } = channel
   const { openModal } = useModal()
   const isMember = useRecoilValue(isMemberSelector)
   const router = useRouter()
@@ -37,18 +37,13 @@ const ChannelDetailCard = ({ channel }: ChannelInfoProps) => {
   }
 
   const handleManagerClick = () => {
-    router.push(`/users/${manager._id}`)
+    router.push(`${USER_PATH}/${manager._id}`)
   }
 
   return (
     <div>
       <S.ChannelDetailCardLayout>
-        <S.StyledCard
-          title={name}
-          href={address}
-          image={imageUrl || channelDefaultImage}
-          hasBoxShadow={false}
-        />
+        <ChannelCard channel={channel} hasBoxShadow={false} />
         <S.Description>{description}</S.Description>
         <S.Member onClick={handleManagerClick}>매니저 {manager.name}</S.Member>
         <S.Member onClick={handleMembersModalOpen}>
