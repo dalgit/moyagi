@@ -2,6 +2,7 @@ import styled, { css, keyframes } from 'styled-components'
 
 interface ItemLayoutProps {
   isActive: boolean
+  isInitial: boolean
 }
 
 const disappearAnimation = keyframes`
@@ -12,7 +13,7 @@ const disappearAnimation = keyframes`
   }
 
   100% {
-    bottom:100%;
+    bottom: 100%;
     transform: translateY(-100%);
     opacity: 0;
   }
@@ -37,6 +38,8 @@ export const InfiniteListLayout = styled.div`
   width: 8rem;
   height: 2rem;
   overflow: hidden;
+  display: flex;
+  gap: 30px;
 `
 
 export const ItemLayout = styled.div<ItemLayoutProps>`
@@ -46,13 +49,16 @@ export const ItemLayout = styled.div<ItemLayoutProps>`
   overflow: hidden;
   text-overflow: ellipsis;
 
-  ${({ isActive }) =>
+  ${({ isActive, isInitial }) =>
     isActive
       ? css`
           animation: ${appearAnimation} 0.9s ease-in forwards;
         `
-      : !isActive &&
-        css`
+      : css`
           animation: ${disappearAnimation} 0.9s ease-in forwards;
+          ${isInitial &&
+          css`
+            visibility: hidden;
+          `}
         `}
 `

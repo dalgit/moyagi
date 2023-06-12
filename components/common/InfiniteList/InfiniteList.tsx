@@ -10,7 +10,7 @@ const InfiniteList = ({ items }: InfiniteListProps) => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % items.length)
+      setCurrentIndex((prevIndex) => prevIndex + 1)
     }, 4000)
 
     return () => {
@@ -21,7 +21,11 @@ const InfiniteList = ({ items }: InfiniteListProps) => {
   return (
     <S.InfiniteListLayout>
       {items.map((item, index) => (
-        <S.ItemLayout key={index} isActive={index === currentIndex}>
+        <S.ItemLayout
+          key={index}
+          isInitial={currentIndex === 0}
+          isActive={index === currentIndex % items.length}
+        >
           {item}
         </S.ItemLayout>
       ))}
