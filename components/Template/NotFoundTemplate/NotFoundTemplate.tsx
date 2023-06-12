@@ -1,5 +1,5 @@
-import Link from 'next/link'
-import { Button, BackButton, NotificationBox } from 'components/common'
+import { useRouter } from 'next/router'
+import { BackLink, Button, NotificationBox } from 'components/common'
 import * as S from './style'
 
 interface NotFoundTemplateProps {
@@ -7,12 +7,14 @@ interface NotFoundTemplateProps {
 }
 
 const NotFoundTemplate = ({ description }: NotFoundTemplateProps) => {
+  const router = useRouter()
+
   const EventButtons = (
     <S.Wrapper>
-      <BackButton>이전</BackButton>
-      <Link href="/">
-        <Button>메인</Button>
-      </Link>
+      <BackLink>
+        <Button variant="secondary">이전</Button>
+      </BackLink>
+      <Button onClick={() => router.push('/')}>메인</Button>
     </S.Wrapper>
   )
 

@@ -1,16 +1,10 @@
-import { Button } from 'components/common'
+import { Button, BackLink } from 'components/common'
 import { useSearch } from 'hooks/channel'
 import * as S from './style'
 
 const SearchBar = ({ ...rest }) => {
-  const {
-    keyword,
-    setKeyword,
-    isSearched,
-    handleSearch,
-    handleKeyDown,
-    handleHomeNavigate,
-  } = useSearch()
+  const { keyword, setKeyword, isSearched, handleSearch, handleKeyDown } =
+    useSearch()
 
   return (
     <S.SearchBarLayout {...rest}>
@@ -22,7 +16,11 @@ const SearchBar = ({ ...rest }) => {
           onKeyDown={handleKeyDown}
           placeholder="채널 검색하기"
         />
-        {isSearched && <S.ResetIcon onClick={handleHomeNavigate} size={25} />}
+        {isSearched && (
+          <BackLink>
+            <S.ResetIcon size={25} />
+          </BackLink>
+        )}
       </S.InputWrapper>
       <Button onClick={handleSearch}>검색</Button>
     </S.SearchBarLayout>

@@ -10,14 +10,11 @@ const useSearch = () => {
       pathname: '/search',
       query: { keyword },
     })
+    setKeyword('')
   }
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') handleSearch()
-  }
-
-  const handleHomeNavigate = () => {
-    router.push('/')
   }
 
   const isSearched = router.pathname === '/search'
@@ -28,7 +25,6 @@ const useSearch = () => {
     isSearched,
     handleSearch,
     handleKeyDown,
-    handleHomeNavigate,
   }
 }
 

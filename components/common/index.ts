@@ -1,5 +1,5 @@
 export { default as Avatar } from './Avatar/Avatar'
-export { default as BackButton } from './BackButton/BackButton'
+export { default as BackLink } from './BackLink/BackLink'
 export { default as Button } from './Button/Button'
 export { default as Card } from './Card/Card'
 export { default as FImage } from './FImage/FImage'
