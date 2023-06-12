@@ -1,18 +1,20 @@
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
-const useRouterEffect = (handler: () => void) => {
+type HandlerType = (url: string) => void
+
+const useRouterEffect = (handler: HandlerType) => {
   const { events } = useRouter()
 
   useEffect(() => {
-    const handleEvent = () => {
-      handler()
+    const handleRouteChangeStart = (url: string) => {
+      handler(url)
     }
 
-    events.on('routeChangeStart', handleEvent)
+    events.on('routeChangeStart', handleRouteChangeStart)
 
     return () => {
-      events.off('routeChangeStart', handleEvent)
+      events.off('routeChangeStart', handleRouteChangeStart)
     }
   }, [events, handler])
 }
