@@ -2,39 +2,34 @@ import Link from 'next/link'
 import { Button, Input, ErrorText } from 'components/common'
 import { useRegisterUser } from 'hooks/auth'
 import { useForm, useBlur } from 'hooks/common'
-import authValidation from 'utils/common/authValidation'
-import * as S from './style'
+import authValidations from 'utils/validations/auth'
+import * as S from '../LoginForm/style'
 
-const initialState = {
+const initialForm = {
   name: '',
   email: '',
   password: '',
   passwordConfirm: '',
+  asfd: '',
 }
 
+const validationFunctions = { ...authValidations }
+
 const SignUpForm = () => {
-  const { form, updateForm } = useForm<{ [key: string]: string }>(initialState)
+  const { form, updateForm, isValid, isAllValid } = useForm(
+    initialForm,
+    validationFunctions,
+  )
+
   const { isBlurred, handleBlur } = useBlur()
   const { mutate: registerUserMutate } = useRegisterUser()
 
   const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    const isValid = [
-      authValidation.name(form.name),
-      authValidation.email(form.email),
-      authValidation.password(form.password),
-      authValidation.passwordConfirm(form.password, form.passwordConfirm),
-    ].every((condition) => condition)
+    if (!isAllValid()) return
 
-    if (!isValid) return
-
-    registerUserMutate({
-      name: form.name,
-      email: form.email,
-      password: form.password,
-      passwordConfirm: form.passwordConfirm,
-    })
+    registerUserMutate({ ...form })
   }
 
   return (
@@ -52,7 +47,7 @@ const SignUpForm = () => {
         />
         <ErrorText
           start={isBlurred.name}
-          error={!authValidation.name(form.name)}
+          error={!isValid.name}
           text="이름이 올바르지 않습니다."
         />
       </div>
@@ -67,7 +62,7 @@ const SignUpForm = () => {
         />
         <ErrorText
           start={isBlurred.email}
-          error={!authValidation.email(form.email)}
+          error={!isValid.email}
           text="이메일이 올바르지 않습니다."
         />
       </div>
@@ -82,7 +77,7 @@ const SignUpForm = () => {
         />
         <ErrorText
           start={isBlurred.password}
-          error={!authValidation.password(form.password)}
+          error={!isValid.password}
           text=" 비밀번호가 올바르지 않습니다."
         />
       </div>
@@ -97,10 +92,8 @@ const SignUpForm = () => {
         />
         <ErrorText
           start={isBlurred.passwordConfirm}
-          error={
-            !authValidation.passwordConfirm(form.password, form.passwordConfirm)
-          }
-          text="비밀번호와 같지 않습니다."
+          error={!isValid.passwordConfirm}
+          text=" 비밀번호가 일치하지 않습니다."
         />
       </div>
       <Button type="submit">회원가입</Button>

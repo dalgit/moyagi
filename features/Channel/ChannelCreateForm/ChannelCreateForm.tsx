@@ -1,6 +1,7 @@
 import { Button, ImageSelector, Input, Radio, Radios } from 'components/common'
 import { useCreateChannel } from 'hooks/channel'
 import { useForm, useUploadImage } from 'hooks/common'
+import channelValidations from 'utils/validations/channel'
 import * as S from './style'
 
 const atomKey = 'channelProfile'
@@ -13,18 +14,26 @@ const initailForm = {
   imgSrc: '',
 }
 
+const validationFunctions = {
+  ...channelValidations,
+}
+
 const ChannelCreateForm = () => {
-  const { form, updateForm } = useForm<{ [key: string]: string }>(initailForm)
+  const { form, updateForm, isAllValid } = useForm(
+    initailForm,
+    validationFunctions,
+  )
+
   const { mutate: createChannelMutate } = useCreateChannel()
   const { getFileUrl } = useUploadImage()
 
   const handleCreateChannel = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
+    if (!isAllValid()) return
+
     createChannelMutate({
-      name: form.name,
-      address: form.address,
-      description: form.description,
+      ...form,
       isPublic: JSON.parse(form.isPublic),
       imageUrl: await getFileUrl(atomKey),
     })
@@ -33,9 +42,14 @@ const ChannelCreateForm = () => {
   return (
     <S.Form onSubmit={handleCreateChannel}>
       <ImageSelector atomKey={atomKey} />
-      <Input label="이름" id="name" onChange={updateForm} />
-      <Input label="주소" id="address" onChange={updateForm} />
-      <Input label="설명" id="description" onChange={updateForm} />
+      <Input label="이름" id="name" maxLength={14} onChange={updateForm} />
+      <Input label="주소" id="address" maxLength={20} onChange={updateForm} />
+      <Input
+        label="설명"
+        id="description"
+        maxLength={40}
+        onChange={updateForm}
+      />
       <Radios
         label="공개 여부"
         name="isPublic"

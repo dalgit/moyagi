@@ -2,26 +2,34 @@ import Link from 'next/link'
 import { Input, Button, ErrorText } from 'components/common'
 import { useAuthenticateUser } from 'hooks/auth'
 import { useForm, useBlur } from 'hooks/common'
-import authValidation from 'utils/common/authValidation'
+import authValidations from 'utils/validations/auth'
 import * as S from './style'
 
-const initialState = {
+const initialForm = {
   email: '',
   password: '',
 }
 
+const validationFunctions = {
+  email: authValidations.email,
+  password: authValidations.password,
+}
+
 const LoginForm = () => {
-  const { form, updateForm } = useForm<{ [key: string]: string }>(initialState)
+  const { form, updateForm, isValid, isAllValid } = useForm(
+    initialForm,
+    validationFunctions,
+  )
+
   const { isBlurred, handleBlur } = useBlur()
   const { mutate: authenticateMutate } = useAuthenticateUser()
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    authenticateMutate({
-      email: form.email,
-      password: form.password,
-    })
+    if (!isAllValid()) return
+
+    authenticateMutate({ ...form })
   }
 
   return (
@@ -38,7 +46,7 @@ const LoginForm = () => {
         />
         <ErrorText
           start={isBlurred.email}
-          error={!authValidation.email(form.email)}
+          error={!isValid.email}
           text="이메일이 올바르지 않습니다."
         />
       </div>
@@ -53,7 +61,7 @@ const LoginForm = () => {
         />
         <ErrorText
           start={isBlurred.password}
-          error={!authValidation.password(form.password)}
+          error={!isValid.password}
           text=" 비밀번호가 올바르지 않습니다."
         />
       </div>
