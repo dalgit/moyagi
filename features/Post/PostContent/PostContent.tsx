@@ -1,8 +1,7 @@
+import { IPost } from 'types/post'
 import * as S from './style'
 
-interface PostContentProps {
-  content: string
-}
+type PostContentProps = Pick<IPost, 'content'>
 
 const PostContent = ({ content }: PostContentProps) => {
   return <S.PostContentLayout dangerouslySetInnerHTML={{ __html: content }} />

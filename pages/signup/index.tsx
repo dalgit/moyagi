@@ -1,11 +1,11 @@
-import { AuthTemplate } from 'components/Template'
-import { SignUpForm } from 'features/Auth'
+import { Layout, SignUpTemplate, SimpleHeader } from 'components/Template'
 
 const SignUpPage = () => {
   return (
-    <AuthTemplate>
-      <SignUpForm />
-    </AuthTemplate>
+    <Layout>
+      <SimpleHeader />
+      <SignUpTemplate />
+    </Layout>
   )
 }
 

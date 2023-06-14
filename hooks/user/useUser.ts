@@ -5,7 +5,9 @@ import client from 'utils/axios/axios'
 import { userKeys } from 'utils/queryKeys/user'
 
 const useUser = (id: string): UseQueryResult<IUser, AxiosError> => {
-  return useQuery(userKeys.list(id), () => getUser(id))
+  return useQuery(userKeys.list(id), () => getUser(id), {
+    enabled: Boolean(id),
+  })
 }
 
 export default useUser

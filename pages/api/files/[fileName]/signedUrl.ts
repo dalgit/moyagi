@@ -1,6 +1,5 @@
 import { NextApiResponse, NextApiRequest } from 'next'
-import getMyPosts from 'server/api/getMyPosts'
-import authMiddleware from 'server/utils/authMiddleware'
+import getPreSignedUrl from 'server/api/getPreSignedUrl'
 
 export default async function handler(
   req: NextApiRequest,
@@ -10,7 +9,7 @@ export default async function handler(
 
   switch (requestMethod) {
     case 'GET':
-      await authMiddleware(getMyPosts)(req, res)
+      await getPreSignedUrl(req, res)
       break
 
     default:

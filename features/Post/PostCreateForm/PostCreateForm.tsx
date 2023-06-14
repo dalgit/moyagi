@@ -13,6 +13,7 @@ const PostCreateForm = () => {
   const { closeModal } = useModal()
 
   const handleSubmit = async () => {
+    if (content === '') return
     createPostMutate({ channelId, content })
     closeModal('PostCreateForm')
   }

@@ -1,20 +1,17 @@
+import { useRecoilValue } from 'recoil'
 import { Avatar, MoreMenu, UserLink } from 'components/common'
-import { useCheckMe } from 'hooks/common'
-import { IUser } from 'types/user'
+import isMeSelector from 'recoil/user/isMe'
+import { IPost } from 'types/post'
 import getFormattedDate from 'utils/common/getFormattedDate'
 import { withUser } from 'utils/common/withDefaultImage'
 import AuthorMenuList from './AuthorMenuList/AuthorMenuList'
 import * as S from './style'
 import UserMenuList from './UserMenuList/UserMenuList'
 
-interface PostHeaderProps {
-  postId: string
-  author: IUser
-  createdAt: Date
-}
+type PostHeaderProps = Pick<IPost, 'postId' | 'author' | 'createdAt'>
 
 const PostHeader = ({ postId, author, createdAt }: PostHeaderProps) => {
-  const isMyPost = useCheckMe(author._id)
+  const isMyPost = useRecoilValue(isMeSelector(author._id))
   const FormattedDate = getFormattedDate(createdAt)
 
   return (

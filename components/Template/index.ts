@@ -1,9 +1,12 @@
-export { default as AuthTemplate } from './AuthTemplate/AuthTemplate'
 export { default as ChannelTemplate } from './ChannelTemplate/ChannelTemplate'
 export { default as CreateChannelTemplate } from './CreateChannelTemplate/CreateChannelTemplate'
 export { default as HomeTemplate } from './HomeTemplate/HomeTemplate'
+export { default as LoginTemplate } from './LoginTemplate/LoginTemplate'
 export { default as NotFoundTemplate } from './NotFoundTemplate/NotFoundTemplate'
+export { default as SignUpTemplate } from './SignUpTemplate/SignUpTemplate'
 export { default as UserProfileTemplate } from './UserProfileTemplate/UserProfileTemplate'
 export { default as UserRegistrationTemplate } from './UserRegistrationTemplate/UserRegistrationTemplate'
 
 export { default as Layout } from '../Layout/Layout/Layout'
+export { default as MainHeader } from '../Layout/Header/MainHeader'
+export { default as SimpleHeader } from '../Layout/Header/SimpleHeader'

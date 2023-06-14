@@ -1,7 +1,7 @@
 import {
   AiOutlineSetting as SettingIcon,
   AiOutlinePaperClip as ClipIcon,
-  AiOutlineExclamation as NoticeIcon,
+  // AiOutlineExclamation as NoticeIcon,
 } from 'react-icons/ai'
 import { useRecoilValue } from 'recoil'
 import { baseUrl } from 'constants/baseUrl'
@@ -31,15 +31,11 @@ const ChannelSideBar = () => {
     onToast({ content: '복사가 완료되었습니다.', type: 'success' })
   }
 
-  const handleNoticeModal = () => {
-    alert('준비중입니다.')
-  }
-
   return (
     <S.ChannelSideBarLayout>
       <SettingIcon onClick={handleSettingModal} />
       <ClipIcon onClick={handleCopyAddress} />
-      <NoticeIcon onClick={handleNoticeModal} />
+      {/* <NoticeIcon onClick={handleNoticeModal} /> */}
     </S.ChannelSideBarLayout>
   )
 }

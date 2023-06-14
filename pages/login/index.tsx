@@ -1,11 +1,12 @@
-import { AuthTemplate } from 'components/Template'
-import { LoginForm } from 'features/Auth'
+import SimpleHeader from 'components/Layout/Header/SimpleHeader'
+import { Layout, LoginTemplate } from 'components/Template'
 
 const LoginPage = () => {
   return (
-    <AuthTemplate>
-      <LoginForm />
-    </AuthTemplate>
+    <Layout>
+      <SimpleHeader />
+      <LoginTemplate />
+    </Layout>
   )
 }
 

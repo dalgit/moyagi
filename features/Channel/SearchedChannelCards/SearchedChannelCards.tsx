@@ -10,7 +10,7 @@ const SearchedChannelCards = () => {
   const [isFetching, setIsFetching] = useState(true)
   const router = useRouter()
   const { keyword } = router.query
-  const isValid = typeof keyword === 'string'
+  const isValid = typeof keyword === 'string' && keyword !== ''
 
   const { data: channels } = useChannelsByKeword(keyword as string, {
     enabled: isValid,

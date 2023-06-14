@@ -4,12 +4,12 @@ import useRouterEffect from 'hooks/common/useRouterEffect'
 import * as S from './style'
 
 interface ImageInputContainerProps {
-  atomKey: string
+  fileKey: string
   children: ReactNode
 }
 
 const ImageInputContainer = ({
-  atomKey,
+  fileKey,
   children,
   ...rest
 }: ImageInputContainerProps) => {
@@ -19,7 +19,7 @@ const ImageInputContainer = ({
   const handleInputChange = () => {
     if (!ref.current?.files) return
     const [file] = ref.current.files
-    setFile(atomKey, file)
+    setFile(fileKey, file)
   }
 
   const handleImageInput = () => {
@@ -27,7 +27,7 @@ const ImageInputContainer = ({
   }
 
   useRouterEffect(() => {
-    removeFile(atomKey)
+    removeFile(fileKey)
   })
 
   return (

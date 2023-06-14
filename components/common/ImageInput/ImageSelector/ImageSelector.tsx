@@ -2,17 +2,17 @@ import * as S from './style'
 
 interface ImageSelectorProps {
   defaultImage?: string
-  atomKey: string
+  fileKey: string
 }
 
 const ImageSelector = ({
   defaultImage,
-  atomKey,
+  fileKey,
   ...rest
 }: ImageSelectorProps) => {
   return (
-    <S.StyledContainer atomKey={atomKey} {...rest}>
-      <S.StyledPreviewer atomKey={atomKey} defaultImage={defaultImage} />
+    <S.StyledContainer fileKey={fileKey} {...rest}>
+      <S.StyledPreviewer fileKey={fileKey} defaultImage={defaultImage} />
     </S.StyledContainer>
   )
 }

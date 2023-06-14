@@ -1,8 +1,9 @@
-import { CreateChannelTemplate, Layout } from 'components/Template'
+import { CreateChannelTemplate, Layout, MainHeader } from 'components/Template'
 
 const CreateChannelPage = () => {
   return (
     <Layout>
+      <MainHeader />
       <CreateChannelTemplate />
     </Layout>
   )

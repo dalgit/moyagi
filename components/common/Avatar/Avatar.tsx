@@ -3,7 +3,7 @@ import { blank } from 'constants/icon'
 import * as S from './style'
 
 export interface AvatarProps extends HtmlHTMLAttributes<HTMLDivElement> {
-  image?: string
+  image: string
   name: string
 }
 

@@ -4,7 +4,7 @@ import { useForm, useUploadImage } from 'hooks/common'
 import channelValidations from 'utils/validations/channel'
 import * as S from './style'
 
-const atomKey = 'channelProfile'
+const fileKey = 'channelProfile'
 
 const initailForm = {
   name: '',
@@ -35,13 +35,13 @@ const ChannelCreateForm = () => {
     createChannelMutate({
       ...form,
       isPublic: JSON.parse(form.isPublic),
-      imageUrl: await getFileUrl(atomKey),
+      imageUrl: await getFileUrl(fileKey),
     })
   }
 
   return (
     <S.Form onSubmit={handleCreateChannel}>
-      <ImageSelector atomKey={atomKey} />
+      <ImageSelector fileKey={fileKey} />
       <Input label="이름" id="name" maxLength={14} onChange={updateForm} />
       <Input label="주소" id="address" maxLength={20} onChange={updateForm} />
       <Input

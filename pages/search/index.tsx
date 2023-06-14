@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic'
-import { HomeTemplate, Layout } from 'components/Template'
+import { HomeTemplate, Layout, MainHeader } from 'components/Template'
 
 const SearchedChannelCards = dynamic(
   () =>
@@ -10,6 +10,7 @@ const SearchedChannelCards = dynamic(
 const SearchPage = () => {
   return (
     <Layout>
+      <MainHeader />
       <HomeTemplate>
         <SearchedChannelCards />
       </HomeTemplate>

@@ -3,7 +3,7 @@ import { IUser } from 'types/user'
 import channelAtom from './channelAtom'
 import channelManagerIdSelector from './managerId'
 
-const membersExceptManagerSelector = selector<IUser[]>({
+const managedMembersSelector = selector<IUser[]>({
   key: 'channelMembersSelector',
 
   get: ({ get }) => {
@@ -14,4 +14,4 @@ const membersExceptManagerSelector = selector<IUser[]>({
   },
 })
 
-export default membersExceptManagerSelector
+export default managedMembersSelector

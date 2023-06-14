@@ -1,12 +1,9 @@
 import React from 'react'
-import { IComment } from 'types/post'
+import { IPost } from 'types/post'
 import * as S from './style'
 import PostCommentItem from '../PostCommentItem/PostCommentItem'
 
-interface PostCommentListProps {
-  comments: IComment[]
-  postId: string
-}
+type PostCommentListProps = Pick<IPost, 'postId' | 'comments'>
 
 const PostCommentList = ({ comments, postId }: PostCommentListProps) => {
   return (

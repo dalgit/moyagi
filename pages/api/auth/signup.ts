@@ -8,9 +8,9 @@ const createUserApi = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const { name, email, password } = req.body
 
-    const checkExisting = await db.collection('users').findOne({ email })
+    const existingEmail = await db.collection('users').findOne({ email })
 
-    if (checkExisting) {
+    if (existingEmail) {
       return res.status(409).json({ message: '중복된 이메일입니다.' })
     }
 

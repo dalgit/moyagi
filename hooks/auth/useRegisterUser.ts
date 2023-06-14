@@ -1,6 +1,7 @@
 import { UseMutationResult, useMutation } from '@tanstack/react-query'
 import { AxiosError, AxiosResponse } from 'axios'
 import { useRouter } from 'next/router'
+import { useToast } from 'hooks/common'
 import client from 'utils/axios/axios'
 
 interface RegisterUserArgs {
@@ -12,12 +13,18 @@ interface RegisterUserArgs {
 
 const useRegisterUser = (): UseMutationResult<
   AxiosResponse,
-  AxiosError,
+  AxiosError<{ message: string }>,
   RegisterUserArgs
 > => {
   const { push } = useRouter()
+  const { onToast } = useToast()
 
   return useMutation(registerUser, {
+    onError: (error) => {
+      if (error.response?.status === 409) {
+        onToast({ content: error.response.data.message, type: 'error' })
+      }
+    },
     onSuccess: () => {
       alert('회원가입이 완료되었습니다!')
       push('/login')

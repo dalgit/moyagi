@@ -5,16 +5,16 @@ import * as S from './style'
 
 interface ImagePreviewerProps {
   defaultImage?: string
-  atomKey: string
+  fileKey: string
 }
 
 const ImagePreviewer = ({
-  atomKey,
+  fileKey,
   defaultImage,
   ...rest
 }: ImagePreviewerProps) => {
   const { state, contents } = useRecoilValueLoadable(
-    previewImageSelector(atomKey),
+    previewImageSelector(fileKey),
   )
 
   const isLoading = state === 'loading'

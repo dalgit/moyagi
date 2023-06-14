@@ -2,7 +2,6 @@ import { NextApiResponse, NextApiRequest } from 'next'
 import createChannel from 'server/api/createChannel'
 import getChannelBySlug from 'server/api/getChannelBySlug'
 import getChannelsByKeyword from 'server/api/getChannelsByKeword'
-import getChannelsByRecommendation from 'server/api/getChannelsByRecommendation'
 import authMiddleware from 'server/utils/authMiddleware'
 
 export default async function handler(
@@ -25,14 +24,10 @@ export default async function handler(
         await getChannelsByKeyword(req, res)
       }
 
-      if (req.query.recommended) {
-        await getChannelsByRecommendation(req, res)
-      }
-
       break
 
     default:
-      res.status(405).end(`${requestMethod} not allowed`)
+      return res.status(405).end(`${requestMethod} not allowed`)
       break
   }
 }

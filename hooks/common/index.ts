@@ -1,5 +1,4 @@
 export { default as useBlur } from './useBlur'
-export { default as useCheckMe } from './useCheckMe'
 export { default as useClickOutside } from './useClickOutside'
 export { default as useDidMount } from './useDidMount'
 export { default as useForm } from './useForm'

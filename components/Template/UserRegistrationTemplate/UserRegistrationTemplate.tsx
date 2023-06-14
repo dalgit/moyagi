@@ -1,12 +1,18 @@
+import { useRecoilValue } from 'recoil'
+import { Spinner } from 'components/common'
 import { RegistrationList } from 'features/Registration'
-import { IRegistration } from 'types/registration'
+import { useUserRegistrations } from 'hooks/registration'
+import userIdSelector from 'recoil/user/userIdSelector'
 import * as S from './style'
 
-interface IProps {
-  registrations: IRegistration[]
-}
+const UserRegistrationTemplate = () => {
+  const userId = useRecoilValue(userIdSelector)
+  const { data: registrations = [], isLoading } = useUserRegistrations(userId)
 
-const UserRegistrationTemplate = ({ registrations }: IProps) => {
+  if (isLoading) {
+    return <Spinner />
+  }
+
   if (!registrations.length) {
     return (
       <S.NotificationBox title="가입신청서가 존재하지 않습니다." type="empty" />

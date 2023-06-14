@@ -9,6 +9,6 @@ export const StyledTextArea = styled.textarea`
   line-height: 1.5;
   overflow-y: hidden;
   font-size: auto;
-
+  border: 1px solid #e2e3e7;
   ${hideScrollbar};
 `

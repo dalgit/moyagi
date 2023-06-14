@@ -23,6 +23,7 @@ const PostCommentForm = ({ postId }: PostCommentProps) => {
   }
 
   const handleCommentSubmit = () => {
+    if (comment === '') return
     commentMutate({ channelId, postId, content: comment })
     setComment('')
   }

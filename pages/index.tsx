@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic'
-import { HomeTemplate, Layout } from 'components/Template'
+import { HomeTemplate, Layout, MainHeader } from 'components/Template'
 
 const UserChannelCards = dynamic(
   () => import('features/Channel').then((module) => module.UserChannelCards),
@@ -9,6 +9,7 @@ const UserChannelCards = dynamic(
 const HomePage = () => {
   return (
     <Layout>
+      <MainHeader />
       <HomeTemplate>
         <UserChannelCards />
       </HomeTemplate>

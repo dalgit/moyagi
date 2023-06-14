@@ -26,8 +26,7 @@ const TextArea = ({
 
     if (textAreaElement) {
       const lineHeight = window.getComputedStyle(textAreaElement).lineHeight
-      const maxHeight = maxLine * parseInt(lineHeight)
-
+      const maxHeight = (maxLine + 1) * parseInt(lineHeight)
       return textAreaElement.scrollHeight < maxHeight
     }
 
@@ -47,8 +46,6 @@ const TextArea = ({
     if (checkMaxLine()) {
       handleResizeHeight()
       onChange(e)
-    } else {
-      alert('최대 작성 범위를 초과하였습니다.')
     }
   }
 

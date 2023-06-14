@@ -16,6 +16,7 @@ export const quillModal = css`
     height: 300px;
   }
 `
+
 export const flexRow = (justify: string, align: string) => css`
   display: flex;
   justify-content: ${justify};

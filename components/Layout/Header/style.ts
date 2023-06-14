@@ -1,9 +1,8 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
-export const HeaderLayout = styled.nav`
+const HeaderStyle = css`
   position: fixed;
   display: flex;
-  justify-content: space-between;
   align-items: center;
   top: 0;
   left: 0;
@@ -13,4 +12,14 @@ export const HeaderLayout = styled.nav`
   background-color: white;
   padding: 0 180px;
   z-index: 10;
+`
+
+export const HeaderLayout = styled.nav`
+  ${HeaderStyle}
+  justify-content: space-between;
+`
+
+export const SimpleHeaderLayout = styled.nav`
+  ${HeaderStyle}
+  justify-content: center;
 `

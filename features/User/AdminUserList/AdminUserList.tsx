@@ -1,15 +1,16 @@
 import { useRecoilValue } from 'recoil'
 import { NotificationBox } from 'components/common'
-import membersExceptManagerSelector from 'recoil/channel/channelMemberSelector'
+import managedMembersSelector from 'recoil/channel/managedMembersSelector'
 import UserBanButton from '../UserBanButton/UserBanButton'
 import UserListItem from '../UserListItem/UserListItem'
 
 const AdminChannelUserList = () => {
-  const members = useRecoilValue(membersExceptManagerSelector)
+  const members = useRecoilValue(managedMembersSelector)
 
   if (!members.length) {
     return <NotificationBox title="관리중인 멤버가 없습니다." type="empty" />
   }
+
   return (
     <div>
       {members?.map((member) => (

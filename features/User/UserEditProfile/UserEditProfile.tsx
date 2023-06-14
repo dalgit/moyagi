@@ -9,7 +9,7 @@ import userIdSelector from 'recoil/user/userIdSelector'
 import { withUser } from 'utils/common/withDefaultImage'
 import * as S from './style'
 
-const atomKey = 'userEditProfile'
+const fileKey = 'userEditProfile'
 
 const UserEditProfile = () => {
   const { name, introduction: intro = '', imageUrl } = useRecoilValue(userAtom)
@@ -23,10 +23,10 @@ const UserEditProfile = () => {
   const handleProfileUpdate = async () => {
     await updateUserMutate({
       introduction,
-      imageUrl: await getFileUrl(atomKey),
+      imageUrl: await getFileUrl(fileKey),
       userId,
     })
-    removeFile(atomKey)
+    removeFile(fileKey)
     closeModal('UserEditProfile')
   }
 
@@ -36,7 +36,7 @@ const UserEditProfile = () => {
 
   return (
     <S.UserEditProfileLayout>
-      <ImageSelector atomKey={atomKey} defaultImage={withUser(imageUrl)} />
+      <ImageSelector fileKey={fileKey} defaultImage={withUser(imageUrl)} />
       <h2>{name}</h2>
       <Input value={introduction} onChange={handleInputChange} />
       <Button onClick={handleProfileUpdate}>변경</Button>

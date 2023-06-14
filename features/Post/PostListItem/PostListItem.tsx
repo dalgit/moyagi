@@ -12,18 +12,15 @@ interface PostProps {
 }
 
 const PostListItem = ({ post }: PostProps) => {
+  const { _id: postId, author, createdAt, content, comments } = post
   const isMember = useRecoilValue(isMemberSelector)
 
   return (
     <S.PostListItemLayout>
-      <PostHeader
-        postId={post._id}
-        author={post.author}
-        createdAt={post.createdAt}
-      />
-      <PostContent content={post.content} />
-      <PostCommentList postId={post._id} comments={post.comments} />
-      {isMember && <PostCommentForm postId={post._id} />}
+      <PostHeader postId={postId} author={author} createdAt={createdAt} />
+      <PostContent content={content} />
+      <PostCommentList postId={postId} comments={comments} />
+      {isMember && <PostCommentForm postId={postId} />}
     </S.PostListItemLayout>
   )
 }

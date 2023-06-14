@@ -1,8 +1,9 @@
-import { getSignedUrl, uploadToSignedUrl } from 'utils/api/aws'
+import { getPreSignedUrl } from 'utils/api/getPreSignedUrl'
+import client from 'utils/axios/axios'
 
 export const uploadImage = async (file: File): Promise<string> => {
-  const { signedUrl, imageUrl } = await getSignedUrl(file.name)
-  await uploadToSignedUrl(signedUrl, file)
+  const { signedUrl, uploadUrl } = await getPreSignedUrl(file.name)
+  await client.put(signedUrl, file)
 
-  return imageUrl
+  return uploadUrl
 }

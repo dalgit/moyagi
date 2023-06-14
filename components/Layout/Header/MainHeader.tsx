@@ -9,7 +9,7 @@ const UserNav = dynamic(
   { ssr: false },
 )
 
-const Header = () => {
+const MainHeader = () => {
   return (
     <S.HeaderLayout>
       <Link href="/">
@@ -20,4 +20,4 @@ const Header = () => {
   )
 }
 
-export default Header
+export default MainHeader

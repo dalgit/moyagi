@@ -72,6 +72,7 @@ const useQuill = () => {
         handlers: { image: imageHandler },
       },
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return { quillRef, modules }

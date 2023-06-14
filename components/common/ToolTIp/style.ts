@@ -49,6 +49,8 @@ export const StyledContent = styled.span`
   background-color: white;
   color: gray;
 
+  white-space: nowrap;
+
   ::after {
     content: '';
     position: absolute;
