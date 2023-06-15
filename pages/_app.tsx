@@ -9,6 +9,7 @@ import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import { RecoilRoot } from 'recoil'
 import { ThemeProvider } from 'styled-components'
+import AxiosProvider from 'components/common/AxiosProvider/AxiosProvider'
 import ModalContainer from 'components/common/ModalContainer/ModalContainer'
 import Toast from 'components/common/Toast/ToastList/ToastList'
 import { CURRENT_PATH, PREV_PATH } from 'constants/paths'
@@ -16,6 +17,7 @@ import { GlobalStyle } from 'styles/global-style'
 import theme from 'styles/theme'
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
+  const router = useRouter()
   const [queryClient] = useState(
     () =>
       new QueryClient({
@@ -27,8 +29,6 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
         },
       }),
   )
-
-  const router = useRouter()
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -43,10 +43,12 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedProps}>
           <ThemeProvider theme={theme}>
-            <GlobalStyle />
-            <Component {...pageProps} />
-            <ModalContainer />
-            <Toast />
+            <AxiosProvider>
+              <GlobalStyle />
+              <Component {...pageProps} />
+              <ModalContainer />
+              <Toast />
+            </AxiosProvider>
           </ThemeProvider>
           <ReactQueryDevtools initialIsOpen={false} />
         </Hydrate>
