@@ -9,7 +9,7 @@ const updateProfile = async (
   res: NextApiResponse,
 ) => {
   try {
-    const userId = new ObjectId(req.user?.id)
+    const userId = new ObjectId(req.user?._id)
 
     const db = await connectToDatabase()
     const usersCollection = db.collection('users')

@@ -1,7 +1,6 @@
 import { NextApiResponse, NextApiRequest } from 'next'
 import createRegistration from 'server/api/createRegistration'
 import getRegistrations from 'server/api/getRegistrations'
-import authMiddleware from 'server/utils/authMiddleware'
 
 export default async function handler(
   req: NextApiRequest,
@@ -15,7 +14,7 @@ export default async function handler(
       break
 
     case 'POST':
-      await authMiddleware(createRegistration)(req, res)
+      await createRegistration(req, res)
       break
 
     default:

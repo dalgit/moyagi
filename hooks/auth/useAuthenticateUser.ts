@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { useSetRecoilState } from 'recoil'
 import { useToast } from 'hooks/common'
 import userAtom from 'recoil/user/userAtom'
-import client from 'utils/axios/axios'
+import client from 'utils/axios/client'
 
 interface useAuthenticateUserArgs {
   email: string

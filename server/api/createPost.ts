@@ -1,5 +1,6 @@
 import { ObjectId } from 'mongodb'
 import { NextApiRequest, NextApiResponse } from 'next'
+import authMiddleware from 'server/utils/authMiddleware'
 import { NextApiRequestWithUser } from 'types/types'
 import { postMatchPipeline } from '../../server/pipeLine/post'
 import connectToDatabase from '../utils/connectToDatabase'
@@ -20,7 +21,7 @@ const createPost = async (
     const { content } = req.body
     const { user } = req
     const channelId = new ObjectId(cid)
-    const userId = new ObjectId(user?.id)
+    const userId = new ObjectId(user?._id)
     const postsCollection = db.collection('posts')
 
     const { insertedId } = await postsCollection.insertOne({
@@ -36,10 +37,10 @@ const createPost = async (
 
     res.status(200).json(post)
   } catch (error) {
-    res
+    return res
       .status(500)
       .json({ message: '서버가 불안정합니다. 잠시후 다시 시도해주세요.' })
   }
 }
 
-export default createPost
+export default authMiddleware(createPost)

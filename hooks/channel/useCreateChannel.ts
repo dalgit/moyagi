@@ -9,7 +9,7 @@ import { useRecoilValue } from 'recoil'
 import { CHANNEL_PATH } from 'constants/paths'
 import userIdSelector from 'recoil/user/userIdSelector'
 import { IChannel } from 'types/channel'
-import client from 'utils/axios/axios'
+import client from 'utils/axios/client'
 import { channelKeys } from 'utils/queryKeys/channel'
 
 interface createChannelArgs {

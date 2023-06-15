@@ -8,7 +8,7 @@ import { useSetRecoilState } from 'recoil'
 import { useToast } from 'hooks/common'
 import userAtom from 'recoil/user/userAtom'
 import { IUser } from 'types/user'
-import client from 'utils/axios/axios'
+import client from 'utils/axios/client'
 import { userKeys } from 'utils/queryKeys/user'
 
 interface updateUserArgs {

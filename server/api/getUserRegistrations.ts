@@ -1,5 +1,6 @@
 import { ObjectId } from 'mongodb'
 import { NextApiResponse } from 'next'
+import authMiddleware from 'server/utils/authMiddleware'
 import { NextApiRequestWithUser } from 'types/types'
 import { registrationMatchPipeline } from '../../server/pipeLine/registration'
 import connectToDatabase from '../utils/connectToDatabase'
@@ -26,4 +27,4 @@ const getUserRegistrations = async (
   }
 }
 
-export default getUserRegistrations
+export default authMiddleware(getUserRegistrations)

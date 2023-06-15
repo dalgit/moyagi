@@ -2,7 +2,6 @@ import { NextApiResponse, NextApiRequest } from 'next'
 import createChannel from 'server/api/createChannel'
 import getChannelBySlug from 'server/api/getChannelBySlug'
 import getChannelsByKeyword from 'server/api/getChannelsByKeword'
-import authMiddleware from 'server/utils/authMiddleware'
 
 export default async function handler(
   req: NextApiRequest,
@@ -12,7 +11,7 @@ export default async function handler(
 
   switch (requestMethod) {
     case 'POST':
-      await authMiddleware(createChannel)(req, res)
+      await createChannel(req, res)
       break
 
     case 'GET':

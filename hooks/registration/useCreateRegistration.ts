@@ -8,7 +8,7 @@ import { useRecoilValue } from 'recoil'
 import { useToast } from 'hooks/common'
 import userIdSelector from 'recoil/user/userIdSelector'
 import { IRegistration, EStatus } from 'types/registration'
-import client from 'utils/axios/axios'
+import client from 'utils/axios/client'
 import { channelKeys } from 'utils/queryKeys/channel'
 import { registrationKeys } from 'utils/queryKeys/registration'
 

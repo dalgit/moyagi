@@ -6,7 +6,7 @@ import {
 import { AxiosError } from 'axios'
 import { useToast } from 'hooks/common'
 import { IPost } from 'types/post'
-import client from 'utils/axios/axios'
+import client from 'utils/axios/client'
 import { postKeys } from 'utils/queryKeys/post'
 
 interface createPostArgs {
@@ -21,6 +21,7 @@ const useCreatePost = (
   const { onToast } = useToast()
   return useMutation(createPost, {
     onSuccess: (newPost) => {
+      console.log(newPost, 'gdgdgd')
       queryClient.setQueryData<IPost[]>(
         postKeys.list(channelId),
         (previousPosts = []) => [newPost, ...previousPosts],

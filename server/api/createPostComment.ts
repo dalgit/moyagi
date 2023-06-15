@@ -1,6 +1,7 @@
 import { ObjectId } from 'mongodb'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { commentMatchPipeline } from 'server/pipeLine/comment'
+import authMiddleware from 'server/utils/authMiddleware'
 import { NextApiRequestWithUser } from 'types/types'
 import connectToDatabase from '../utils/connectToDatabase'
 
@@ -26,7 +27,7 @@ const createPostComment = async (
     const { insertedId } = await commentsCollection.insertOne({
       channelId: new ObjectId(channelId),
       postId: new ObjectId(postId),
-      authorId: new ObjectId(user?.id),
+      authorId: new ObjectId(user?._id),
       content,
       createdAt: new Date(),
     })
@@ -43,4 +44,4 @@ const createPostComment = async (
   }
 }
 
-export default createPostComment
+export default authMiddleware(createPostComment)

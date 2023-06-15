@@ -1,7 +1,7 @@
 import { UseMutationResult, useMutation } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 import { IUser } from 'types/user'
-import client from 'utils/axios/axios'
+import client from 'utils/axios/client'
 
 interface deleteChannelMemberArgs {
   channelId: string

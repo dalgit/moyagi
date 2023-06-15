@@ -2,7 +2,7 @@ import { UseMutationResult, useMutation } from '@tanstack/react-query'
 import { AxiosError, AxiosResponse } from 'axios'
 import { useRouter } from 'next/router'
 import { useToast } from 'hooks/common'
-import client from 'utils/axios/axios'
+import client from 'utils/axios/client'
 
 interface RegisterUserArgs {
   name: string

@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import createPostComment from 'server/api/createPostComment'
-import authMiddleware from 'server/utils/authMiddleware'
 
 interface ExtendedNextApiRequest extends NextApiRequest {
   query: {
@@ -17,7 +16,7 @@ export default async function handler(
 
   switch (requestMethod) {
     case 'POST':
-      await authMiddleware(createPostComment)(req, res)
+      await createPostComment(req, res)
       break
 
     default:

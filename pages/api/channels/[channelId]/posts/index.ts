@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import createPost from 'server/api/createPost'
 import getChannelPosts from 'server/api/getChannelPosts'
-import authMiddleware from 'server/utils/authMiddleware'
 
 interface ExtendedNextApiRequest extends NextApiRequest {
   query: {
@@ -21,7 +20,7 @@ export default async function handler(
       break
 
     case 'POST':
-      await authMiddleware(createPost)(req, res)
+      await createPost(req, res)
       break
 
     default:

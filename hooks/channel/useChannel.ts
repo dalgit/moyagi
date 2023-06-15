@@ -3,7 +3,7 @@ import { AxiosError } from 'axios'
 import useRecoilQuery from 'hooks/common/useRecoilQuery'
 import channelAtom from 'recoil/channel/channelAtom'
 import { IChannel } from 'types/channel'
-import client from 'utils/axios/axios'
+import client from 'utils/axios/client'
 import { channelKeys } from 'utils/queryKeys/channel'
 
 const useChannel = (slug: string): UseQueryResult<IChannel, AxiosError> => {

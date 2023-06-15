@@ -1,5 +1,6 @@
 import { ObjectId } from 'mongodb'
 import { NextApiResponse } from 'next'
+import authMiddleware from 'server/utils/authMiddleware'
 import { NextApiRequestWithUser } from 'types/types'
 import { registrationMatchPipeline } from '../../server/pipeLine/registration'
 import connectToDatabase from '../utils/connectToDatabase'
@@ -12,7 +13,7 @@ const createRegistration = async (
     const db = await connectToDatabase()
     const registrationsCollection = db.collection('registrations')
 
-    const userId = new ObjectId(req.user?.id)
+    const userId = new ObjectId(req.user?._id)
     const channelId = new ObjectId(req.query.channelId as string)
 
     const { message, isPublic } = req.body
@@ -48,4 +49,4 @@ const createRegistration = async (
   }
 }
 
-export default createRegistration
+export default authMiddleware(createRegistration)

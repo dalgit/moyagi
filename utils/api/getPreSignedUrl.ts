@@ -1,4 +1,4 @@
-import client from '../axios/axios'
+import client from '../axios/client'
 
 interface GetPreSignedUrlResult {
   signedUrl: string

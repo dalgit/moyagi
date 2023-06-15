@@ -12,7 +12,7 @@ const generateJwt = (user: any) => {
   }
 
   const accessToken = jwt.sign(payload, process.env.SECRET_KEY as string, {
-    expiresIn: '30m',
+    expiresIn: '3h',
   })
 
   const refreshToken = jwt.sign(payload, process.env.SECRET_KEY as string, {

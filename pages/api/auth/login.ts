@@ -26,9 +26,11 @@ const loginApi = async (req: NextApiRequest, res: NextApiResponse) => {
 
     res.setHeader('Set-Cookie', [
       `refresh_token=${refreshToken}; Path=/; HttpOnly; Secure; SameSite=None; Max-Age=${
-        3600 * 24 * 3
+        3600 * 24 * 30
       } `,
-      `access_token=${accessToken}; Path=/; HttpOnly; Secure; SameSite=None; Max-Age=${3600}`,
+      `access_token=${accessToken}; Path=/; HttpOnly; Secure; SameSite=None; Max-Age=${
+        3600 * 24 * 30
+      }`,
     ])
 
     return res.status(200).json(user)

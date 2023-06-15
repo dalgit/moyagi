@@ -1,7 +1,7 @@
 import { useQuery, UseQueryResult } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 import { IUser } from 'types/user'
-import client from 'utils/axios/axios'
+import client from 'utils/axios/client'
 import { userKeys } from 'utils/queryKeys/user'
 
 const useUser = (id: string): UseQueryResult<IUser, AxiosError> => {

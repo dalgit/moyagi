@@ -5,7 +5,7 @@ import {
 } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 import { IChannel } from 'types/channel'
-import client from 'utils/axios/axios'
+import client from 'utils/axios/client'
 import { channelKeys } from 'utils/queryKeys/channel'
 
 const useRecommendedChannels = (

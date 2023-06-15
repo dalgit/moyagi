@@ -7,7 +7,7 @@ import { AxiosError, AxiosResponse } from 'axios'
 import { useRouter } from 'next/router'
 import { useResetRecoilState } from 'recoil'
 import userAtom from 'recoil/user/userAtom'
-import client from 'utils/axios/axios'
+import client from 'utils/axios/client'
 
 const useLogoutUser = (): UseMutationResult<AxiosResponse, AxiosError> => {
   const resetUser = useResetRecoilState(userAtom)

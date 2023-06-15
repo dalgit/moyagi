@@ -6,7 +6,7 @@ import {
 import { AxiosError } from 'axios'
 import { useToast } from 'hooks/common'
 import { IRegistration } from 'types/registration'
-import client from 'utils/axios/axios'
+import client from 'utils/axios/client'
 import { registrationKeys } from 'utils/queryKeys/registration'
 
 interface DeleteRegistrationArgs {

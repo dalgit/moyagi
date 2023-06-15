@@ -14,6 +14,7 @@ const ChannelPostList = dynamic(
 
 const ChannelTemplate = () => {
   const { query } = useRouter()
+
   const { data: channel = {} as IChannel } = useChannel(query.slug as string)
 
   return (
