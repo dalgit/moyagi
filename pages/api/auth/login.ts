@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
 import { NextApiRequest, NextApiResponse } from 'next'
 import connectToDatabase from 'server/utils/connectToDatabase'
+import generateJwt from 'server/utils/generateAccessToken '
 
 const loginApi = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
@@ -22,23 +22,13 @@ const loginApi = async (req: NextApiRequest, res: NextApiResponse) => {
       return res.status(400).json({ message: '비밀번호가 일치하지 않습니다.' })
     }
 
-    const payload = {
-      user: {
-        id: user._id.toHexString(),
-      },
-    }
-
-    const accessToken = jwt.sign(payload, process.env.SECRET_KEY as string, {
-      expiresIn: '30m',
-    })
-
-    const refreshToken = jwt.sign(payload, process.env.SECRET_KEY as string, {
-      expiresIn: '3d',
-    })
+    const { accessToken, refreshToken } = generateJwt(user)
 
     res.setHeader('Set-Cookie', [
-      `refresh_token=${refreshToken}; Path=/; HttpOnly; Secure; SameSite=None;`,
-      `access_token=${accessToken}; Path=/; HttpOnly; Secure; SameSite=None;`,
+      `refresh_token=${refreshToken}; Path=/; HttpOnly; Secure; SameSite=None; Max-Age=${
+        3600 * 24 * 3
+      } `,
+      `access_token=${accessToken}; Path=/; HttpOnly; Secure; SameSite=None; Max-Age=${3600}`,
     ])
 
     return res.status(200).json(user)

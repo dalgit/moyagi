@@ -3,11 +3,11 @@ import { IUser } from 'types/user'
 
 RecoilEnv.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED = false
 
-const sessionStorageEffect =
+const localStorageEffect =
   (key: string): AtomEffect<IUser> =>
   ({ setSelf, onSet }) => {
     if (typeof window !== 'undefined') {
-      const savedValue = sessionStorage.getItem(key)
+      const savedValue = localStorage.getItem(key)
       if (savedValue !== null) {
         setSelf(JSON.parse(savedValue))
       }
@@ -15,9 +15,9 @@ const sessionStorageEffect =
 
     onSet((newValue, _, isReset) => {
       isReset
-        ? sessionStorage.removeItem(key)
-        : sessionStorage.setItem(key, JSON.stringify(newValue))
+        ? localStorage.removeItem(key)
+        : localStorage.setItem(key, JSON.stringify(newValue))
     })
   }
 
-export default sessionStorageEffect
+export default localStorageEffect

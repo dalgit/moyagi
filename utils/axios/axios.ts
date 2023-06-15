@@ -38,8 +38,15 @@ client.interceptors.response.use(
     if (error.response?.status === 401 && 'errorType' in error.response.data) {
       if (error.response.data.errorType === 'TokenExpiredError') {
         const originalRequest = error.config as AxiosRequestConfig
-        await axios.post('http://localhost:3000/api/auth/refresh')
-        return axios(originalRequest)
+        try {
+          await axios.post('http://localhost:3000/api/auth/refresh')
+          return axios(originalRequest)
+        } catch (e) {
+          if (error.response.data.errorType === 'TokenExpiredError') {
+            window.location.href = '/login'
+            alert('다시 로그인을 해주세요.')
+          }
+        }
       }
     }
 
