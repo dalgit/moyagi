@@ -19,7 +19,7 @@ const refresh = async (req: NextApiRequest, res: NextApiResponse) => {
   } catch (error) {
     if (error instanceof TokenExpiredError) {
       return res.status(401).json({
-        errorType: 'TokenExpiredError',
+        errorType: 'RefreshTokenExpiredError',
         message: 'refresh token이 만료되었습니다.',
       })
     }

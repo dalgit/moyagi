@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
+import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
 import { useEffect, ReactNode } from 'react'
 import { useLogoutUser } from 'hooks/auth'
 import { useToast } from 'hooks/common'
@@ -6,7 +6,10 @@ import client from 'utils/axios/client'
 
 interface ErrorResponse {
   status?: string
-  errorType?: 'TokenExpiredError' | 'TokenNotFoundError'
+  errorType?:
+    | 'AccessTokenExpiredError'
+    | 'RefreshTokenExpiredError'
+    | 'TokenNotFoundError'
 }
 
 interface AxiosProviderProps {
@@ -26,15 +29,15 @@ const AxiosProvider = ({ children }: AxiosProviderProps) => {
       const errorType = error.response?.data.errorType
 
       if (error.response?.status === 401) {
-        if (errorType === 'TokenExpiredError') {
+        if (errorType === 'AccessTokenExpiredError') {
           const originalRequest = error.config as AxiosRequestConfig
           try {
-            await axios.post('http://localhost:3000/api/auth/refresh')
-            return axios(originalRequest)
+            await client.post('/auth/refresh')
+            return client(originalRequest)
           } catch (e) {
             mutate({})
             onToast({
-              content: '다시 로그인을 해주세요.',
+              content: '로그인이 만료되었습니다.',
               type: 'error',
             })
           }

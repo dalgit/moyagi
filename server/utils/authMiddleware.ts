@@ -23,7 +23,7 @@ const authMiddleware =
     } catch (error) {
       if (error instanceof TokenExpiredError) {
         return res.status(401).json({
-          errorType: 'TokenExpiredError',
+          errorType: 'AccessTokenExpiredError',
           message: 'access toekn이 만료되었습니다.',
         })
       }
