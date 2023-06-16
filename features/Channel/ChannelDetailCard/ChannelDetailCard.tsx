@@ -6,8 +6,8 @@ import useModal from 'hooks/common/useModal'
 import { isMemberSelector } from 'recoil/channel/isMemberSelector'
 import userIdSelector from 'recoil/user/userIdSelector'
 import { IChannel } from 'types/channel'
+import { withChannel } from 'utils/common/withDefaultImage'
 import * as S from './style'
-import ChannelCard from '../ChannelCard/ChannelCard'
 
 interface ChannelInfoProps {
   channel: IChannel
@@ -41,21 +41,20 @@ const ChannelDetailCard = ({ channel }: ChannelInfoProps) => {
   }
 
   return (
-    <div>
-      <S.ChannelDetailCardLayout>
-        <ChannelCard channel={channel} hasBoxShadow={false} />
-        <S.Description>{description}</S.Description>
-        <S.Member onClick={handleManagerClick}>매니저 {manager.name}</S.Member>
-        <S.Member onClick={handleMembersModalOpen}>
-          멤버 {members?.length}명
-        </S.Member>
-        {isMember ? (
-          <Button onClick={handlePostCreateModalOpen}>작성하기</Button>
-        ) : (
-          <Button onClick={handleRegistrationModalOpen}>가입하기</Button>
-        )}
-      </S.ChannelDetailCardLayout>
-    </div>
+    <S.ChannelDetailCardLayout>
+      <S.ChannelDetailCardImage src={withChannel(channel.imageUrl)} />
+      <S.Title>{channel.name}</S.Title>
+      <S.Description>{description}</S.Description>
+      <S.Member onClick={handleManagerClick}>매니저 {manager.name}</S.Member>
+      <S.Member onClick={handleMembersModalOpen}>
+        멤버 {members?.length}명
+      </S.Member>
+      {isMember ? (
+        <Button onClick={handlePostCreateModalOpen}>작성하기</Button>
+      ) : (
+        <Button onClick={handleRegistrationModalOpen}>가입하기</Button>
+      )}
+    </S.ChannelDetailCardLayout>
   )
 }
 

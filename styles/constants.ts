@@ -10,6 +10,8 @@ export const baseHover = css`
 export const quillModal = css`
   .quill {
     max-width: 400px;
+    min-width: 300px;
+    width: 100%;
   }
 
   .ql-editor {

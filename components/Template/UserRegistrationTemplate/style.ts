@@ -6,8 +6,8 @@ export const UserRegistrationTemplateLayout = styled.div`
   flex-direction: column;
   gap: 25px;
   padding: 25px 0;
-  width: 700px;
   margin: auto;
+  max-width: 700px;
 `
 
 export const NotificationBox = styled(Box)`

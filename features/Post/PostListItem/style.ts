@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const PostListItemLayout = styled.div`
-  max-width: 550px;
+  width: 100%;
   background-color: white;
   padding: 10px;
   border-radius: 10px;

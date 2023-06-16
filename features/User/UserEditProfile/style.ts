@@ -7,6 +7,7 @@ export const UserEditProfileLayout = styled.div`
   justify-content: center;
   padding: 50px 0 0 0;
   gap: 10px;
-  width: 350px;
+  max-width: 350px;
+  min-width: 300px;
   margin: auto;
 `

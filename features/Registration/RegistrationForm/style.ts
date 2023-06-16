@@ -6,4 +6,6 @@ export const Wrapper = styled.div`
 
   gap: 10px;
   margin-bottom: 20px;
+
+  min-width: 300px;
 `

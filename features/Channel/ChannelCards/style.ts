@@ -8,4 +8,10 @@ export const ChannelCardsLayout = styled.div`
   justify-items: center;
 
   margin: 40px 0;
+
+  @media ${({ theme }) => theme.device.mobile} {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    grid-gap: 55px;
+    padding: 30px;
+  }
 `

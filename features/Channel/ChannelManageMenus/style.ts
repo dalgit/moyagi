@@ -6,6 +6,8 @@ export const ChannelManageMenusLayout = styled.div`
   font-size: 25px;
 
   & > * {
+    width: 100px;
+    height: 60px;
     border-radius: 5px;
     padding: 15px;
 

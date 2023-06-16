@@ -37,4 +37,12 @@ export const NotificationBoxLayout = styled.div`
   ${NotificationImage} {
     opacity: 0.5;
   }
+
+  h2,
+  h4 {
+    white-space: pre-wrap;
+    word-break: keep-all;
+    text-align: center;
+    line-height: 1.3;
+  }
 `

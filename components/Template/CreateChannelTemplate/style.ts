@@ -7,6 +7,6 @@ export const CreateChannelTemplateLayout = styled.div`
   padding: 50px 0;
   gap: 15px;
 
-  width: 450px;
+  max-width: 450px;
   margin: 0 auto;
 `

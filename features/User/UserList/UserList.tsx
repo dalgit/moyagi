@@ -1,4 +1,5 @@
 import { IUser } from 'types/user'
+import * as S from './style'
 import UserListItem from '../UserListItem/UserListItem'
 
 interface UserListProps {
@@ -8,7 +9,7 @@ interface UserListProps {
 
 const UserList = ({ users, onItemClick }: UserListProps) => {
   return (
-    <div>
+    <S.UserListLayout>
       {users.map((user) => (
         <UserListItem
           key={user._id}
@@ -16,7 +17,7 @@ const UserList = ({ users, onItemClick }: UserListProps) => {
           {...user}
         />
       ))}
-    </div>
+    </S.UserListLayout>
   )
 }
 

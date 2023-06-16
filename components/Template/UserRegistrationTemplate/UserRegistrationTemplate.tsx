@@ -14,9 +14,7 @@ const UserRegistrationTemplate = () => {
   }
 
   if (!registrations.length) {
-    return (
-      <S.NotificationBox title="가입신청서가 존재하지 않습니다." type="empty" />
-    )
+    return <S.NotificationBox title="요청한 가입이 없습니다." type="empty" />
   }
 
   return (

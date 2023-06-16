@@ -1,7 +1,7 @@
+import { useState } from 'react'
 import {
   AiOutlineSetting as SettingIcon,
   AiOutlinePaperClip as ClipIcon,
-  // AiOutlineExclamation as NoticeIcon,
 } from 'react-icons/ai'
 import { useRecoilValue } from 'recoil'
 import { baseUrl } from 'constants/baseUrl'
@@ -17,6 +17,7 @@ const ChannelSideBar = () => {
   const { onToast } = useToast()
   const { address } = useRecoilValue(channelAtom)
   const isManager = useRecoilValue(isChannelManagerSelector)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   const handleSettingModal = () => {
     if (isManager) {
@@ -31,11 +32,17 @@ const ChannelSideBar = () => {
     onToast({ content: '복사가 완료되었습니다.', type: 'success' })
   }
 
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen((prev) => !prev)
+  }
+
   return (
     <S.ChannelSideBarLayout>
-      <SettingIcon onClick={handleSettingModal} />
-      <ClipIcon onClick={handleCopyAddress} />
-      {/* <NoticeIcon onClick={handleNoticeModal} /> */}
+      <S.PlusIcon onClick={toggleMobileMenu} />
+      <S.IconWrapper isMobileMenuOpen={isMobileMenuOpen}>
+        <SettingIcon onClick={handleSettingModal} />
+        <ClipIcon onClick={handleCopyAddress} />
+      </S.IconWrapper>
     </S.ChannelSideBarLayout>
   )
 }

@@ -7,6 +7,7 @@ export const Blur = styled.div`
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.25);
+  z-index: 20;
 `
 
 export const ChildrenWrapper = styled.div`
@@ -17,6 +18,7 @@ export const ChildrenWrapper = styled.div`
   padding: 25px;
   background-color: white;
   box-shadow: 0 5px 18px -7px rgba(0, 0, 0, 1);
+  z-index: 30;
 `
 
 export const ExitIcon = styled(GrClose)`

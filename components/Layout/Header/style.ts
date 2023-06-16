@@ -11,7 +11,11 @@ const HeaderStyle = css`
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   background-color: white;
   padding: 0 180px;
-  z-index: 10;
+  z-index: 35;
+
+  @media ${({ theme }) => theme.device.tabletMax} {
+    padding: 0 10px;
+  }
 `
 
 export const HeaderLayout = styled.nav`
