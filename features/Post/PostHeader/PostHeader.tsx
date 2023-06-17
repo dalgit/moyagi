@@ -1,5 +1,5 @@
 import { useRecoilValue } from 'recoil'
-import { Avatar, MoreMenu, UserLink } from 'components/common'
+import { Avatar, UserLink } from 'components/common'
 import isMeSelector from 'recoil/user/isMe'
 import { IPost } from 'types/post'
 import getFormattedDate from 'utils/common/getFormattedDate'
@@ -21,13 +21,11 @@ const PostHeader = ({ postId, author, createdAt }: PostHeaderProps) => {
       </UserLink>
       <S.Wrapper>
         <span>{FormattedDate}</span>
-        <MoreMenu>
-          {isMyPost ? (
-            <AuthorMenuList postId={postId} />
-          ) : (
-            <UserMenuList authorId={author._id} />
-          )}
-        </MoreMenu>
+        {isMyPost ? (
+          <AuthorMenuList postId={postId} />
+        ) : (
+          <UserMenuList authorId={author._id} />
+        )}
       </S.Wrapper>
     </S.PostHeaderLayout>
   )

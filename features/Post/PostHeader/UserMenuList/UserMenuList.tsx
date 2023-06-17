@@ -1,4 +1,4 @@
-import { UserLink } from 'components/common'
+import { MoreMenu, UserLink } from 'components/common'
 
 interface UserMenuListProps {
   authorId: string
@@ -6,9 +6,11 @@ interface UserMenuListProps {
 
 const UserMenuList = ({ authorId }: UserMenuListProps) => {
   return (
-    <UserLink href={authorId}>
-      <li>작성자 정보</li>
-    </UserLink>
+    <MoreMenu>
+      <UserLink href={authorId}>
+        <li>작성자 정보</li>
+      </UserLink>
+    </MoreMenu>
   )
 }
 

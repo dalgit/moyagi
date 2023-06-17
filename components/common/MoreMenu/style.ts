@@ -10,14 +10,18 @@ export const MenuList = styled.ul`
   background-color: white;
   position: absolute;
   right: 0px;
-  top: 35px;
-  width: 130px;
+  top: 20px;
+  min-width: 100px;
   border-radius: 10px;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   padding: 10px;
+  white-space: nowrap;
 
   li {
+    font-size: 13px;
     text-align: center;
+    margin: 5px 0;
+
     ${baseHover}
   }
 `

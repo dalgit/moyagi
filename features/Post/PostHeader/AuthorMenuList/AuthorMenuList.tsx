@@ -1,4 +1,5 @@
 import { useRecoilValue } from 'recoil'
+import { MoreMenu } from 'components/common'
 import { useDeletePost } from 'hooks/post'
 import channelIdSelector from 'recoil/channel/channelIdSelector'
 
@@ -16,7 +17,11 @@ const AuthorMenuList = ({ postId }: AuthorMenuListProps) => {
     }
   }
 
-  return <li onClick={handleDeletePost}>삭제</li>
+  return (
+    <MoreMenu>
+      <li onClick={handleDeletePost}>삭제</li>
+    </MoreMenu>
+  )
 }
 
 export default AuthorMenuList
