@@ -1,5 +1,5 @@
 import { useRecoilValue } from 'recoil'
-import { Button } from 'components/common'
+import { MoreMenu } from 'components/common'
 import { useUpdateRegistration } from 'hooks/registration'
 import channelIdSelector from 'recoil/channel/channelIdSelector'
 import { EStatus } from 'types/registration'
@@ -8,7 +8,7 @@ interface AdminButtonsProps {
   registrationId: string
 }
 
-const AdminButtons = ({ registrationId }: AdminButtonsProps) => {
+const AdminMenus = ({ registrationId }: AdminButtonsProps) => {
   const { mutate: patchRegistrationStatusMutate } = useUpdateRegistration()
   const channelId = useRecoilValue(channelIdSelector)
 
@@ -21,11 +21,11 @@ const AdminButtons = ({ registrationId }: AdminButtonsProps) => {
   }
 
   return (
-    <div>
-      <Button onClick={() => handleButtonClick(EStatus.APPROVE)}>승인</Button>
-      <Button onClick={() => handleButtonClick(EStatus.REJECT)}>거절</Button>
-    </div>
+    <MoreMenu>
+      <li onClick={() => handleButtonClick(EStatus.APPROVE)}>승인</li>
+      <li onClick={() => handleButtonClick(EStatus.REJECT)}>거절</li>
+    </MoreMenu>
   )
 }
 
-export default AdminButtons
+export default AdminMenus

@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Button, FImage } from 'components/common'
+import { FImage } from 'components/common'
 import { baseHover } from 'styles/constants'
 
 export const PostCommentItemLayout = styled.div`
@@ -36,14 +36,13 @@ export const AtuhorName = styled.span`
 
 export const StyledComment = styled.span`
   font-size: 14px;
+  white-space: pre-line;
 `
 
 export const CommentDate = styled.span`
   color: gray;
   font-size: 11px;
 `
-
-export const CommentEventButton = styled(Button)``
 
 export const RightWrapper = styled.div`
   display: flex;

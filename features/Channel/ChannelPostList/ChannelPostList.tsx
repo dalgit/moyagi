@@ -11,7 +11,7 @@ const ChannelPostList = () => {
 
   const { data: posts = [] } = useChannelPosts(channelId, {
     suspense: true,
-    enabled: shouldFetchPosts,
+    enabled: !!channelId && shouldFetchPosts,
   })
 
   if (!shouldFetchPosts) {

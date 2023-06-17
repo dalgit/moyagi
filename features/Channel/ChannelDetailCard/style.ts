@@ -2,15 +2,21 @@ import styled from 'styled-components'
 import { FImage } from 'components/common'
 
 export const ChannelDetailCardLayout = styled.div`
-  display: flex;
-  flex-direction: column;
   border: 1px solid #f2f3f5;
   background-color: white;
   border-radius: 12px;
   padding: 10px;
-  gap: 10px;
-  width: 180px;
   height: fit-content;
+  gap: 10px;
+
+  @media ${({ theme }) => theme.device.tablet},
+    ${({ theme }) => theme.device.laptop} {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 180px;
+    max-width: 180px;
+  }
 
   @media ${({ theme }) => theme.device.mobile} {
     display: grid;

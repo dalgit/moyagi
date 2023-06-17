@@ -9,6 +9,8 @@ export const ToastItemLayout = styled.div<{ type: ToastStatus }>`
   border-radius: 5px;
   text-align: center;
   min-width: 200px;
+  white-space: pre-wrap;
+  word-break: keep-all;
 
   ${({ type }) => {
     if (type === 'success') {

@@ -5,7 +5,7 @@ import connectToDatabase from '../utils/connectToDatabase'
 
 const getRegistrations = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const channelId = new ObjectId(req.query.cid as string)
+    const channelId = new ObjectId(req.query.channelId as string)
 
     const db = await connectToDatabase()
     const registrationsCollection = db.collection('registrations')

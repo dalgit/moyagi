@@ -22,7 +22,7 @@ const useUpdateRegistration = (): UseMutationResult<
   const queryClient = useQueryClient()
 
   return useMutation(updateRegistration, {
-    onSuccess: (updatedRegistration, { channelId }) => {
+    onSuccess: (updatedRegistration: IRegistration, { channelId }) => {
       queryClient.setQueryData<IRegistration[]>(
         registrationKeys.list(channelId),
         (previousRegistrations = []) =>
@@ -43,6 +43,8 @@ const updateRegistration = async ({
   registrationId,
   status,
 }: UpdateRegistrationProps): Promise<IRegistration> =>
-  await client.patch(`/channels/${channelId}/registrations/${registrationId}`, {
-    status,
-  })
+  await client
+    .patch(`/channels/${channelId}/registrations/${registrationId}`, {
+      status,
+    })
+    .then((res) => res.data)

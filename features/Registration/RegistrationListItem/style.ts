@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import Button from 'components/common/Button/Button'
 
 export const RegistrationLayout = styled.div<{ status: string }>`
   padding: 10px;
@@ -15,20 +14,22 @@ export const Message = styled.span`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 50px;
+  min-height: 50px;
+  white-space: pre-wrap;
+  word-break: break-all;
 `
 
-export const Buttons = styled.div`
-  position: absolute;
-  right: 5px;
-  bottom: 5px;
+export const RegistrationHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 `
 
-export const CancleButton = styled(Button)`
-  width: 40px;
-  font-size: 10px;
-
-  position: absolute;
-  right: 5px;
-  bottom: 5px;
+export const Wrapper = styled.div`
+  display: grid;
+  grid-template-columns: 30px minmax(60px, auto) 15px;
+  gap: 15px;
+  font-size: 11px;
+  justify-items: end;
 `

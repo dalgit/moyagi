@@ -7,6 +7,7 @@ import { AxiosError } from 'axios'
 import { useRouter } from 'next/router'
 import { useRecoilValue } from 'recoil'
 import { CHANNEL_PATH } from 'constants/paths'
+import { useToast } from 'hooks/common'
 import userIdSelector from 'recoil/user/userIdSelector'
 import { IChannel } from 'types/channel'
 import client from 'utils/axios/client'
@@ -22,11 +23,12 @@ interface createChannelArgs {
 
 const useCreateChannel = (): UseMutationResult<
   IChannel,
-  AxiosError,
+  AxiosError<{ message: string }>,
   createChannelArgs
 > => {
   const queryClient = useQueryClient()
   const { push } = useRouter()
+  const { onToast } = useToast()
   const userId = useRecoilValue(userIdSelector)
 
   return useMutation(createChannel, {
@@ -43,8 +45,12 @@ const useCreateChannel = (): UseMutationResult<
         (previousChannels = []) => [newChannel, ...previousChannels],
       )
 
+      onToast({ content: '채널이 개설되었습니다.', type: 'success' })
       push(`${CHANNEL_PATH}/${address}`)
-      alert('채널이 개설되었습니다!')
+    },
+    onError: (error) => {
+      const message = error.response?.data?.message || '알수없는 오류'
+      onToast({ content: message, type: 'error' })
     },
   })
 }

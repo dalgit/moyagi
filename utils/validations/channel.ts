@@ -9,7 +9,7 @@ const channelValidations: CreateChannelValidations = {
     return name.length <= 14
   },
   address: (address) => {
-    const regex = /^[a-zA-Z]+(-[a-zA-Z]+)*$/
+    const regex = /^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*$/
     return regex.test(address)
   },
   description: (description) => {

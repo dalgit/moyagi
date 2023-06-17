@@ -47,7 +47,9 @@ export const IconWrapper = styled.div<{ isMobileMenuOpen: boolean }>`
 `
 
 export const PlusIcon = styled(AiOutlinePlus)`
-  @media ${({ theme }) => theme.device.laptop} {
-    display: none;
+  display: none;
+
+  @media ${({ theme }) => theme.device.mobile} {
+    display: block;
   }
 `

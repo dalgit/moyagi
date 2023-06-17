@@ -11,7 +11,7 @@ export const Blur = styled.div`
 `
 
 export const ChildrenWrapper = styled.div`
-  position: absolute;
+  position: fixed;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);

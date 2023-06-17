@@ -1,23 +1,33 @@
 import { useRecoilValue } from 'recoil'
-import { NotificationBox } from 'components/common'
+import { NotificationBox, Spinner } from 'components/common'
 import { useChannelRegistrations } from 'hooks/registration'
 import channelAtom from 'recoil/channel/channelAtom'
-import RegistrationList from '../RegistrationList/RegistrationList'
+import * as S from './style'
 
 const ChannelRegistrationList = () => {
   const { _id: channelId } = useRecoilValue(channelAtom)
-  const { data: registrations = [] } = useChannelRegistrations(channelId)
+  const {
+    data: registrations = [],
+    isLoading,
+    isSuccess,
+  } = useChannelRegistrations(channelId)
+  const isEmpty = isSuccess && !registrations.length
 
-  if (!registrations.length) {
-    return (
-      <NotificationBox
-        title="채널의 가입신청서가 존재하지 않습니다."
-        type="empty"
-      />
-    )
-  }
-
-  return <RegistrationList registrations={registrations} />
+  return (
+    <S.ChannelRegistrationListLayout>
+      <h2>가입 관리</h2>
+      {isLoading && <Spinner />}
+      {isEmpty && (
+        <NotificationBox
+          title="요청된 가입이 존재하지 않습니다."
+          type="empty"
+        />
+      )}
+      {isSuccess && !isEmpty && (
+        <S.StyledRegistrationList registrations={registrations} />
+      )}
+    </S.ChannelRegistrationListLayout>
+  )
 }
 
 export default ChannelRegistrationList

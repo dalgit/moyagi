@@ -38,7 +38,7 @@ const UserEditProfile = () => {
     <S.UserEditProfileLayout>
       <ImageSelector fileKey={fileKey} defaultImage={withUser(imageUrl)} />
       <h2>{name}</h2>
-      <Input value={introduction} onChange={handleInputChange} />
+      <Input value={introduction} onChange={handleInputChange} maxLength={50} />
       <Button onClick={handleProfileUpdate}>변경</Button>
     </S.UserEditProfileLayout>
   )

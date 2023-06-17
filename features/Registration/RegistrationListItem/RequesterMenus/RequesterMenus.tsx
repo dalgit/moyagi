@@ -1,13 +1,13 @@
 import { useRecoilValue } from 'recoil'
+import { MoreMenu } from 'components/common'
 import { useDeleteRegistration } from 'hooks/registration'
 import userIdSelector from 'recoil/user/userIdSelector'
-import * as S from './style'
 
 interface UserButtonsProps {
   registrationId: string
 }
 
-const UserButtons = ({ registrationId }: UserButtonsProps) => {
+const RequesterMenus = ({ registrationId }: UserButtonsProps) => {
   const { mutate: deleteRegistrationMutate } = useDeleteRegistration()
   const userId = useRecoilValue(userIdSelector)
 
@@ -17,7 +17,11 @@ const UserButtons = ({ registrationId }: UserButtonsProps) => {
     }
   }
 
-  return <S.CancleButton onClick={handleButtonClick}>취소</S.CancleButton>
+  return (
+    <MoreMenu>
+      <li onClick={handleButtonClick}>취소</li>
+    </MoreMenu>
+  )
 }
 
-export default UserButtons
+export default RequesterMenus

@@ -26,7 +26,7 @@ const useRegisterUser = (): UseMutationResult<
       }
     },
     onSuccess: () => {
-      alert('회원가입이 완료되었습니다!')
+      onToast({ content: '회원가입이 완료되었습니다!', type: 'success' })
       push('/login')
     },
   })

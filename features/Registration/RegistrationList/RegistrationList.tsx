@@ -6,10 +6,17 @@ interface RegistrationListProps {
   registrations: IRegistration[]
 }
 
-const RegistrationList = ({ registrations }: RegistrationListProps) => {
+const RegistrationList = ({
+  registrations,
+  ...rest
+}: RegistrationListProps) => {
+  const sortedRegistrations = registrations.sort((a, b) => {
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  })
+
   return (
-    <S.RegistrationListLayout>
-      {registrations?.map((registration) => (
+    <S.RegistrationListLayout {...rest}>
+      {sortedRegistrations?.map((registration) => (
         <RegistrationListItem
           key={registration._id}
           registration={registration}

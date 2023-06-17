@@ -13,7 +13,12 @@ const ChannelMemberList = () => {
     router.push(`/users/${user._id}`)
   }
 
-  return <UserList onItemClick={handleMemberClick} users={members} />
+  return (
+    <>
+      <h2>Members</h2>
+      <UserList onItemClick={handleMemberClick} users={members} />
+    </>
+  )
 }
 
 export default ChannelMemberList

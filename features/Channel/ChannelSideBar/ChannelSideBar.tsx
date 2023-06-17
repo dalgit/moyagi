@@ -29,7 +29,10 @@ const ChannelSideBar = () => {
 
   const handleCopyAddress = () => {
     navigator.clipboard.writeText(`${baseUrl + CHANNEL_PATH}/${address}`)
-    onToast({ content: '복사가 완료되었습니다.', type: 'success' })
+    onToast({
+      content: '복사가 완료되었습니다.',
+      type: 'success',
+    })
   }
 
   const toggleMobileMenu = () => {

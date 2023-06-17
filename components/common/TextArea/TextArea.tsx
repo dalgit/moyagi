@@ -15,6 +15,7 @@ interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
 
 const TextArea = ({
   onChange,
+  value,
   maxLine = 6,
   rows = 1,
   ...rest
@@ -42,21 +43,23 @@ const TextArea = ({
     }
   }, [])
 
-  const handleInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    if (checkMaxLine()) {
-      handleResizeHeight()
-      onChange(e)
-    }
-  }
+  const handleInputChange = useCallback(
+    (e: ChangeEvent<HTMLTextAreaElement>) => {
+      if (checkMaxLine()) {
+        onChange(e)
+      }
+    },
+    [checkMaxLine, onChange],
+  )
 
   useLayoutEffect(() => {
     handleResizeHeight()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [handleResizeHeight, value])
 
   return (
     <S.StyledTextArea
       rows={rows}
+      value={value}
       ref={textAreaRef}
       onChange={handleInputChange}
       {...rest}
