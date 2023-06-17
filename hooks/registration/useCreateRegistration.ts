@@ -20,7 +20,7 @@ interface createRegistrationArgs {
 
 const useCreateRegistration = (): UseMutationResult<
   IRegistration,
-  AxiosError,
+  AxiosError<{ message: string }>,
   createRegistrationArgs
 > => {
   const queryClient = useQueryClient()
@@ -47,6 +47,14 @@ const useCreateRegistration = (): UseMutationResult<
           ...previousRegistrations,
         ],
       )
+    },
+    onError: (error) => {
+      if (error.response?.status === 409) {
+        onToast({
+          content: error.response.data.message,
+          type: 'error',
+        })
+      }
     },
   })
 }

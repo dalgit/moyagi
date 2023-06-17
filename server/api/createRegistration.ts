@@ -20,6 +20,15 @@ const createRegistration = async (
 
     const status = isPublic ? 'approved' : 'pending'
 
+    const existingRegistration = await registrationsCollection.findOne({
+      requesterId: userId,
+      channelId,
+    })
+
+    if (existingRegistration?.status === 'pending') {
+      return res.status(409).json({ message: '이미 가입을 심사중입니다.' })
+    }
+
     if (isPublic) {
       const channelsCollection = db.collection('channels')
 
