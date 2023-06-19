@@ -6,6 +6,7 @@ import {
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { AppProps } from 'next/app'
 import { useRouter } from 'next/router'
+import { DefaultSeo } from 'next-seo'
 import { useState, useEffect } from 'react'
 import { RecoilRoot } from 'recoil'
 import { ThemeProvider } from 'styled-components'
@@ -13,6 +14,7 @@ import AxiosProvider from 'components/common/AxiosProvider/AxiosProvider'
 import ModalContainer from 'components/common/ModalContainer/ModalContainer'
 import Toast from 'components/common/Toast/ToastList/ToastList'
 import { CURRENT_PATH, PREV_PATH } from 'constants/paths'
+import SEO from 'seo.config'
 import { GlobalStyle } from 'styles/global-style'
 import theme from 'styles/theme'
 
@@ -45,6 +47,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
           <ThemeProvider theme={theme}>
             <AxiosProvider>
               <GlobalStyle />
+              <DefaultSeo {...SEO} />
               <Component {...pageProps} />
               <ModalContainer />
               <Toast />
