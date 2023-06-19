@@ -1,0 +1,10 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://moyagi.vercel.app
+
+# Sitemaps
+Sitemap: https://moyagi.vercel.app/sitemap.xml
+Sitemap: https://moyagi.vercel.app/sitemap/channel-sitemap.xml
