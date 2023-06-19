@@ -20,5 +20,5 @@ const useRecommendedChannels = (
 
 export default useRecommendedChannels
 
-const getRecommendedChannels = async (): Promise<IChannel[]> =>
+export const getRecommendedChannels = async (): Promise<IChannel[]> =>
   await client.get('/channels/recommended').then((res) => res.data)

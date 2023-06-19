@@ -8,7 +8,7 @@ const SEO: DefaultSeoProps = {
   additionalLinkTags: [
     {
       rel: 'icon',
-      href: '/assets/favicon.ico',
+      href: '/docs/favicon.ico',
     },
   ],
   openGraph: {
@@ -17,7 +17,7 @@ const SEO: DefaultSeoProps = {
     url: baseUrl,
     site_name: 'Moyagi',
     title: 'Moyagi',
-    images: [{ url: '/assets/logo.png' }],
+    images: [{ url: '/docs/logo_og.png' }],
   },
 }
 

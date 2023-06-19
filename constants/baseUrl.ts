@@ -1,1 +1,1 @@
-export const baseUrl = 'tmp'
+export const baseUrl = 'https://moyagi.vercel.app'
