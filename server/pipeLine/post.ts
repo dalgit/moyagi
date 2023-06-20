@@ -52,37 +52,37 @@ const postCommentsPipeline = [
   {
     $lookup: {
       from: 'comments',
-      foreignField: 'postId',
-      localField: '_id',
+      let: { postId: '$_id' },
+      pipeline: [
+        {
+          $match: {
+            $expr: { $eq: ['$postId', '$$postId'] },
+          },
+        },
+        {
+          $lookup: {
+            from: 'users',
+            foreignField: '_id',
+            localField: 'authorId',
+            as: 'author',
+          },
+        },
+        {
+          $unwind: {
+            path: '$author',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        {
+          $project: {
+            authorId: 0,
+            channelId: 0,
+            postId: 0,
+            'author.password': 0,
+          },
+        },
+      ],
       as: 'comments',
-    },
-  },
-  {
-    $lookup: {
-      from: 'users',
-      foreignField: '_id',
-      localField: 'comments.authorId',
-      as: 'commentsAuthor',
-    },
-  },
-  {
-    $unwind: {
-      path: '$commentsAuthor',
-      preserveNullAndEmptyArrays: true,
-    },
-  },
-  {
-    $addFields: {
-      'comments.author': '$commentsAuthor',
-    },
-  },
-  {
-    $project: {
-      commentsAuthor: 0,
-      'comments.authorId': 0,
-      'comments.channelId': 0,
-      'comments.postId': 0,
-      'comments.author.password': 0,
     },
   },
 ]
