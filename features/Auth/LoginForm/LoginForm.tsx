@@ -27,7 +27,7 @@ const LoginForm = () => {
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    if (!isAllValid()) return
+    if (!isAllValid) return
 
     authenticateMutate({ ...form })
   }

@@ -14,14 +14,10 @@ const initailForm = {
   imgSrc: '',
 }
 
-const validationFunctions = {
-  ...channelValidations,
-}
-
 const ChannelCreateForm = () => {
   const { form, updateForm, isAllValid } = useForm(
     initailForm,
-    validationFunctions,
+    channelValidations,
   )
 
   const { mutate: createChannelMutate } = useCreateChannel()
@@ -31,7 +27,7 @@ const ChannelCreateForm = () => {
   const handleCreateChannel = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    if (isAllValid()) {
+    if (isAllValid) {
       createChannelMutate({
         ...form,
         isPublic: JSON.parse(form.isPublic),

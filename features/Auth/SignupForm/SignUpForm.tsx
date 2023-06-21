@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Button, Input, ErrorText } from 'components/common'
 import { useRegisterUser } from 'hooks/auth'
 import { useForm, useBlur } from 'hooks/common'
+import { Dependencies } from 'hooks/common/useForm'
 import authValidations from 'utils/validations/auth'
 import * as S from '../LoginForm/style'
 
@@ -10,15 +11,17 @@ const initialForm = {
   email: '',
   password: '',
   passwordConfirm: '',
-  asfd: '',
 }
 
-const validationFunctions = { ...authValidations }
+const dependencies: Dependencies<typeof initialForm> = {
+  password: ['passwordConfirm'],
+}
 
 const SignUpForm = () => {
   const { form, updateForm, isValid, isAllValid } = useForm(
     initialForm,
-    validationFunctions,
+    authValidations,
+    dependencies,
   )
 
   const { isBlurred, handleBlur } = useBlur()
@@ -27,7 +30,7 @@ const SignUpForm = () => {
   const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    if (!isAllValid()) return
+    if (!isAllValid) return
 
     registerUserMutate({ ...form })
   }
