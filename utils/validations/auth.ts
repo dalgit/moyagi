@@ -1,7 +1,7 @@
 type AuthValidations = {
   name: (name: string) => boolean
-  email: (name: string) => boolean
-  password: (name: string) => boolean
+  email: (email: string) => boolean
+  password: (password: string) => boolean
   passwordConfirm: (value: string, form?: Record<string, string>) => boolean
 }
 

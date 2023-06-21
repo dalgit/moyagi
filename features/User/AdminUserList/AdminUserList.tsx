@@ -1,6 +1,7 @@
 import { useRecoilValue } from 'recoil'
 import { NotificationBox } from 'components/common'
 import managedMembersSelector from 'recoil/channel/managedMembersSelector'
+import * as S from './style'
 import UserBanButton from '../UserBanButton/UserBanButton'
 import UserListItem from '../UserListItem/UserListItem'
 
@@ -12,7 +13,7 @@ const AdminChannelUserList = () => {
   }
 
   return (
-    <div>
+    <S.AdminUserListLayout>
       {members?.map((member) => (
         <UserListItem
           key={member._id}
@@ -20,7 +21,7 @@ const AdminChannelUserList = () => {
           {...member}
         />
       ))}
-    </div>
+    </S.AdminUserListLayout>
   )
 }
 
