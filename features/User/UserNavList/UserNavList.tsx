@@ -2,15 +2,21 @@ import Link from 'next/link'
 import { useRecoilValue } from 'recoil'
 import { UserLink } from 'components/common'
 import { useLogoutUser } from 'hooks/auth'
-import userIdSelector from 'recoil/user/userIdSelector'
+import userAtom from 'recoil/user/userAtom'
 import * as S from './style'
 
 const UserNavList = () => {
-  const userId = useRecoilValue(userIdSelector)
+  const { provider, _id: userId } = useRecoilValue(userAtom)
   const { mutate: logoutMutate } = useLogoutUser()
 
   const handleLogoutClick = () => {
-    logoutMutate({})
+    if (provider === 'kakao') {
+      window.location.href = `https://kauth.kakao.com/oauth/logout?client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_API}&logout_redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_LOGOUT_REDIRECT_URI}`
+    }
+
+    if (provider === 'local') {
+      logoutMutate({})
+    }
   }
 
   return (

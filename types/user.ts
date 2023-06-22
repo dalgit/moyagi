@@ -5,4 +5,5 @@ export interface IUser {
   password?: string
   imageUrl?: string
   introduction?: string
+  provider: 'local' | 'kakao'
 }

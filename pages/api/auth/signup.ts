@@ -20,6 +20,7 @@ const createUserApi = async (req: NextApiRequest, res: NextApiResponse) => {
       name,
       email,
       password: hashedPassword,
+      provider: 'local',
     })
 
     res.status(201).json({ message: '가입이 완료되었습니다.' })

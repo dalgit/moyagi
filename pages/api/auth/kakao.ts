@@ -1,6 +1,8 @@
 import axios from 'axios'
 import { NextApiRequest, NextApiResponse } from 'next'
 import connectToDatabase from 'server/utils/connectToDatabase'
+import generateJwt from 'server/utils/generateAccessToken '
+import setAuthCookies from 'server/utils/setAuthCookies'
 
 interface KakaoToken {
   access_token: string
@@ -52,6 +54,7 @@ const createUserToDB = async ({ id, properties }: KakaoUser) => {
     oauthId: id,
     name: properties?.nickname || `user${id}`,
     imageUrl: properties?.profile_image,
+    provider: 'kakao',
   }
 
   const result = await db.collection('users').insertOne(newUser)
@@ -71,6 +74,9 @@ const kakaoApi = async (req: NextApiRequest, res: NextApiResponse) => {
   if (!user) {
     user = await createUserToDB(kakaoUser)
   }
+
+  const { accessToken, refreshToken } = generateJwt(user)
+  setAuthCookies(res, accessToken, refreshToken)
 
   return res.status(200).json(user)
 }
