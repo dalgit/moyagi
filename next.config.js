@@ -13,6 +13,8 @@ const nextConfig = {
         pathname: '**',
       },
     ],
+
+    domains: ['k.kakaocdn.net'],
   },
 }
 

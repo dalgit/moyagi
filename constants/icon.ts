@@ -16,3 +16,5 @@ export const send = '/assets/send.svg'
 export const question = '/assets/question.svg'
 
 export const exclamation = '/assets/exclamation.svg'
+
+export const KAKAO_LOGO = '/assets/kakao_logo.png'
