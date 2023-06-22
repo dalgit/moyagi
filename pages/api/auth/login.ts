@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt'
 import { NextApiRequest, NextApiResponse } from 'next'
 import connectToDatabase from 'server/utils/connectToDatabase'
 import generateJwt from 'server/utils/generateAccessToken '
+import setAuthCookies from 'server/utils/setAuthCookies'
 
 const loginApi = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
@@ -23,15 +24,7 @@ const loginApi = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     const { accessToken, refreshToken } = generateJwt(user)
-
-    res.setHeader('Set-Cookie', [
-      `refresh_token=${refreshToken}; Path=/; HttpOnly; Secure; SameSite=None; Max-Age=${
-        3600 * 24 * 30
-      } `,
-      `access_token=${accessToken}; Path=/; HttpOnly; Secure; SameSite=None; Max-Age=${
-        3600 * 24 * 30
-      }`,
-    ])
+    setAuthCookies(res, accessToken, refreshToken)
 
     return res.status(200).json(user)
   } catch (error) {

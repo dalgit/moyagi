@@ -2,6 +2,7 @@ import { TokenExpiredError } from 'jsonwebtoken'
 import { NextApiRequest, NextApiResponse } from 'next'
 import generateJwt from 'server/utils/generateAccessToken '
 import jwtVerify from 'server/utils/jwtVerify'
+import setAuthCookies from 'server/utils/setAuthCookies'
 
 const refresh = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
@@ -10,10 +11,7 @@ const refresh = async (req: NextApiRequest, res: NextApiResponse) => {
     const { user } = jwtVerify(refreshToken)
     const { accessToken } = generateJwt(user)
 
-    res.setHeader(
-      'Set-Cookie',
-      `access_token=${accessToken}; Path=/; HttpOnly; Secure; SameSite=None; Max-Age=${3600}`,
-    )
+    setAuthCookies(res, accessToken)
 
     return res.status(200).json(user)
   } catch (error) {

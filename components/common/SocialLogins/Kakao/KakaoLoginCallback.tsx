@@ -6,7 +6,7 @@ import { useToast } from 'hooks/common'
 import userAtom from 'recoil/user/userAtom'
 import client from 'utils/axios/client'
 
-const KakaoCallback = () => {
+const KakaoLoginCallback = () => {
   const setUser = useSetRecoilState(userAtom)
   const { onToast } = useToast()
   const { push } = useRouter()
@@ -37,4 +37,4 @@ const KakaoCallback = () => {
   return <Spinner />
 }
 
-export default KakaoCallback
+export default KakaoLoginCallback

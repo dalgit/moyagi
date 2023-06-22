@@ -12,6 +12,10 @@ export const GlobalStyle = createGlobalStyle`
     background-color: ${({ theme }) => theme.colors.background};
   }
 
+  #__next {
+    height: 100vh;
+  }
+
   ul {
     list-style-type: none;
     margin: 0;
