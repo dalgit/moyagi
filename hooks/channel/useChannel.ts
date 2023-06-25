@@ -1,22 +1,21 @@
-import { UseQueryResult } from '@tanstack/react-query'
-import { AxiosError } from 'axios'
-import useRecoilQuery from 'hooks/common/useRecoilQuery'
-import channelAtom from 'recoil/channel/channelAtom'
+import { useRouter } from 'next/router'
 import { IChannel } from 'types/channel'
-import client from 'utils/axios/client'
-import { channelKeys } from 'utils/queryKeys/channel'
+import { useChannelQueryBySlug } from './useChannelQueryBySlug'
 
-const useChannel = (slug: string): UseQueryResult<IChannel, AxiosError> => {
-  return useRecoilQuery<IChannel>(channelAtom, channelKeys.detail(slug), () =>
-    getChannelBySlug(slug),
-  )
+const useChannel = <T = IChannel>(selectFn?: (data: IChannel) => T) => {
+  const router = useRouter()
+  const slug = router.query.slug
+
+  if (typeof slug !== 'string') {
+    throw new Error(`${slug}는 올바른 주소가 아닙니다.`)
+  }
+
+  const { data } = useChannelQueryBySlug<T>(slug, {
+    initialData: {} as IChannel,
+    ...(selectFn && { select: selectFn }),
+  })
+
+  return data as T
 }
 
 export default useChannel
-
-export const getChannelBySlug = async (slug: string): Promise<IChannel> =>
-  await client
-    .get('/channels', {
-      params: { channelAddress: slug },
-    })
-    .then((res) => res.data)
