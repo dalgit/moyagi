@@ -1,7 +1,7 @@
 import { NextSeo } from 'next-seo'
 import { baseUrl } from 'constants/baseUrl'
 import { CHANNEL_PATH } from 'constants/paths'
-import { useChannel } from 'hooks/channel'
+import { useChannelQueryBySlug } from 'hooks/channel/useChannelQueryBySlug'
 import { IChannel } from 'types/channel'
 import { withChannel } from 'utils/common/withDefaultImage'
 
@@ -10,7 +10,7 @@ interface ChannelSEOProps {
 }
 
 const ChannelSEO = ({ slug }: ChannelSEOProps) => {
-  const { data: channel = {} as IChannel } = useChannel(slug)
+  const { data: channel = {} as IChannel } = useChannelQueryBySlug(slug)
 
   return (
     <NextSeo

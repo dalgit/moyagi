@@ -1,7 +1,6 @@
-import { useRecoilValue } from 'recoil'
 import { MoreMenu } from 'components/common'
+import { useChannel } from 'hooks/channel'
 import { useDeletePost } from 'hooks/post'
-import channelIdSelector from 'recoil/channel/channelIdSelector'
 
 interface AuthorMenuListProps {
   postId: string
@@ -9,7 +8,7 @@ interface AuthorMenuListProps {
 
 const AuthorMenuList = ({ postId }: AuthorMenuListProps) => {
   const { mutate: deletePostMutate } = useDeletePost()
-  const channelId = useRecoilValue(channelIdSelector)
+  const { _id: channelId } = useChannel()
 
   const handleDeletePost = () => {
     if (window.confirm('정말 삭제할까요?')) {

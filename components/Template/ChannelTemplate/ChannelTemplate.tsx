@@ -1,10 +1,7 @@
 import dynamic from 'next/dynamic'
-import { useRouter } from 'next/router'
 import { Suspense } from 'react'
 import { Spinner } from 'components/common'
 import { ChannelDetailCard, ChannelSideBar } from 'features/Channel'
-import { useChannel } from 'hooks/channel'
-import { IChannel } from 'types/channel'
 import * as S from './style'
 
 const ChannelPostList = dynamic(
@@ -13,13 +10,9 @@ const ChannelPostList = dynamic(
 )
 
 const ChannelTemplate = () => {
-  const { query } = useRouter()
-
-  const { data: channel = {} as IChannel } = useChannel(query.slug as string)
-
   return (
     <S.ChannelTemplateLayout>
-      <ChannelDetailCard channel={channel} />
+      <ChannelDetailCard />
       <Suspense fallback={<Spinner />}>
         <ChannelPostList />
       </Suspense>

@@ -13,7 +13,7 @@ const useChannelRegistrations = (
   options?: UseQueryOptions<IRegistration[], AxiosError>,
 ): UseQueryResult<IRegistration[], AxiosError> => {
   return useQuery<IRegistration[], AxiosError>(
-    registrationKeys.list(channelId),
+    registrationKeys.channels(channelId),
     () => getChannelRegistrations(channelId),
     options,
   )

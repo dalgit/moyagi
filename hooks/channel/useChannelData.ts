@@ -17,7 +17,7 @@ export const useShouldFetchPosts = () => {
 export const useIsManager = () => {
   const manager = useChannel((data) => data.manager)
   const userId = useRecoilValue(userIdSelector)
-  return manager._id === userId
+  return manager?._id === userId
 }
 
 export const useManagedMembers = () => {

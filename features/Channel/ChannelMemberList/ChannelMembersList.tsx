@@ -1,12 +1,11 @@
 import { useRouter } from 'next/router'
-import { useRecoilValue } from 'recoil'
 import { UserList } from 'features/User'
-import channelAtom from 'recoil/channel/channelAtom'
+import { useChannel } from 'hooks/channel'
 import { IUser } from 'types/user'
 
 const ChannelMemberList = () => {
-  const channel = useRecoilValue(channelAtom)
-  const members = channel?.members
+  const { members } = useChannel()
+
   const router = useRouter()
 
   const handleMemberClick = (user: IUser) => {

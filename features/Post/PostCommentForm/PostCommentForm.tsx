@@ -2,8 +2,8 @@ import { useState, ChangeEvent } from 'react'
 import { useRecoilValue } from 'recoil'
 import TextArea from 'components/common/TextArea/TextArea'
 import { send } from 'constants/icon'
+import { useChannel } from 'hooks/channel'
 import useCreateComment from 'hooks/post/useCreateComment'
-import channelIdSelector from 'recoil/channel/channelIdSelector'
 import userAtom from 'recoil/user/userAtom'
 import { withUser } from 'utils/common/withDefaultImage'
 import * as S from './style'
@@ -16,7 +16,7 @@ const PostCommentForm = ({ postId }: PostCommentProps) => {
   const [comment, setComment] = useState<string>('')
   const { mutate: commentMutate } = useCreateComment()
   const { imageUrl } = useRecoilValue(userAtom)
-  const channelId = useRecoilValue(channelIdSelector)
+  const { _id: channelId } = useChannel()
 
   const handleCommentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setComment(e.target.value)

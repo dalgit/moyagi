@@ -2,8 +2,8 @@ import { useRouter } from 'next/router'
 import { useRecoilValue } from 'recoil'
 import { Button } from 'components/common'
 import { USER_PATH } from 'constants/paths'
+import { useChannel } from 'hooks/channel'
 import useDeleteComment from 'hooks/post/useDeleteComment'
-import channelIdSelector from 'recoil/channel/channelIdSelector'
 import isMeSelector from 'recoil/user/isMe'
 import { IComment } from 'types/post'
 import getFormattedDate from 'utils/common/getFormattedDate'
@@ -19,10 +19,9 @@ const PostCommentItem = ({ comment, postId }: PostCommentItemProps) => {
   const { author, content, createdAt } = comment
   const FormattedDate = getFormattedDate(createdAt)
   const { mutate: deleteCommentMutate } = useDeleteComment()
-  const channelId = useRecoilValue(channelIdSelector)
   const isMe = useRecoilValue(isMeSelector(author._id))
   const router = useRouter()
-
+  const { _id: channelId } = useChannel()
   const handleUserClick = () => {
     router.push(`${USER_PATH}/${author._id}`)
   }

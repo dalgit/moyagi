@@ -21,9 +21,8 @@ const useCreatePost = (
   const { onToast } = useToast()
   return useMutation(createPost, {
     onSuccess: (newPost) => {
-      console.log(newPost, 'gdgdgd')
       queryClient.setQueryData<IPost[]>(
-        postKeys.list(channelId),
+        postKeys.channels(channelId),
         (previousPosts = []) => [newPost, ...previousPosts],
       )
 

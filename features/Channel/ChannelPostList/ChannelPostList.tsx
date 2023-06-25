@@ -1,13 +1,12 @@
-import { useRecoilValue } from 'recoil'
 import { NotificationBox } from 'components/common'
 import { PostList } from 'features/Post'
+import { useChannel } from 'hooks/channel'
+import { useShouldFetchPosts } from 'hooks/channel/useChannelData'
 import { useChannelPosts } from 'hooks/post'
-import channelIdSelector from 'recoil/channel/channelIdSelector'
-import shouldFetchPostsSelector from 'recoil/channel/shouldFetchPostSelector'
 
 const ChannelPostList = () => {
-  const shouldFetchPosts = useRecoilValue(shouldFetchPostsSelector)
-  const channelId = useRecoilValue(channelIdSelector)
+  const { _id: channelId } = useChannel()
+  const shouldFetchPosts = useShouldFetchPosts()
 
   const { data: posts = [] } = useChannelPosts(channelId, {
     suspense: true,

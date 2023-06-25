@@ -1,7 +1,6 @@
-import { useRecoilValue } from 'recoil'
 import { MoreMenu } from 'components/common'
+import { useChannel } from 'hooks/channel'
 import { useUpdateRegistration } from 'hooks/registration'
-import channelIdSelector from 'recoil/channel/channelIdSelector'
 import { EStatus } from 'types/registration'
 
 interface AdminButtonsProps {
@@ -10,7 +9,7 @@ interface AdminButtonsProps {
 
 const AdminMenus = ({ registrationId }: AdminButtonsProps) => {
   const { mutate: patchRegistrationStatusMutate } = useUpdateRegistration()
-  const channelId = useRecoilValue(channelIdSelector)
+  const { _id: channelId } = useChannel()
 
   const handleButtonClick = async (status: EStatus) => {
     patchRegistrationStatusMutate({

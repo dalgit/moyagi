@@ -1,22 +1,23 @@
+import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useRecoilValue } from 'recoil'
-import { Button } from 'components/common'
 import { USER_PATH } from 'constants/paths'
+import { useChannel } from 'hooks/channel'
+import { useIsMember } from 'hooks/channel/useChannelData'
 import useModal from 'hooks/common/useModal'
-import { isMemberSelector } from 'recoil/channel/isMemberSelector'
 import userIdSelector from 'recoil/user/userIdSelector'
-import { IChannel } from 'types/channel'
 import { withChannel } from 'utils/common/withDefaultImage'
 import * as S from './style'
 
-interface ChannelInfoProps {
-  channel: IChannel
-}
+const DynamicButton = dynamic(
+  () => import('components/common').then((module) => module.Button),
+  { ssr: false },
+)
 
-const ChannelDetailCard = ({ channel }: ChannelInfoProps) => {
-  const { description, manager, members } = channel
+const ChannelDetailCard = () => {
+  const { description, manager, members, imageUrl, name } = useChannel()
   const { openModal } = useModal()
-  const isMember = useRecoilValue(isMemberSelector)
+  const isMember = useIsMember()
   const router = useRouter()
   const userId = useRecoilValue(userIdSelector)
 
@@ -42,17 +43,21 @@ const ChannelDetailCard = ({ channel }: ChannelInfoProps) => {
 
   return (
     <S.ChannelDetailCardLayout>
-      <S.ChannelDetailCardImage src={withChannel(channel.imageUrl)} />
-      <S.Title>{channel.name}</S.Title>
+      <S.ChannelDetailCardImage src={withChannel(imageUrl)} />
+      <S.Title>{name}</S.Title>
       <S.Description>{description}</S.Description>
-      <S.Member onClick={handleManagerClick}>매니저 {manager.name}</S.Member>
+      <S.Member onClick={handleManagerClick}>매니저 {manager?.name}</S.Member>
       <S.Member onClick={handleMembersModalOpen}>
         멤버 {members?.length}명
       </S.Member>
       {isMember ? (
-        <Button onClick={handlePostCreateModalOpen}>작성하기</Button>
+        <DynamicButton onClick={handlePostCreateModalOpen}>
+          작성하기
+        </DynamicButton>
       ) : (
-        <Button onClick={handleRegistrationModalOpen}>가입하기</Button>
+        <DynamicButton onClick={handleRegistrationModalOpen}>
+          가입하기
+        </DynamicButton>
       )}
     </S.ChannelDetailCardLayout>
   )

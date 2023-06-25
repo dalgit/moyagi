@@ -34,7 +34,7 @@ const useCreateRegistration = (): UseMutationResult<
 
         queryClient.invalidateQueries(channelKeys.detail(slug))
 
-        queryClient.invalidateQueries(channelKeys.list(userId))
+        queryClient.invalidateQueries(channelKeys.users(userId))
 
         onToast({ content: '가입이 완료되었습니다.', type: 'success' })
       }

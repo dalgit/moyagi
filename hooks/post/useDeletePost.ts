@@ -25,12 +25,15 @@ const useDeletePost = (): UseMutationResult<
   return useMutation(deletePost, {
     onMutate: ({ channelId, postId }) => {
       const previousPosts = queryClient.getQueryData<IPost[]>(
-        postKeys.list(channelId),
+        postKeys.channels(channelId),
       )
 
       const updatedPosts = previousPosts?.filter((post) => post._id !== postId)
 
-      queryClient.setQueryData<IPost[]>(postKeys.list(channelId), updatedPosts)
+      queryClient.setQueryData<IPost[]>(
+        postKeys.channels(channelId),
+        updatedPosts,
+      )
 
       onToast({ content: '삭제가 완료되었습니다.', type: 'success' })
       return { previousPosts }
@@ -39,7 +42,7 @@ const useDeletePost = (): UseMutationResult<
     onError: (_, { channelId }, context) => {
       if (context?.previousPosts) {
         queryClient.setQueryData<IPost[]>(
-          postKeys.list(channelId),
+          postKeys.channels(channelId),
           context.previousPosts,
         )
       }

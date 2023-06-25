@@ -24,7 +24,7 @@ const useDeleteComment = (): UseMutationResult<
   return useMutation(deleteComment, {
     onMutate: ({ channelId, postId, commentId }) => {
       const previousPosts = queryClient.getQueryData<IPost[]>(
-        postKeys.list(channelId),
+        postKeys.channels(channelId),
       )
 
       const updatedPosts = previousPosts?.map((post) => {
@@ -37,7 +37,10 @@ const useDeleteComment = (): UseMutationResult<
         return post
       })
 
-      queryClient.setQueryData<IPost[]>(postKeys.list(channelId), updatedPosts)
+      queryClient.setQueryData<IPost[]>(
+        postKeys.channels(channelId),
+        updatedPosts,
+      )
 
       return { previousPosts }
     },
@@ -45,7 +48,7 @@ const useDeleteComment = (): UseMutationResult<
     onError: (_, { channelId }, context) => {
       if (context?.previousPosts) {
         queryClient.setQueryData<IPost[]>(
-          postKeys.list(channelId),
+          postKeys.channels(channelId),
           context.previousPosts,
         )
       }

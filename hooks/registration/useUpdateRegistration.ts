@@ -24,7 +24,7 @@ const useUpdateRegistration = (): UseMutationResult<
   return useMutation(updateRegistration, {
     onSuccess: (updatedRegistration: IRegistration, { channelId }) => {
       queryClient.setQueryData<IRegistration[]>(
-        registrationKeys.list(channelId),
+        registrationKeys.channels(channelId),
         (previousRegistrations = []) =>
           previousRegistrations.map((registration) =>
             registration._id === updatedRegistration._id

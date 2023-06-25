@@ -24,7 +24,7 @@ const useCreateComment = (): UseMutationResult<
   return useMutation(createComment, {
     onSuccess: (newComment, { channelId, postId }) => {
       queryClient.setQueryData<IPost[]>(
-        postKeys.list(channelId),
+        postKeys.channels(channelId),
         (previousPosts) => {
           const updatedPosts = previousPosts?.map((post) => {
             if (post._id === postId) {

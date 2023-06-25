@@ -1,7 +1,5 @@
-import { useRecoilValue } from 'recoil'
 import { Button } from 'components/common'
-import { useDeleteChannelMember } from 'hooks/channel'
-import channelAtom from 'recoil/channel/channelAtom'
+import { useChannel, useDeleteChannelMember } from 'hooks/channel'
 
 interface UserBanButtonProps {
   userId: string
@@ -9,7 +7,7 @@ interface UserBanButtonProps {
 
 const UserBanButton = ({ userId }: UserBanButtonProps) => {
   const { mutate } = useDeleteChannelMember()
-  const { _id: channelId } = useRecoilValue(channelAtom)
+  const { _id: channelId } = useChannel()
 
   const handleButtonClick = () => {
     mutate({ userId, channelId })

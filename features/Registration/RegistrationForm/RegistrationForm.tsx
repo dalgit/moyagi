@@ -1,15 +1,15 @@
 import { useState, ChangeEvent } from 'react'
-import { useRecoilValue } from 'recoil'
 import { Button } from 'components/common'
 import TextArea from 'components/common/TextArea/TextArea'
 import ToolTip from 'components/common/ToolTIp/ToolTip'
+import { useChannel } from 'hooks/channel'
 import useModal from 'hooks/common/useModal'
 import { useCreateRegistration } from 'hooks/registration'
-import channelAtom from 'recoil/channel/channelAtom'
 import * as S from './style'
 
 const RegistrationForm = () => {
-  const { _id: channelId, isPublic } = useRecoilValue(channelAtom)
+  const { _id: channelId, isPublic } = useChannel()
+
   const { mutate: createRegistrationMutate } = useCreateRegistration()
   const [message, setMessage] = useState<string>('')
   const { closeModal } = useModal()

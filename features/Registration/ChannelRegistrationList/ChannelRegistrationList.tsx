@@ -1,16 +1,17 @@
-import { useRecoilValue } from 'recoil'
 import { NotificationBox, Spinner } from 'components/common'
+import { useChannel } from 'hooks/channel'
 import { useChannelRegistrations } from 'hooks/registration'
-import channelAtom from 'recoil/channel/channelAtom'
 import * as S from './style'
 
 const ChannelRegistrationList = () => {
-  const { _id: channelId } = useRecoilValue(channelAtom)
+  const { _id: channelId } = useChannel()
+
   const {
     data: registrations = [],
     isLoading,
     isSuccess,
   } = useChannelRegistrations(channelId)
+
   const isEmpty = isSuccess && !registrations.length
 
   return (

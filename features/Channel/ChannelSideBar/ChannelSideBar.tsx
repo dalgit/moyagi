@@ -3,20 +3,19 @@ import {
   AiOutlineSetting as SettingIcon,
   AiOutlinePaperClip as ClipIcon,
 } from 'react-icons/ai'
-import { useRecoilValue } from 'recoil'
 import { baseUrl } from 'constants/baseUrl'
 import { CHANNEL_PATH } from 'constants/paths'
+import { useChannel } from 'hooks/channel'
+import { useIsManager } from 'hooks/channel/useChannelData'
 import useModal from 'hooks/common/useModal'
 import useToast from 'hooks/common/useToast'
-import channelAtom from 'recoil/channel/channelAtom'
-import { isChannelManagerSelector } from 'recoil/channel/isChannelManagerSelector'
 import * as S from './style'
 
 const ChannelSideBar = () => {
   const { openModal } = useModal()
   const { onToast } = useToast()
-  const { address } = useRecoilValue(channelAtom)
-  const isManager = useRecoilValue(isChannelManagerSelector)
+  const { address } = useChannel()
+  const isManager = useIsManager()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   const handleSettingModal = () => {

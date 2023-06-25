@@ -1,9 +1,7 @@
 export const channelKeys = {
   all: ['channels'],
-  details: () => [...channelKeys.all, 'detail'],
-  detail: (slug: string) => [...channelKeys.details(), slug],
-  lists: () => [...channelKeys.all, 'list'],
-  list: (userId: string) => [...channelKeys.lists(), userId],
-  search: (keyword: string) => [...channelKeys.all, { search: keyword }],
-  recommended: () => [...channelKeys.all, 'recommended'],
+  detail: (slug: string) => ['channels', 'detail', slug],
+  users: (userId: string) => ['channels', 'users', userId],
+  search: (keyword: string) => ['channels', { search: keyword }],
+  recommended: () => ['channels', 'recommended'],
 }

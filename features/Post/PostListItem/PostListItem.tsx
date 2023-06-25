@@ -1,5 +1,4 @@
-import { useRecoilValue } from 'recoil'
-import { isMemberSelector } from 'recoil/channel/isMemberSelector'
+import { useIsMember } from 'hooks/channel/useChannelData'
 import { IPost } from 'types/post'
 import * as S from './style'
 import PostCommentForm from '../PostCommentForm/PostCommentForm'
@@ -13,7 +12,7 @@ interface PostProps {
 
 const PostListItem = ({ post }: PostProps) => {
   const { _id: postId, author, createdAt, content, comments } = post
-  const isMember = useRecoilValue(isMemberSelector)
+  const isMember = useIsMember()
 
   return (
     <S.PostListItemLayout>

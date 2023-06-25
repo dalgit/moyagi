@@ -8,6 +8,7 @@ import * as S from './style'
 const RecommendedChannelList = () => {
   const { data: channels = [] } = useRecommendedChannels({
     suspense: true,
+    staleTime: Infinity,
   })
 
   const channelItem = (channel: IChannel) => (

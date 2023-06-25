@@ -15,8 +15,8 @@ const useLogoutUser = (): UseMutationResult<AxiosResponse, AxiosError> => {
   const { push } = useRouter()
 
   return useMutation(logoutUser, {
-    onMutate: () => {
-      push('/login')
+    onMutate: async () => {
+      await push('/login')
       resetUser()
       queryClient.clear()
     },

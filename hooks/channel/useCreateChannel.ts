@@ -41,7 +41,7 @@ const useCreateChannel = (): UseMutationResult<
       )
 
       queryClient.setQueryData<IChannel[]>(
-        channelKeys.list(userId),
+        channelKeys.users(userId),
         (previousChannels = []) => [newChannel, ...previousChannels],
       )
 
