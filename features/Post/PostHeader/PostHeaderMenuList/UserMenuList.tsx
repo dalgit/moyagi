@@ -1,13 +1,16 @@
 import { MoreMenu, UserLink } from 'components/common'
+import usePostById from 'hooks/post/usePostById'
 
 interface UserMenuListProps {
-  authorId: string
+  postId: string
 }
 
-const UserMenuList = ({ authorId }: UserMenuListProps) => {
+const UserMenuList = ({ postId }: UserMenuListProps) => {
+  const { data } = usePostById(postId)
+
   return (
     <MoreMenu>
-      <UserLink href={authorId}>
+      <UserLink href={data?.author._id ?? ''}>
         <li>작성자 정보</li>
       </UserLink>
     </MoreMenu>

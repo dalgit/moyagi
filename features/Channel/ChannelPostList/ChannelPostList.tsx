@@ -1,16 +1,14 @@
 import { NotificationBox } from 'components/common'
 import { PostList } from 'features/Post'
-import { useChannel } from 'hooks/channel'
 import { useShouldFetchPosts } from 'hooks/channel/useChannelData'
-import { useChannelPosts } from 'hooks/post'
+import { useChannelPostsQuery } from 'hooks/post'
 
 const ChannelPostList = () => {
-  const { _id: channelId } = useChannel()
   const shouldFetchPosts = useShouldFetchPosts()
 
-  const { data: posts = [] } = useChannelPosts(channelId, {
+  const { data: posts = [] } = useChannelPostsQuery({
     suspense: true,
-    enabled: !!channelId && shouldFetchPosts,
+    enabled: shouldFetchPosts,
   })
 
   if (!shouldFetchPosts) {

@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import createPostComment from 'server/api/createPostComment'
+import getPostComments from 'server/api/getPostComments'
 
 interface ExtendedNextApiRequest extends NextApiRequest {
   query: {
@@ -15,6 +16,9 @@ export default async function handler(
   const requestMethod = req.method
 
   switch (requestMethod) {
+    case 'GET':
+      await getPostComments(req, res)
+      break
     case 'POST':
       await createPostComment(req, res)
       break

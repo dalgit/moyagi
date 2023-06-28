@@ -4,9 +4,9 @@ import {
   useQueryClient,
 } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
-import { IComment, IPost } from 'types/post'
+import { IComment } from 'types/post'
 import client from 'utils/axios/client'
-import { postKeys } from 'utils/queryKeys/post'
+import { commentKeys } from 'utils/queryKeys/post'
 
 interface deleteCommentArgs {
   postId: string
@@ -22,34 +22,28 @@ const useDeleteComment = (): UseMutationResult<
   const queryClient = useQueryClient()
 
   return useMutation(deleteComment, {
-    onMutate: ({ channelId, postId, commentId }) => {
-      const previousPosts = queryClient.getQueryData<IPost[]>(
-        postKeys.channels(channelId),
+    onMutate: ({ postId, commentId }) => {
+      const previousComments = queryClient.getQueryData<IComment[]>(
+        commentKeys.posts(postId),
       )
 
-      const updatedPosts = previousPosts?.map((post) => {
-        if (post._id === postId) {
-          const updatedComments = post.comments.filter(
-            (comment) => comment._id !== commentId,
-          )
-          return { ...post, comments: updatedComments }
-        }
-        return post
-      })
-
-      queryClient.setQueryData<IPost[]>(
-        postKeys.channels(channelId),
-        updatedPosts,
+      const updatedComments = previousComments?.filter(
+        (comment) => comment._id !== commentId,
       )
 
-      return { previousPosts }
+      queryClient.setQueryData<IComment[]>(
+        commentKeys.posts(postId),
+        updatedComments,
+      )
+
+      return { previousComments }
     },
 
-    onError: (_, { channelId }, context) => {
-      if (context?.previousPosts) {
-        queryClient.setQueryData<IPost[]>(
-          postKeys.channels(channelId),
-          context.previousPosts,
+    onError: (_, { postId }, context) => {
+      if (context?.previousComments) {
+        queryClient.setQueryData<IComment[]>(
+          commentKeys.posts(postId),
+          context.previousComments,
         )
       }
     },

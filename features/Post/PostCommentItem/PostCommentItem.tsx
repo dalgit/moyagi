@@ -17,11 +17,11 @@ interface PostCommentItemProps {
 
 const PostCommentItem = ({ comment, postId }: PostCommentItemProps) => {
   const { author, content, createdAt } = comment
-  const FormattedDate = getFormattedDate(createdAt)
   const { mutate: deleteCommentMutate } = useDeleteComment()
-  const isMe = useRecoilValue(isMeSelector(author._id))
-  const router = useRouter()
+  const isMyComment = useRecoilValue(isMeSelector(author._id))
   const { _id: channelId } = useChannel()
+  const router = useRouter()
+
   const handleUserClick = () => {
     router.push(`${USER_PATH}/${author._id}`)
   }
@@ -42,8 +42,8 @@ const PostCommentItem = ({ comment, postId }: PostCommentItemProps) => {
         </S.InnerWrapper>
       </S.Wrapper>
       <S.RightWrapper>
-        <S.CommentDate>{FormattedDate}</S.CommentDate>
-        {isMe && (
+        <S.CommentDate>{getFormattedDate(createdAt)}</S.CommentDate>
+        {isMyComment && (
           <Button variant="sub" onClick={handleCommentDelete}>
             삭제
           </Button>

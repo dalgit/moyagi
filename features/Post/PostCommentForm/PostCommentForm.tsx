@@ -1,8 +1,8 @@
-import { useState, ChangeEvent } from 'react'
 import { useRecoilValue } from 'recoil'
 import TextArea from 'components/common/TextArea/TextArea'
 import { send } from 'constants/icon'
 import { useChannel } from 'hooks/channel'
+import useContent from 'hooks/common/useContent'
 import useCreateComment from 'hooks/post/useCreateComment'
 import userAtom from 'recoil/user/userAtom'
 import { withUser } from 'utils/common/withDefaultImage'
@@ -13,26 +13,19 @@ interface PostCommentProps {
 }
 
 const PostCommentForm = ({ postId }: PostCommentProps) => {
-  const [comment, setComment] = useState<string>('')
+  const { handleContentChange, content, handleContentSubmit } = useContent()
   const { mutate: commentMutate } = useCreateComment()
   const { imageUrl } = useRecoilValue(userAtom)
   const { _id: channelId } = useChannel()
 
-  const handleCommentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setComment(e.target.value)
-  }
-
-  const handleCommentSubmit = () => {
-    if (comment === '') return
-    commentMutate({ channelId, postId, content: comment })
-    setComment('')
-  }
+  const handleClickSend = () =>
+    handleContentSubmit(() => commentMutate({ channelId, postId, content }))
 
   return (
     <S.PostCommentLayout>
       <S.UserIcon src={withUser(imageUrl)} />
-      <TextArea value={comment} onChange={handleCommentChange} />
-      <S.Send onClick={handleCommentSubmit} src={send} />
+      <TextArea value={content} onChange={handleContentChange} />
+      <S.Send onClick={handleClickSend} src={send} />
     </S.PostCommentLayout>
   )
 }

@@ -11,14 +11,14 @@ interface PostProps {
 }
 
 const PostListItem = ({ post }: PostProps) => {
-  const { _id: postId, author, createdAt, content, comments } = post
+  const { _id: postId, author, createdAt, content } = post
   const isMember = useIsMember()
 
   return (
     <S.PostListItemLayout>
       <PostHeader postId={postId} author={author} createdAt={createdAt} />
       <PostContent content={content} />
-      <PostCommentList postId={postId} comments={comments} />
+      <PostCommentList postId={postId} />
       {isMember && <PostCommentForm postId={postId} />}
     </S.PostListItemLayout>
   )
