@@ -1,5 +1,5 @@
 import { MoreMenu, UserLink } from 'components/common'
-import usePostById from 'hooks/post/usePostById'
+import { usePostById } from 'hooks/post/usePost'
 
 interface UserMenuListProps {
   postId: string

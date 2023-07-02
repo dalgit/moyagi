@@ -1,4 +1,4 @@
-import { withUser } from 'utils/common/withDefaultImage'
+import { Avatar } from 'components/common'
 import * as S from './style'
 
 interface ProfileProps {
@@ -14,7 +14,7 @@ const UserProfile = ({
 }: ProfileProps) => {
   return (
     <S.UserProfileLayout>
-      <S.ProfileImage src={withUser(imageUrl)} />
+      <Avatar image={imageUrl} size={200} type="user" />
       <h2>{name}</h2>
       <span>{introduction}</span>
     </S.UserProfileLayout>

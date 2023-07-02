@@ -1,19 +1,21 @@
-import ChannelManageMenus from 'features/Channel/ChannelManageMenus/ChannelManageMenus'
-import ChannelMemberList from 'features/Channel/ChannelMemberList/ChannelMembersList'
+import { ManagedMembersModal } from 'features/Channel'
+import ChannelMemberList from 'features/Channel/ChannelMembersModal/ChannelMembersModal'
+import ChannelManageMenus from 'features/Channel/ChannelSideBar/Menus/ChannelManageMenus'
+import ChannelUserMenus from 'features/Channel/ChannelSideBar/Menus/ChannelUserMenus'
 import PostCreateForm from 'features/Post/PostCreateForm/PostCreateForm'
-import { ChannelRegistrationList } from 'features/Registration'
+import { ChannelRegsModal } from 'features/Registration'
 import RegistrationForm from 'features/Registration/RegistrationForm/RegistrationForm'
-import { UserEditProfile } from 'features/User'
-import AdminChannelUserList from 'features/User/AdminUserList/AdminUserList'
+import { UserProfileEditModal } from 'features/User'
 
 const MODAL_COMPONENTS = {
   channelMemberList: ChannelMemberList,
   RegistrationForm: RegistrationForm,
-  UserEditProfile: UserEditProfile,
+  UserProfileEditModal: UserProfileEditModal,
   PostCreateForm: PostCreateForm,
-  ChannelRegistrationList: ChannelRegistrationList,
+  ChannelRegsModal: ChannelRegsModal,
   ChannelManageMenus: ChannelManageMenus,
-  AdminChannelUserList: AdminChannelUserList,
+  ChannelUserMenus: ChannelUserMenus,
+  ManagedMembersModal: ManagedMembersModal,
 }
 
 export default MODAL_COMPONENTS

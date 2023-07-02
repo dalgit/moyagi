@@ -1,13 +1,7 @@
 import styled from 'styled-components'
 import { empty, sorry } from 'constants/icon'
+import { NotificationType, NotificationImageProps } from './type'
 import FImage from '../FImage/FImage'
-
-type NotificationType = 'sorry' | 'empty'
-
-export interface NotificationImageProps {
-  type: NotificationType
-  alt?: string
-}
 
 export const NotificationImage = styled(FImage).attrs(
   ({ type, alt }: NotificationImageProps) => ({

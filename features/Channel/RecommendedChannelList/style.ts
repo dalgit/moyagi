@@ -9,7 +9,7 @@ export const RecommendedChannelListLayout = styled.div`
   font-size: 16px;
 `
 
-export const Wrapper = styled.div`
+export const Header = styled.div`
   display: flex;
   align-items: center;
   gap: 5px;

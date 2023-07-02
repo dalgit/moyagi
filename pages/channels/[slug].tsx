@@ -12,7 +12,7 @@ import {
   useChannelQueryBySlug,
 } from 'hooks/channel/useChannelQueryBySlug'
 import { channelKeys } from 'utils/queryKeys/channel'
-import { getIsClientRouting } from 'utils/server/checkRouting'
+import { isClientRouting } from 'utils/server/checkRouting'
 
 interface ChannelPageProps {
   slug: string
@@ -38,7 +38,7 @@ export default ChannelPage
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const slug = context.params?.slug
 
-  if (getIsClientRouting(context)) {
+  if (isClientRouting(context)) {
     return {
       props: { slug },
     }

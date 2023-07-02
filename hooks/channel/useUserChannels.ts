@@ -1,5 +1,6 @@
 import {
   useQuery,
+  useQueryClient,
   UseQueryOptions,
   UseQueryResult,
 } from '@tanstack/react-query'
@@ -12,11 +13,23 @@ const useUserChannels = (
   id: string,
   options?: UseQueryOptions<IChannel[], AxiosError>,
 ): UseQueryResult<IChannel[], AxiosError> => {
-  return useQuery<IChannel[], AxiosError>(
-    channelKeys.users(id),
-    () => getUserChannels(id),
-    options,
-  )
+  const queryClient = useQueryClient()
+
+  return useQuery<IChannel[], AxiosError>({
+    queryKey: channelKeys.users(id),
+    queryFn: async () => {
+      const channels = await getUserChannels(id)
+
+      channels?.forEach((channel) => {
+        queryClient.setQueryData(channelKeys.detail(channel.address), channel)
+      })
+
+      return channels
+    },
+    staleTime: 1000 * 60 * 10,
+    enabled: !!id,
+    ...options,
+  })
 }
 
 export default useUserChannels

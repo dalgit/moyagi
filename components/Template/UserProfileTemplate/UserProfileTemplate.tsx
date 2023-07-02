@@ -17,7 +17,7 @@ const UserProfileTemplate = () => {
   const { openModal } = useModal()
 
   const handleModalOepn = () => {
-    openModal('UserEditProfile')
+    openModal('UserProfileEditModal')
   }
 
   if (isLoading) {

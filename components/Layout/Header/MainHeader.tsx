@@ -4,8 +4,8 @@ import Link from 'next/link'
 import { logo } from 'constants/icon'
 import * as S from './style'
 
-const UserNav = dynamic(
-  () => import('features/User').then((module) => module.UserNav),
+const UserNavigation = dynamic(
+  () => import('features/User').then((module) => module.UserNavigation),
   { ssr: false },
 )
 
@@ -15,7 +15,7 @@ const MainHeader = () => {
       <Link href="/">
         <Image src={logo} alt="logo" width={120} height={30} />
       </Link>
-      <UserNav />
+      <UserNavigation />
     </S.HeaderLayout>
   )
 }

@@ -1,7 +1,7 @@
 import Link from 'next/link'
-import { Button, Input, ErrorText } from 'components/common'
+import { Button, ValidInput } from 'components/common'
 import { useRegisterUser } from 'hooks/auth'
-import { useForm, useBlur } from 'hooks/common'
+import { useForm } from 'hooks/common'
 import { Dependencies } from 'hooks/common/useForm'
 import authValidations from 'utils/validations/auth'
 import * as S from '../LoginForm/style'
@@ -18,87 +18,54 @@ const dependencies: Dependencies<typeof initialForm> = {
 }
 
 const SignUpForm = () => {
-  const { form, updateForm, isValid, isAllValid } = useForm(
+  const { form, updateForm, isValid, handleSubmit } = useForm(
     initialForm,
     authValidations,
     dependencies,
   )
 
-  const { isBlurred, handleBlur } = useBlur()
   const { mutate: registerUserMutate } = useRegisterUser()
 
-  const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-
-    if (!isAllValid) return
-
-    registerUserMutate({ ...form })
-  }
-
   return (
-    <S.FormLayout onSubmit={handleSignUp}>
+    <S.FormLayout
+      onSubmit={(e) => {
+        e.preventDefault()
+        handleSubmit(() => registerUserMutate({ ...form }))
+      }}
+    >
       <S.Title>Sign Up</S.Title>
-
-      <div>
-        <Input
-          required
-          type="text"
-          name="name"
-          label="name"
-          onChange={updateForm}
-          onBlur={handleBlur}
-        />
-        <ErrorText
-          start={isBlurred.name}
-          error={!isValid.name}
-          text="이름이 올바르지 않습니다."
-        />
-      </div>
-      <div>
-        <Input
-          required
-          type="email"
-          name="email"
-          label="email"
-          onChange={updateForm}
-          onBlur={handleBlur}
-        />
-        <ErrorText
-          start={isBlurred.email}
-          error={!isValid.email}
-          text="이메일이 올바르지 않습니다."
-        />
-      </div>
-      <div>
-        <Input
-          required
-          type="password"
-          name="password"
-          label="Password"
-          onChange={updateForm}
-          onBlur={handleBlur}
-        />
-        <ErrorText
-          start={isBlurred.password}
-          error={!isValid.password}
-          text=" 비밀번호가 올바르지 않습니다."
-        />
-      </div>
-      <div>
-        <Input
-          required
-          type="password"
-          name="passwordConfirm"
-          label="password confirm"
-          onChange={updateForm}
-          onBlur={handleBlur}
-        />
-        <ErrorText
-          start={isBlurred.passwordConfirm}
-          error={!isValid.passwordConfirm}
-          text=" 비밀번호가 일치하지 않습니다."
-        />
-      </div>
+      <ValidInput
+        type="text"
+        name="name"
+        label="name"
+        onChange={updateForm}
+        isValid={isValid.name}
+        errorText="이름이 올바르지 않습니다."
+      />
+      <ValidInput
+        type="email"
+        name="email"
+        label="email"
+        onChange={updateForm}
+        isValid={isValid.email}
+        errorText="이메일이 올바르지 않습니다."
+      />
+      <ValidInput
+        type="password"
+        name="password"
+        label="password"
+        onChange={updateForm}
+        isValid={isValid.password}
+        errorText="비밀번호가 올바르지 않습니다."
+      />
+      <ValidInput
+        type="password"
+        name="passwordConfirm"
+        label="password confirm"
+        onChange={updateForm}
+        isValid={isValid.passwordConfirm}
+        errorText="비밀번호가 일치하지 않습니다."
+      />
       <Button type="submit">회원가입</Button>
       <Link href="/login">계정이 이미 있으신가요? 로그인</Link>
     </S.FormLayout>

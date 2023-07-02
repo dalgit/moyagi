@@ -17,11 +17,3 @@ export const Send = styled(FImage)`
   height: 25px;
   cursor: pointer;
 `
-
-export const UserIcon = styled(FImage).attrs({ alt: 'user' })`
-  border-radius: 50%;
-  margin-top: 8px;
-  min-width: 25px;
-  height: 25px;
-  cursor: pointer;
-`

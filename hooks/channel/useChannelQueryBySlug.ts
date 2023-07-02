@@ -12,6 +12,7 @@ export const useChannelQueryBySlug = <T = IChannel>(
     queryKey: channelKeys.detail(slug),
     queryFn: () => getChannelBySlug(slug),
     ...options,
+    staleTime: 1000 * 60 * 10,
   })
 }
 

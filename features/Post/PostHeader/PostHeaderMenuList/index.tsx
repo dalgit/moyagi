@@ -1,4 +1,4 @@
-import { useCheckMyPost } from 'hooks/post/usePostById'
+import { useCheckMyPost } from 'hooks/post/usePost'
 import AuthorMenuList from './AuthorMenuList'
 import UserMenuList from './UserMenuList'
 

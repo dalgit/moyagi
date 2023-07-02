@@ -23,7 +23,7 @@ const useCommentsQuery = (
       const comments = await getPostComments(channelId, postId)
 
       comments?.forEach((author) => {
-        queryClient.setQueryData(userKeys.list(author._id), author)
+        queryClient.setQueryData(userKeys.detail(author._id), author)
       })
 
       return comments

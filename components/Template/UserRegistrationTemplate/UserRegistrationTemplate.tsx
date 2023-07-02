@@ -1,13 +1,13 @@
 import { useRecoilValue } from 'recoil'
 import { Spinner } from 'components/common'
 import { RegistrationList } from 'features/Registration'
-import { useUserRegistrations } from 'hooks/registration'
+import { useUserRegsQuery } from 'hooks/registration'
 import userIdSelector from 'recoil/user/userIdSelector'
 import * as S from './style'
 
 const UserRegistrationTemplate = () => {
   const userId = useRecoilValue(userIdSelector)
-  const { data: registrations = [], isLoading } = useUserRegistrations(userId)
+  const { data: registrations = [], isLoading } = useUserRegsQuery(userId)
 
   if (isLoading) {
     return <Spinner />

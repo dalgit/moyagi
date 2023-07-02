@@ -1,12 +1,5 @@
-import { ReactNode } from 'react'
-import { NotificationImageProps } from './style'
 import * as S from './style'
-
-interface NotificationBoxProps extends NotificationImageProps {
-  title?: string
-  description?: string
-  children?: ReactNode
-}
+import { NotificationBoxProps } from './type'
 
 const NotificationBox = ({
   title,

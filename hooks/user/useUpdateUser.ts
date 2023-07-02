@@ -5,7 +5,6 @@ import {
 } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 import { useSetRecoilState } from 'recoil'
-import { useToast } from 'hooks/common'
 import userAtom from 'recoil/user/userAtom'
 import { IUser } from 'types/user'
 import client from 'utils/axios/client'
@@ -24,13 +23,36 @@ const useUpdateUser = (): UseMutationResult<
 > => {
   const queryClient = useQueryClient()
   const setUser = useSetRecoilState(userAtom)
-  const { onToast } = useToast()
 
   return useMutation(updateUser, {
-    onSuccess: (updatedUser, { userId }) => {
-      queryClient.setQueryData<IUser>(userKeys.list(userId), updatedUser)
+    onMutate: ({ imageUrl, introduction, userId }) => {
+      const previousUser = queryClient.getQueryData<IUser>(
+        userKeys.detail(userId),
+      )
+
+      const updatedUser = {
+        ...previousUser,
+        imageUrl,
+        introduction,
+      } as IUser
+
+      queryClient.setQueryData<IUser | undefined>(
+        userKeys.detail(userId),
+        updatedUser,
+      )
+
+      return { previousUser }
+    },
+
+    onSuccess: (updatedUser) => {
       setUser(updatedUser)
-      onToast({ content: '프로필이 업데이트 되었습니다.', type: 'success' })
+    },
+
+    onError: (_, { userId }, context) => {
+      queryClient.setQueryData<IUser>(
+        userKeys.detail(userId),
+        context?.previousUser,
+      )
     },
   })
 }

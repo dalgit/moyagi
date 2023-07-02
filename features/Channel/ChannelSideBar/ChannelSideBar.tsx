@@ -6,7 +6,7 @@ import {
 import { baseUrl } from 'constants/baseUrl'
 import { CHANNEL_PATH } from 'constants/paths'
 import { useChannel } from 'hooks/channel'
-import { useIsManager } from 'hooks/channel/useChannelData'
+import { useIsManager, useIsMember } from 'hooks/channel/useChannelData'
 import useModal from 'hooks/common/useModal'
 import useToast from 'hooks/common/useToast'
 import * as S from './style'
@@ -16,11 +16,14 @@ const ChannelSideBar = () => {
   const { onToast } = useToast()
   const { address } = useChannel()
   const isManager = useIsManager()
+  const isMember = useIsMember()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   const handleSettingModal = () => {
     if (isManager) {
       openModal('ChannelManageMenus')
+    } else if (isMember) {
+      openModal('ChannelUserMenus')
     } else {
       onToast({ content: '권한이 없습니다.', type: 'error' })
     }

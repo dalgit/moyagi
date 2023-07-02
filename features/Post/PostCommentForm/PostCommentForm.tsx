@@ -1,11 +1,11 @@
 import { useRecoilValue } from 'recoil'
+import { Avatar } from 'components/common'
 import TextArea from 'components/common/TextArea/TextArea'
 import { send } from 'constants/icon'
 import { useChannel } from 'hooks/channel'
 import useContent from 'hooks/common/useContent'
 import useCreateComment from 'hooks/post/useCreateComment'
 import userAtom from 'recoil/user/userAtom'
-import { withUser } from 'utils/common/withDefaultImage'
 import * as S from './style'
 
 interface PostCommentProps {
@@ -23,7 +23,7 @@ const PostCommentForm = ({ postId }: PostCommentProps) => {
 
   return (
     <S.PostCommentLayout>
-      <S.UserIcon src={withUser(imageUrl)} />
+      <Avatar image={imageUrl} type="user" size={25} />
       <TextArea value={content} onChange={handleContentChange} />
       <S.Send onClick={handleClickSend} src={send} />
     </S.PostCommentLayout>

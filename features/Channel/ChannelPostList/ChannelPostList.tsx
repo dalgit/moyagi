@@ -2,6 +2,7 @@ import { NotificationBox } from 'components/common'
 import { PostList } from 'features/Post'
 import { useShouldFetchPosts } from 'hooks/channel/useChannelData'
 import { useChannelPostsQuery } from 'hooks/post'
+import { config } from './config'
 
 const ChannelPostList = () => {
   const shouldFetchPosts = useShouldFetchPosts()
@@ -12,23 +13,11 @@ const ChannelPostList = () => {
   })
 
   if (!shouldFetchPosts) {
-    return (
-      <NotificationBox
-        title="비공개 채널입니다."
-        description="가입후 이용해주세요"
-        type="sorry"
-      />
-    )
+    return <NotificationBox {...config.noPublic} />
   }
 
   if (!posts.length) {
-    return (
-      <NotificationBox
-        title="작성된 게시물이 없습니다."
-        description="첫 글을 작성해보세요"
-        type="empty"
-      />
-    )
+    return <NotificationBox {...config.noPost} />
   }
 
   return <PostList posts={posts} />

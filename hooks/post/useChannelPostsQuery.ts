@@ -23,7 +23,7 @@ const useChannelPostsQuery = <T = IPost[]>(
       const posts = await getChannelPostsById(channelId)
 
       posts.forEach(({ author }) => {
-        queryClient.setQueryData(userKeys.list(author._id), author)
+        queryClient.setQueryData(userKeys.detail(author._id), author)
       })
 
       return posts

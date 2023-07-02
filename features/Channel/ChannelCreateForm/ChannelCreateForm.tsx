@@ -1,6 +1,12 @@
-import { Button, ImageSelector, Input, Radio, Radios } from 'components/common'
+import {
+  Button,
+  ImageSelector,
+  Radio,
+  Radios,
+  ValidInput,
+} from 'components/common'
 import { useCreateChannel } from 'hooks/channel'
-import { useForm, useToast, useUploadImage } from 'hooks/common'
+import { useForm, useUploadImage } from 'hooks/common'
 import channelValidations from 'utils/validations/channel'
 import * as S from './style'
 
@@ -15,52 +21,58 @@ const initailForm = {
 }
 
 const ChannelCreateForm = () => {
-  const { form, updateForm, isAllValid } = useForm(
+  const { form, updateForm, isValid, handleSubmit } = useForm(
     initailForm,
     channelValidations,
   )
 
   const { mutate: createChannelMutate } = useCreateChannel()
   const { getFileUrl } = useUploadImage()
-  const { onToast } = useToast()
 
-  const handleCreateChannel = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-
-    if (isAllValid) {
+  const handleCreateChannel = () => {
+    handleSubmit(async () => {
       createChannelMutate({
         ...form,
         isPublic: JSON.parse(form.isPublic),
         imageUrl: await getFileUrl(fileKey),
       })
-    } else {
-      onToast({ content: '부적절한 입력입니다.', type: 'error' })
-    }
+    })
   }
 
   return (
-    <S.Form onSubmit={handleCreateChannel}>
+    <S.Form
+      onSubmit={(e) => {
+        e.preventDefault()
+        handleCreateChannel()
+      }}
+    >
       <ImageSelector fileKey={fileKey} />
-      <Input
+      <ValidInput
         label="이름"
         id="name"
         placeholder="14자 이내"
         maxLength={14}
         onChange={updateForm}
+        errorText="이름이 올바르지 않습니다."
+        isValid={isValid.name}
       />
-      <Input
+      <ValidInput
         label="주소"
         id="address"
         placeholder="영문, 숫자, '-'의 조합 20자 이내"
         maxLength={20}
         onChange={updateForm}
+        errorText="주소가 올바르지 않습니다."
+        isValid={isValid.address}
       />
-      <Input
+      <ValidInput
         label="설명"
         id="description"
         placeholder="40자 이내"
         maxLength={40}
         onChange={updateForm}
+        errorText="설명이 올바르지 않습니다."
+        isValid={isValid.description}
       />
       <Radios
         label="공개 여부"

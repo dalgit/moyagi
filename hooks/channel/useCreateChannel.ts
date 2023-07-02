@@ -42,8 +42,10 @@ const useCreateChannel = (): UseMutationResult<
 
       queryClient.setQueryData<IChannel[]>(
         channelKeys.users(userId),
-        (previousChannels = []) => [newChannel, ...previousChannels],
+        (previousChannels = []) => [...previousChannels, newChannel],
       )
+
+      queryClient.invalidateQueries(channelKeys.users(userId))
 
       onToast({ content: '채널이 개설되었습니다.', type: 'success' })
       push(`${CHANNEL_PATH}/${address}`)

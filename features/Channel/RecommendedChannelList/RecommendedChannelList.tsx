@@ -19,10 +19,10 @@ const RecommendedChannelList = () => {
 
   return (
     <S.RecommendedChannelListLayout>
-      <S.Wrapper>
+      <S.Header>
         <ToolTip type="question" content="멤버가 많은 채널들을 추천해드려요" />
         <span>추천</span>
-      </S.Wrapper>
+      </S.Header>
       <InfiniteList items={channels.map(channelItem)} />
     </S.RecommendedChannelListLayout>
   )

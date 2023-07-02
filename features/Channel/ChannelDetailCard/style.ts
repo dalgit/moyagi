@@ -50,6 +50,7 @@ export const Title = styled.span`
 export const Description = styled.span`
   font-size: 14px;
   line-height: 1.5;
+  word-break: break-all;
 `
 
 export const Member = styled.span`

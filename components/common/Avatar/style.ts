@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { baseHover } from 'styles/constants'
 import FImage from '../FImage/FImage'
 
@@ -9,13 +9,19 @@ export const AvatarLayout = styled.div`
   gap: 5px;
   font-weight: bold;
 
+  display: flex;
+  align-items: center;
+
   ${baseHover}
 `
 
-export const AvatarImage = styled(FImage)`
+export const AvatarImage = styled(FImage)<{ size: number | undefined }>`
   border-radius: 50%;
-  min-width: 30px;
-  height: 30px;
+
+  ${({ size }) => css`
+    min-width: ${size ? size + 'px' : '30px'};
+    height: ${size ? size + 'px' : '30px'};
+  `}
 `
 
 export const AvatarName = styled.span`
