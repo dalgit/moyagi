@@ -4,11 +4,8 @@ import FImage from '../FImage/FImage'
 
 export const AvatarLayout = styled.div`
   display: flex;
-  background-color: white;
   padding: 5px;
   gap: 5px;
-  font-weight: bold;
-
   display: flex;
   align-items: center;
 

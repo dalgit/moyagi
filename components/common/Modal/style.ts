@@ -19,6 +19,8 @@ export const ChildrenWrapper = styled.div`
   background-color: white;
   box-shadow: 0 5px 18px -7px rgba(0, 0, 0, 1);
   z-index: 30;
+
+  min-width: 250px;
 `
 
 export const ExitIcon = styled(GrClose)`

@@ -10,7 +10,7 @@ const ChannelUserMenus = () => {
   const { _id: channelId } = useChannel()
   const userId = useRecoilValue(userIdSelector)
 
-  const handle = () => {
+  const handleLeaveChannel = () => {
     if (window.confirm('정말 탈퇴하시겠습니까?')) {
       mutate({ userId, channelId })
     }
@@ -18,7 +18,7 @@ const ChannelUserMenus = () => {
 
   return (
     <S.MenusLayout>
-      <Button onClick={handle}>탈퇴</Button>
+      <Button onClick={handleLeaveChannel}>탈퇴</Button>
     </S.MenusLayout>
   )
 }

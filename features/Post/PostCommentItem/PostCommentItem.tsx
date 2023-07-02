@@ -1,13 +1,12 @@
 import { useRouter } from 'next/router'
 import { useRecoilValue } from 'recoil'
-import { Button } from 'components/common'
+import { Avatar, Button } from 'components/common'
 import { USER_PATH } from 'constants/paths'
 import { useChannel } from 'hooks/channel'
 import useDeleteComment from 'hooks/post/useDeleteComment'
 import isMeSelector from 'recoil/user/isMe'
 import { IComment } from 'types/post'
 import getFormattedDate from 'utils/common/getFormattedDate'
-import { withUser } from 'utils/common/withDefaultImage'
 import * as S from './style'
 
 interface PostCommentItemProps {
@@ -34,13 +33,18 @@ const PostCommentItem = ({ comment, postId }: PostCommentItemProps) => {
 
   return (
     <S.PostCommentItemLayout>
-      <S.Wrapper>
-        <S.UserIcon src={withUser(author.imageUrl)} onClick={handleUserClick} />
+      <S.LeftWrapper>
+        <Avatar
+          image={author.imageUrl}
+          type="user"
+          size={30}
+          onClick={handleUserClick}
+        />
         <S.InnerWrapper>
           <S.AtuhorName>{author.name}</S.AtuhorName>
           <S.StyledComment>{content}</S.StyledComment>
         </S.InnerWrapper>
-      </S.Wrapper>
+      </S.LeftWrapper>
       <S.RightWrapper>
         <S.CommentDate>{getFormattedDate(createdAt)}</S.CommentDate>
         {isMyComment && (

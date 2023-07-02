@@ -1,15 +1,15 @@
-import { LiHTMLAttributes, ReactNode } from 'react'
+import { LiHTMLAttributes, ElementType } from 'react'
 import * as S from './style'
 
 export interface ListItemProps extends LiHTMLAttributes<HTMLLIElement> {
-  right?: ReactNode
+  Right: ElementType
 }
 
-const ListItem = ({ children, right, ...props }: ListItemProps) => {
+const ListItem = ({ children, Right, ...props }: ListItemProps) => {
   return (
     <S.ListItemLayout {...props}>
       {children}
-      {right}
+      <Right />
     </S.ListItemLayout>
   )
 }

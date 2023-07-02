@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
 export const MenusLayout = styled.div`
   display: flex;
+  justify-content: center;
   gap: 15px;
   font-size: 25px;
 

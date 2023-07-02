@@ -72,7 +72,12 @@ const useForm = <T extends Record<string, string>>(
     return Object.values(isValid).every((item) => item)
   }, [isValid])
 
-  return { form, updateForm, isValid, isAllValid }
+  const handleSubmit = (submitEvent: () => void) => {
+    if (!isAllValid) return
+    submitEvent()
+  }
+
+  return { form, updateForm, isValid, isAllValid, handleSubmit }
 }
 
 export type { Dependencies }

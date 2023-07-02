@@ -1,10 +1,16 @@
-import { useMutation, UseMutationResult } from '@tanstack/react-query'
+import {
+  useMutation,
+  UseMutationResult,
+  useQueryClient,
+} from '@tanstack/react-query'
 import { AxiosError, AxiosResponse } from 'axios'
 import { useRouter } from 'next/router'
 import { useSetRecoilState } from 'recoil'
 import { useToast } from 'hooks/common'
 import userAtom from 'recoil/user/userAtom'
+import { IUser } from 'types/user'
 import client from 'utils/axios/client'
+import { userKeys } from 'utils/queryKeys/user'
 
 interface useAuthenticateUserArgs {
   email: string
@@ -28,8 +34,9 @@ const useAuthenticateUser = (): UseMutationResult<
         })
       }
     },
-    onSuccess: (data) => {
-      setUser(data)
+
+    onSuccess: (user) => {
+      setUser(user)
       push('/')
     },
   })

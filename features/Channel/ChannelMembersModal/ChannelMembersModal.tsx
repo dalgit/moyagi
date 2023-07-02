@@ -1,23 +1,17 @@
-import { Avatar } from 'components/common'
+import UserItem from 'features/User/UserItem/UserItem'
 import { useChannel } from 'hooks/channel'
 import * as S from './style'
 
-const ChannelMemberList = () => {
+const ChannelMembersModal = () => {
   const { members } = useChannel()
 
   return (
     <S.ChannelMembersLayout>
       {members?.map((member) => (
-        <Avatar
-          key={member._id}
-          name={member.name}
-          type="user"
-          image={member.imageUrl}
-          href={`/users/${member._id}`}
-        />
+        <UserItem key={member._id} user={member} />
       ))}
     </S.ChannelMembersLayout>
   )
 }
 
-export default ChannelMemberList
+export default ChannelMembersModal

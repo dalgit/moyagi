@@ -11,6 +11,7 @@ import { IRegistration, EStatus } from 'types/registration'
 import client from 'utils/axios/client'
 import { channelKeys } from 'utils/queryKeys/channel'
 import { registrationKeys } from 'utils/queryKeys/registration'
+import { cacheReg } from './useRegsData'
 
 interface createRegistrationArgs {
   channelId: string
@@ -49,6 +50,8 @@ const useCreateRegistration = (): UseMutationResult<
           ...previousRegistrations,
         ],
       )
+
+      cacheReg(queryClient, newRegistration)
     },
     onError: (error) => {
       if (error.response?.status === 409) {

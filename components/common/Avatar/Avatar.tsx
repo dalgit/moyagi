@@ -9,7 +9,7 @@ export interface AvatarProps extends HtmlHTMLAttributes<HTMLDivElement> {
   name?: string
   href?: string
   size?: number
-  type: 'channel' | 'user' | 'default'
+  type?: 'channel' | 'user' | 'default'
 }
 
 const Avatar = ({

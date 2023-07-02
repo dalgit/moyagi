@@ -1,8 +1,4 @@
-import {
-  useQuery,
-  UseQueryOptions,
-  UseQueryResult,
-} from '@tanstack/react-query'
+import { useQuery, UseQueryOptions } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 import { IChannel } from 'types/channel'
 import client from 'utils/axios/client'
@@ -11,12 +7,13 @@ import { channelKeys } from 'utils/queryKeys/channel'
 const useChannelsByKeword = (
   keyword: string,
   options?: UseQueryOptions<IChannel[], AxiosError>,
-): UseQueryResult<IChannel[], AxiosError> => {
-  return useQuery<IChannel[], AxiosError>(
-    channelKeys.search(keyword),
-    () => searchChannelsByKeword(keyword),
-    options,
-  )
+) => {
+  return useQuery<IChannel[], AxiosError>({
+    queryKey: channelKeys.search(keyword),
+    queryFn: () => searchChannelsByKeword(keyword),
+    staleTime: 1000 * 60 * 5,
+    ...options,
+  })
 }
 
 export default useChannelsByKeword

@@ -1,4 +1,5 @@
 import { NextApiResponse, NextApiRequest } from 'next'
+import { managerPipeline, membersPipeline } from 'server/pipeLine/channel'
 import connectToDatabase from '../utils/connectToDatabase'
 
 const getChannelsByRecommendation = async (
@@ -10,9 +11,12 @@ const getChannelsByRecommendation = async (
     const channelsCollection = db.collection('channels')
 
     const recommendedChannels = await channelsCollection
-      .find()
-      .sort({ members: -1 })
-      .limit(5)
+      .aggregate([
+        { $sort: { members: -1 } },
+        { $limit: 4 },
+        ...managerPipeline,
+        ...membersPipeline,
+      ])
       .toArray()
 
     return res.status(200).json(recommendedChannels)

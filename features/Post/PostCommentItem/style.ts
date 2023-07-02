@@ -10,7 +10,7 @@ export const PostCommentItemLayout = styled.div`
   gap: 10px;
 `
 
-export const Wrapper = styled.div`
+export const LeftWrapper = styled.div`
   display: flex;
   gap: 10px;
 `

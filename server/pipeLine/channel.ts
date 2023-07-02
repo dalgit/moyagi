@@ -8,7 +8,7 @@ export const channelMatchPipeline = (filter: TFilter) => [
   ...membersPipeline,
 ]
 
-const managerPipeline = [
+export const managerPipeline = [
   {
     $lookup: {
       from: 'users',
@@ -28,7 +28,7 @@ const managerPipeline = [
   },
 ]
 
-const membersPipeline = [
+export const membersPipeline = [
   {
     $lookup: {
       from: 'users',

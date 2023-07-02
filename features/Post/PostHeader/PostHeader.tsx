@@ -1,7 +1,7 @@
 import { Avatar } from 'components/common'
 import { IPost } from 'types/post'
 import getFormattedDate from 'utils/common/getFormattedDate'
-import PostHeaderMenuList from './PostHeaderMenuList'
+import PostHeaderMenuList from './Menu'
 import * as S from './style'
 
 type PostHeaderProps = Pick<IPost, 'postId' | 'author' | 'createdAt'>

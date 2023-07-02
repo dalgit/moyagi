@@ -1,16 +1,26 @@
-import { useQuery, UseQueryOptions } from '@tanstack/react-query'
+import {
+  useQuery,
+  useQueryClient,
+  UseQueryOptions,
+} from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 import { IRegistration } from 'types/registration'
 import client from 'utils/axios/client'
 import { registrationKeys } from 'utils/queryKeys/registration'
+import { cacheRegs } from './useRegsData'
 
-const useChannelRegsQuery = (
+const useChannelRegsQuery = <T = IRegistration[]>(
   channelId: string,
-  options?: UseQueryOptions<IRegistration[], AxiosError>,
+  options?: UseQueryOptions<IRegistration[], AxiosError, T>,
 ) => {
-  return useQuery<IRegistration[], AxiosError>({
+  const queryClient = useQueryClient()
+  return useQuery<IRegistration[], AxiosError, T>({
     queryKey: registrationKeys.channels(channelId),
-    queryFn: () => getChannelRegistrations(channelId),
+    queryFn: async () => {
+      const regs = await getChannelRegistrations(channelId)
+      cacheRegs(queryClient, regs)
+      return regs
+    },
     ...options,
   })
 }

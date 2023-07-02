@@ -12,7 +12,7 @@ const ChannelDetailCard = () => {
   const router = useRouter()
 
   const handleMembersClick = () => {
-    openModal('channelMemberList')
+    openModal('ChannelMembersModal')
   }
 
   const handleManagerClick = () => {

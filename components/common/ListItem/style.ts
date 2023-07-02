@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { baseHover } from 'styles/constants'
 
 export const ListItemLayout = styled.li`
   display: flex;
@@ -8,6 +7,4 @@ export const ListItemLayout = styled.li`
   background-color: white;
   padding: 5px;
   gap: 5px;
-
-  ${baseHover}
 `
