@@ -1,12 +1,14 @@
-import { Children, cloneElement, ReactElement } from 'react'
+import { Children, cloneElement, ReactElement, ElementType } from 'react'
+import { FiMoreHorizontal as MoreIcon } from 'react-icons/fi'
 import { useMenu } from 'hooks/common'
 import * as S from './style'
 
 interface MoreMenuProps {
   children: ReactElement | ReactElement[]
+  Icon?: ElementType
 }
 
-const MoreMenu = ({ children }: MoreMenuProps) => {
+const MoreMenu = ({ children, Icon = MoreIcon }: MoreMenuProps) => {
   const { isMenuOpen, handleMenuClick, ref } = useMenu<HTMLDivElement>()
 
   const handleChildClick = (child: ReactElement) => {
@@ -16,15 +18,17 @@ const MoreMenu = ({ children }: MoreMenuProps) => {
 
   return (
     <S.MoreMenuLayout ref={ref}>
-      <S.MoreIcon onClick={handleMenuClick} />
+      <div onClick={handleMenuClick}>
+        <Icon />
+      </div>
       {isMenuOpen && (
-        <S.MenuList>
+        <ul>
           {Children?.map(children, (child) =>
             cloneElement(child, {
               onClick: () => handleChildClick(child),
             }),
           )}
-        </S.MenuList>
+        </ul>
       )}
     </S.MoreMenuLayout>
   )

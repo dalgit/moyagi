@@ -1,38 +1,38 @@
 import { useRouter } from 'next/router'
 import { useRecoilValue } from 'recoil'
-import { Button } from 'components/common'
-import { useMenu } from 'hooks/common'
+import { Button, MoreMenu } from 'components/common'
+import { useLogoutUser } from 'hooks/auth'
 import userAtom from 'recoil/user/userAtom'
 import * as S from './style'
-import UserNavigationMenu from './Menus/UserNavigationMenu'
 
 const UserNavigation = () => {
-  const user = useRecoilValue(userAtom)
-  const { isMenuOpen, handleMenuClick, ref } = useMenu<HTMLDivElement>()
-  const router = useRouter()
+  const { _id: userId, name, imageUrl, provider } = useRecoilValue(userAtom)
+  const { mutate: logout } = useLogoutUser()
+  const { push } = useRouter()
 
-  const handleLoginButtonClcik = () => {
-    router.push('/login')
+  const navigate = (path: string) => {
+    push(path)
   }
 
-  if (!user._id) {
-    return (
-      <Button variant="sub" onClick={handleLoginButtonClcik}>
-        로그인
-      </Button>
-    )
-  }
+  const MenuIcon = () => (
+    <S.StyledAvatar name={name} image={imageUrl} type="user" />
+  )
 
   return (
-    <S.UserNavLayout ref={ref}>
-      <S.UserAvatar
-        name={user.name}
-        image={user.imageUrl}
-        onClick={handleMenuClick}
-        type="user"
-      />
-      {isMenuOpen && <UserNavigationMenu />}
-    </S.UserNavLayout>
+    <>
+      {!userId ? (
+        <Button variant="sub" onClick={() => navigate('/login')}>
+          로그인
+        </Button>
+      ) : (
+        <MoreMenu Icon={MenuIcon}>
+          <li onClick={() => navigate(`/users/${userId}`)}>프로필</li>
+          <li onClick={() => navigate('/create-channel')}>채널 만들기</li>
+          <li onClick={() => navigate('/profile/registrations')}>가입 관리</li>
+          <li onClick={() => logout({ provider })}>로그아웃</li>
+        </MoreMenu>
+      )}
+    </>
   )
 }
 
