@@ -1,35 +1,28 @@
 import { ObjectId } from 'mongodb'
 import { NextApiResponse } from 'next'
-import { NextApiRequestWithUser } from 'types/types'
+import { CustomNextApiRequest } from 'server/types/api'
+import withDB from 'server/utils/withDB'
 import { postMatchPipeline } from '../../server/pipeLine/post'
-import connectToDatabase from '../utils/connectToDatabase'
 
 const deleteChannelPost = async (
-  req: NextApiRequestWithUser,
+  req: CustomNextApiRequest,
   res: NextApiResponse,
 ) => {
-  try {
-    const channelId = new ObjectId(req.query.channelId as string)
-    const postId = new ObjectId(req.query.postId as string)
+  const channelId = new ObjectId(req.query.channelId as string)
+  const postId = new ObjectId(req.query.postId as string)
 
-    const db = await connectToDatabase()
-    const postsCollection = db.collection('posts')
+  const postsCollection = req.db.collection('posts')
 
-    const post = await postsCollection
-      .aggregate(postMatchPipeline({ _id: postId }))
-      .next()
+  const post = await postsCollection
+    .aggregate(postMatchPipeline({ _id: postId }))
+    .next()
 
-    await postsCollection.deleteOne({
-      _id: postId,
-      channelId,
-    })
+  await postsCollection.deleteOne({
+    _id: postId,
+    channelId,
+  })
 
-    return res.status(200).json(post)
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: '서버가 불안정합니다. 잠시후 다시 시도해주세요.' })
-  }
+  return res.status(200).json(post)
 }
 
-export default deleteChannelPost
+export default withDB(deleteChannelPost)

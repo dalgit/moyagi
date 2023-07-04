@@ -1,29 +1,18 @@
 import { ObjectId } from 'mongodb'
 import { NextApiResponse } from 'next'
-import { NextApiRequestWithUser } from 'types/types'
+import { CustomNextApiRequest } from 'server/types/api'
+import withDB from 'server/utils/withDB'
 import { postMatchPipeline } from '../../server/pipeLine/post'
-import connectToDatabase from '../utils/connectToDatabase'
 
-const getMyPosts = async (
-  req: NextApiRequestWithUser,
-  res: NextApiResponse,
-) => {
-  try {
-    const userId = new ObjectId(req.user?._id)
+const getMyPosts = async (req: CustomNextApiRequest, res: NextApiResponse) => {
+  const userId = new ObjectId(req.user?._id)
 
-    const db = await connectToDatabase()
-    const postsCollection = db.collection('posts')
+  const posts = await req.db
+    .collection('posts')
+    .aggregate(postMatchPipeline({ authorId: userId }))
+    .toArray()
 
-    const posts = await postsCollection
-      .aggregate(postMatchPipeline({ authorId: userId }))
-      .toArray()
-
-    return res.status(200).json(posts)
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: '서버가 불안정합니다. 잠시후 다시 시도해주세요.' })
-  }
+  return res.status(200).json(posts)
 }
 
-export default getMyPosts
+export default withDB(getMyPosts)

@@ -1,8 +1,9 @@
-import { NextApiResponse, NextApiRequest } from 'next'
+import { NextApiResponse } from 'next'
 import getUserPosts from 'server/api/getUserPosts'
+import { CustomNextApiRequest } from 'server/types/api'
 
 export default async function handler(
-  req: NextApiRequest,
+  req: CustomNextApiRequest,
   res: NextApiResponse,
 ) {
   const requestMethod = req.method

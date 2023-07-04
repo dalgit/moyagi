@@ -1,34 +1,21 @@
 import { ObjectId } from 'mongodb'
-import { NextApiRequest, NextApiResponse } from 'next'
+import { NextApiResponse } from 'next'
+import { CustomNextApiRequest } from 'server/types/api'
+import withDB from 'server/utils/withDB'
 import { postMatchPipeline } from '../../server/pipeLine/post'
-import connectToDatabase from '../utils/connectToDatabase'
-
-interface ExtendedNextApiRequest extends NextApiRequest {
-  query: {
-    channelId?: string
-  }
-}
 
 const getChannelPosts = async (
-  req: ExtendedNextApiRequest,
+  req: CustomNextApiRequest,
   res: NextApiResponse,
 ) => {
-  try {
-    const channelId = new ObjectId(req.query.channelId)
-    const db = await connectToDatabase()
+  const channelId = new ObjectId(req.query.channelId as string)
 
-    const postsCollection = db.collection('posts')
+  const posts = await req.db
+    .collection('posts')
+    .aggregate(postMatchPipeline({ channelId }))
+    .toArray()
 
-    const posts = await postsCollection
-      .aggregate(postMatchPipeline({ channelId }))
-      .toArray()
-
-    res.status(200).json(posts)
-  } catch (e) {
-    res
-      .status(500)
-      .json({ message: '서버가 불안정합니다. 잠시후 다시 시도해주세요.' })
-  }
+  res.status(200).json(posts)
 }
 
-export default getChannelPosts
+export default withDB(getChannelPosts)

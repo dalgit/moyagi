@@ -1,46 +1,30 @@
 import { ObjectId } from 'mongodb'
-import { NextApiRequest, NextApiResponse } from 'next'
+import { NextApiResponse } from 'next'
+import { CustomNextApiRequest } from 'server/types/api'
 import authMiddleware from 'server/utils/authMiddleware'
-import { NextApiRequestWithUser } from 'types/types'
+import withDB from 'server/utils/withDB'
 import { postMatchPipeline } from '../../server/pipeLine/post'
-import connectToDatabase from '../utils/connectToDatabase'
 
-interface ExtendedNextApiRequest extends NextApiRequest {
-  query: {
-    channelId?: string
-  }
+const createPost = async (req: CustomNextApiRequest, res: NextApiResponse) => {
+  const { channelId: cid } = req.query
+  const { content } = req.body
+  const { user } = req
+  const channelId = new ObjectId(cid as string)
+  const userId = new ObjectId(user?._id)
+  const postsCollection = req.db.collection('posts')
+
+  const { insertedId } = await postsCollection.insertOne({
+    channelId: channelId,
+    authorId: userId,
+    content,
+    createdAt: new Date(),
+  })
+
+  const post = await postsCollection
+    .aggregate(postMatchPipeline({ _id: insertedId }))
+    .next()
+
+  res.status(200).json(post)
 }
 
-const createPost = async (
-  req: NextApiRequestWithUser & ExtendedNextApiRequest,
-  res: NextApiResponse,
-) => {
-  try {
-    const db = await connectToDatabase()
-    const { channelId: cid } = req.query
-    const { content } = req.body
-    const { user } = req
-    const channelId = new ObjectId(cid)
-    const userId = new ObjectId(user?._id)
-    const postsCollection = db.collection('posts')
-
-    const { insertedId } = await postsCollection.insertOne({
-      channelId: channelId,
-      authorId: userId,
-      content,
-      createdAt: new Date(),
-    })
-
-    const post = await postsCollection
-      .aggregate(postMatchPipeline({ _id: insertedId }))
-      .next()
-
-    res.status(200).json(post)
-  } catch (error) {
-    return res
-      .status(500)
-      .json({ message: '서버가 불안정합니다. 잠시후 다시 시도해주세요.' })
-  }
-}
-
-export default authMiddleware(createPost)
+export default authMiddleware(withDB(createPost))

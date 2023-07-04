@@ -1,10 +1,11 @@
-import { NextApiResponse, NextApiRequest } from 'next'
+import { NextApiResponse } from 'next'
 import createChannel from 'server/api/createChannel'
 import getChannelBySlug from 'server/api/getChannelBySlug'
 import getChannelsByKeyword from 'server/api/getChannelsByKeword'
+import { CustomNextApiRequest } from 'server/types/api'
 
 export default async function handler(
-  req: NextApiRequest,
+  req: CustomNextApiRequest,
   res: NextApiResponse,
 ) {
   const requestMethod = req.method

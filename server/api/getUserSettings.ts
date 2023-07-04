@@ -1,25 +1,19 @@
 import { ObjectId } from 'mongodb'
-import { NextApiResponse, NextApiRequest } from 'next'
-import connectToDatabase from '../utils/connectToDatabase'
+import { NextApiResponse } from 'next'
+import { CustomNextApiRequest } from 'server/types/api'
+import withDB from 'server/utils/withDB'
 
-const getUserSettings = async (req: NextApiRequest, res: NextApiResponse) => {
-  try {
-    const userId = new ObjectId(req.query.id as string)
+const getUserSettings = async (
+  req: CustomNextApiRequest,
+  res: NextApiResponse,
+) => {
+  const userId = new ObjectId(req.query.id as string)
 
-    const db = await connectToDatabase()
-    const usersCollection = db.collection('users')
+  const user = await req.db
+    .collection('users')
+    .findOne({ _id: userId }, { projection: { password: 0 } })
 
-    const user = await usersCollection.findOne(
-      { _id: userId },
-      { projection: { password: 0 } },
-    )
-
-    return res.status(200).json(user)
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: '서버가 불안정합니다. 잠시후 다시 시도해주세요.' })
-  }
+  return res.status(200).json(user)
 }
 
-export default getUserSettings
+export default withDB(getUserSettings)

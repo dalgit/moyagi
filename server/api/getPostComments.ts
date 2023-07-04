@@ -1,25 +1,21 @@
 import { ObjectId } from 'mongodb'
-import { NextApiResponse, NextApiRequest } from 'next'
+import { NextApiResponse } from 'next'
 import { commentMatchPipeline } from 'server/pipeLine/comment'
-import connectToDatabase from '../utils/connectToDatabase'
+import { CustomNextApiRequest } from 'server/types/api'
+import withDB from 'server/utils/withDB'
 
-const getPostComments = async (req: NextApiRequest, res: NextApiResponse) => {
-  try {
-    const postId = new ObjectId(req.query.postId as string)
+const getPostComments = async (
+  req: CustomNextApiRequest,
+  res: NextApiResponse,
+) => {
+  const postId = new ObjectId(req.query.postId as string)
 
-    const db = await connectToDatabase()
-    const commentsCollection = db.collection('comments')
+  const comments = await req.db
+    .collection('comments')
+    .aggregate(commentMatchPipeline({ postId }))
+    .toArray()
 
-    const comments = await commentsCollection
-      .aggregate(commentMatchPipeline({ postId }))
-      .toArray()
-
-    return res.status(200).json(comments)
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: '서버가 불안정합니다. 잠시후 다시 시도해주세요.' })
-  }
+  return res.status(200).json(comments)
 }
 
-export default getPostComments
+export default withDB(getPostComments)

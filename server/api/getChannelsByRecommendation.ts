@@ -1,30 +1,23 @@
-import { NextApiResponse, NextApiRequest } from 'next'
+import { NextApiResponse } from 'next'
 import { managerPipeline, membersPipeline } from 'server/pipeLine/channel'
-import connectToDatabase from '../utils/connectToDatabase'
+import { CustomNextApiRequest } from 'server/types/api'
+import withDB from 'server/utils/withDB'
 
 const getChannelsByRecommendation = async (
-  req: NextApiRequest,
+  req: CustomNextApiRequest,
   res: NextApiResponse,
 ) => {
-  try {
-    const db = await connectToDatabase()
-    const channelsCollection = db.collection('channels')
+  const recommendedChannels = await req.db
+    .collection('channels')
+    .aggregate([
+      { $sort: { members: -1 } },
+      { $limit: 4 },
+      ...managerPipeline,
+      ...membersPipeline,
+    ])
+    .toArray()
 
-    const recommendedChannels = await channelsCollection
-      .aggregate([
-        { $sort: { members: -1 } },
-        { $limit: 4 },
-        ...managerPipeline,
-        ...membersPipeline,
-      ])
-      .toArray()
-
-    return res.status(200).json(recommendedChannels)
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: '서버가 불안정합니다. 잠시 후 다시 시도해주세요.' })
-  }
+  return res.status(200).json(recommendedChannels)
 }
 
-export default getChannelsByRecommendation
+export default withDB(getChannelsByRecommendation)

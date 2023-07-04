@@ -1,4 +1,4 @@
-import { TFilter } from 'server/type/pipeline'
+import { TFilter } from 'server/types/pipeline'
 
 export const commentMatchPipeline = (filter: TFilter) => [
   {

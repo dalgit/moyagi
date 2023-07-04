@@ -1,11 +1,11 @@
 import { TokenExpiredError } from 'jsonwebtoken'
-import { NextApiHandler, NextApiResponse } from 'next'
-import { NextApiRequestWithUser } from 'types/types'
+import { NextApiResponse } from 'next'
+import { CustomNextApiHandler, CustomNextApiRequest } from 'server/types/api'
 import jwtVerify from './jwtVerify'
 
 const authMiddleware =
-  (handler: NextApiHandler) =>
-  async (req: NextApiRequestWithUser, res: NextApiResponse) => {
+  (handler: CustomNextApiHandler) =>
+  async (req: CustomNextApiRequest, res: NextApiResponse) => {
     const accessToken = req.cookies.access_token as string
 
     if (!accessToken) {

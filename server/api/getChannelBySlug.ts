@@ -1,31 +1,24 @@
 import { NextApiResponse } from 'next'
-import { NextApiRequestWithUser } from 'types/types'
+import { CustomNextApiRequest } from 'server/types/api'
+import withDB from 'server/utils/withDB'
 import { channelMatchPipeline } from '../../server/pipeLine/channel'
-import connectToDatabase from '../utils/connectToDatabase'
 
 const getChannelBySlug = async (
-  req: NextApiRequestWithUser,
+  req: CustomNextApiRequest,
   res: NextApiResponse,
 ) => {
-  try {
-    const db = await connectToDatabase()
-    const channelsCollection = db.collection('channels')
-    const { channelAddress: address } = req.query
+  const { channelAddress: address } = req.query
 
-    const channel = await channelsCollection
-      .aggregate(channelMatchPipeline({ address: address as string }))
-      .next()
+  const channel = await req.db
+    .collection('channels')
+    .aggregate(channelMatchPipeline({ address: address as string }))
+    .next()
 
-    if (!channel) {
-      return res.status(404).json({ message: '채널을 찾을 수 없습니다.' })
-    }
-
-    return res.status(200).json(channel)
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: '서버가 불안정합니다. 잠시후 다시 시도해주세요.' })
+  if (!channel) {
+    return res.status(404).json({ message: '채널을 찾을 수 없습니다.' })
   }
+
+  return res.status(200).json(channel)
 }
 
-export default getChannelBySlug
+export default withDB(getChannelBySlug)

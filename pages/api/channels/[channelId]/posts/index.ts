@@ -1,15 +1,10 @@
-import { NextApiRequest, NextApiResponse } from 'next'
+import { NextApiResponse } from 'next'
 import createPost from 'server/api/createPost'
 import getChannelPosts from 'server/api/getChannelPosts'
-
-interface ExtendedNextApiRequest extends NextApiRequest {
-  query: {
-    channelId?: string
-  }
-}
+import { CustomNextApiRequest } from 'server/types/api'
 
 export default async function handler(
-  req: ExtendedNextApiRequest,
+  req: CustomNextApiRequest,
   res: NextApiResponse,
 ) {
   const requestMethod = req.method

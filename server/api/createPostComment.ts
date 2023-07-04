@@ -1,47 +1,33 @@
 import { ObjectId } from 'mongodb'
-import { NextApiRequest, NextApiResponse } from 'next'
+import { NextApiResponse } from 'next'
 import { commentMatchPipeline } from 'server/pipeLine/comment'
+import { CustomNextApiRequest } from 'server/types/api'
 import authMiddleware from 'server/utils/authMiddleware'
-import { NextApiRequestWithUser } from 'types/types'
-import connectToDatabase from '../utils/connectToDatabase'
-
-interface ExtendedNextApiRequest extends NextApiRequest {
-  query: {
-    channelId?: string
-    postId?: string
-  }
-}
+import withDB from 'server/utils/withDB'
 
 const createPostComment = async (
-  req: NextApiRequestWithUser & ExtendedNextApiRequest,
+  req: CustomNextApiRequest,
   res: NextApiResponse,
 ) => {
-  try {
-    const db = await connectToDatabase()
-    const { channelId, postId } = req.query
-    const { content } = req.body
-    const { user } = req
+  const { channelId, postId } = req.query
+  const { content } = req.body
+  const { user } = req
 
-    const commentsCollection = db.collection('comments')
+  const commentsCollection = req.db.collection('comments')
 
-    const { insertedId } = await commentsCollection.insertOne({
-      channelId: new ObjectId(channelId),
-      postId: new ObjectId(postId),
-      authorId: new ObjectId(user?._id),
-      content,
-      createdAt: new Date(),
-    })
+  const { insertedId } = await commentsCollection.insertOne({
+    channelId: new ObjectId(channelId as string),
+    postId: new ObjectId(postId as string),
+    authorId: new ObjectId(user?._id),
+    content,
+    createdAt: new Date(),
+  })
 
-    const comment = await commentsCollection
-      .aggregate(commentMatchPipeline({ _id: insertedId }))
-      .next()
+  const comment = await commentsCollection
+    .aggregate(commentMatchPipeline({ _id: insertedId }))
+    .next()
 
-    res.status(200).json(comment)
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: '서버가 불안정합니다. 잠시후 다시 시도해주세요.' })
-  }
+  return res.status(200).json(comment)
 }
 
-export default authMiddleware(createPostComment)
+export default authMiddleware(withDB(createPostComment))
