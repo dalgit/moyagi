@@ -9,7 +9,7 @@ import { IRegistration } from 'types/registration'
 import client from 'utils/axios/client'
 import { registrationKeys } from 'utils/queryKeys/registration'
 
-interface DeleteRegistrationArgs {
+interface DeleteRegistrationParams {
   userId: string
   registrationId: string
 }
@@ -17,7 +17,7 @@ interface DeleteRegistrationArgs {
 const useDeleteRegistration = (): UseMutationResult<
   IRegistration,
   AxiosError,
-  DeleteRegistrationArgs
+  DeleteRegistrationParams
 > => {
   const queryClient = useQueryClient()
   const { onToast } = useToast()
@@ -57,5 +57,5 @@ export default useDeleteRegistration
 const deleteRegistration = async ({
   userId,
   registrationId,
-}: DeleteRegistrationArgs): Promise<IRegistration> =>
+}: DeleteRegistrationParams): Promise<IRegistration> =>
   await client.delete(`/users/${userId}/registrations/${registrationId}`)

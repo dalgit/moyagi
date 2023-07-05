@@ -8,7 +8,7 @@ import { IPost } from 'types/post'
 import client from 'utils/axios/client'
 import { commentKeys } from 'utils/queryKeys/post'
 
-interface createPostArgs {
+interface CreateCommentParams {
   channelId: string
   postId: string
   content: string
@@ -17,7 +17,7 @@ interface createPostArgs {
 const useCreateComment = (): UseMutationResult<
   IPost,
   AxiosError,
-  createPostArgs
+  CreateCommentParams
 > => {
   const queryClient = useQueryClient()
 
@@ -35,7 +35,7 @@ const createComment = async ({
   channelId,
   postId,
   content,
-}: createPostArgs): Promise<IPost> =>
+}: CreateCommentParams): Promise<IPost> =>
   await client
     .post(`/channels/${channelId}/posts/${postId}/comments`, { content })
     .then((res) => res.data)

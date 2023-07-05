@@ -9,7 +9,7 @@ import client from 'utils/axios/client'
 import { channelKeys } from 'utils/queryKeys/channel'
 import useChannel from './useChannel'
 
-interface deleteChannelMemberArgs {
+interface LeaveChannelParams {
   channelId: string
   userId: string
 }
@@ -17,7 +17,7 @@ interface deleteChannelMemberArgs {
 const useLeaveChannel = (): UseMutationResult<
   IUser,
   AxiosError,
-  deleteChannelMemberArgs
+  LeaveChannelParams
 > => {
   const queryClient = useQueryClient()
   const { address } = useChannel()
@@ -38,7 +38,7 @@ export default useLeaveChannel
 const leaveChannel = async ({
   channelId,
   userId,
-}: deleteChannelMemberArgs): Promise<IUser> =>
+}: LeaveChannelParams): Promise<IUser> =>
   await client
     .delete(`/users/${userId}/channels/${channelId}`)
     .then((res) => res.data)

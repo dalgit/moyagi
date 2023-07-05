@@ -9,7 +9,7 @@ import { IPost } from 'types/post'
 import client from 'utils/axios/client'
 import { postKeys } from 'utils/queryKeys/post'
 
-interface createPostArgs {
+interface CreatePostParams {
   channelId: string
   content: string
 }
@@ -17,7 +17,7 @@ interface createPostArgs {
 const useCreatePost = (): UseMutationResult<
   IPost,
   AxiosError,
-  createPostArgs
+  CreatePostParams
 > => {
   const queryClient = useQueryClient()
   const { onToast } = useToast()
@@ -34,7 +34,7 @@ export default useCreatePost
 const createPost = async ({
   channelId,
   content,
-}: createPostArgs): Promise<IPost> =>
+}: CreatePostParams): Promise<IPost> =>
   await client
     .post(`/channels/${channelId}/posts`, { content })
     .then((res) => res.data)

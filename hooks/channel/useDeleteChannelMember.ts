@@ -3,7 +3,7 @@ import { AxiosError } from 'axios'
 import { IUser } from 'types/user'
 import client from 'utils/axios/client'
 
-interface deleteChannelMemberArgs {
+interface DeleteChannelMemberParams {
   channelId: string
   userId: string
 }
@@ -11,7 +11,7 @@ interface deleteChannelMemberArgs {
 const useDeleteChannelMember = (): UseMutationResult<
   IUser,
   AxiosError,
-  deleteChannelMemberArgs
+  DeleteChannelMemberParams
 > => {
   return useMutation(deleteChannelMember, {
     onSuccess: () => {
@@ -25,7 +25,7 @@ export default useDeleteChannelMember
 const deleteChannelMember = async ({
   channelId,
   userId,
-}: deleteChannelMemberArgs): Promise<IUser> =>
+}: DeleteChannelMemberParams): Promise<IUser> =>
   await client
     .delete(`/channels/${channelId}/users/${userId}`)
     .then((res) => res.data)

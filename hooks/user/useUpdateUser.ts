@@ -10,7 +10,7 @@ import { IUser } from 'types/user'
 import client from 'utils/axios/client'
 import { userKeys } from 'utils/queryKeys/user'
 
-interface updateUserArgs {
+interface UpdateUserParams {
   imageUrl?: string
   introduction?: string
   userId: string
@@ -19,7 +19,7 @@ interface updateUserArgs {
 const useUpdateUser = (): UseMutationResult<
   IUser,
   AxiosError,
-  updateUserArgs
+  UpdateUserParams
 > => {
   const queryClient = useQueryClient()
   const setUser = useSetRecoilState(userAtom)
@@ -63,7 +63,7 @@ const updateUser = async ({
   imageUrl,
   introduction,
   userId,
-}: updateUserArgs): Promise<IUser> =>
+}: UpdateUserParams): Promise<IUser> =>
   await client
     .patch(`/users/${userId}`, {
       imageUrl,

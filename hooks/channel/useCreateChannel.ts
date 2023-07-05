@@ -13,7 +13,7 @@ import { IChannel } from 'types/channel'
 import client from 'utils/axios/client'
 import { channelKeys } from 'utils/queryKeys/channel'
 
-interface createChannelArgs {
+interface CreateChannelParams {
   name: string
   address: string
   description: string
@@ -24,7 +24,7 @@ interface createChannelArgs {
 const useCreateChannel = (): UseMutationResult<
   IChannel,
   AxiosError<{ message: string }>,
-  createChannelArgs
+  CreateChannelParams
 > => {
   const queryClient = useQueryClient()
   const { push } = useRouter()
@@ -65,7 +65,7 @@ const createChannel = async ({
   description,
   isPublic,
   imageUrl,
-}: createChannelArgs): Promise<IChannel> =>
+}: CreateChannelParams): Promise<IChannel> =>
   await client
     .post('/channels', {
       name,

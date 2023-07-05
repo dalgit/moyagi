@@ -8,7 +8,7 @@ import { IPost } from 'types/post'
 import client from 'utils/axios/client'
 import { postKeys } from 'utils/queryKeys/post'
 
-interface deletePostArgs {
+interface DeletePostParams {
   postId: string
   channelId: string
 }
@@ -16,7 +16,7 @@ interface deletePostArgs {
 const useDeletePost = (): UseMutationResult<
   IPost,
   AxiosError,
-  deletePostArgs
+  DeletePostParams
 > => {
   const queryClient = useQueryClient()
 
@@ -52,7 +52,7 @@ export default useDeletePost
 const deletePost = async ({
   channelId,
   postId,
-}: deletePostArgs): Promise<IPost> =>
+}: DeletePostParams): Promise<IPost> =>
   await client
     .delete(`/channels/${channelId}/posts/${postId}`)
     .then((res) => res.data)

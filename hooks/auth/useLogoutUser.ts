@@ -10,12 +10,12 @@ import userAtom from 'recoil/user/userAtom'
 import { IUser } from 'types/user'
 import client from 'utils/axios/client'
 
-type logoutArgs = Partial<Pick<IUser, 'provider'>>
+type LogoutUserParams = Partial<Pick<IUser, 'provider'>>
 
 const useLogoutUser = (): UseMutationResult<
   AxiosResponse | string,
   AxiosError,
-  logoutArgs
+  LogoutUserParams
 > => {
   const { cleanUpAndRedirect } = useCleanUp()
 
@@ -44,7 +44,7 @@ const useCleanUp = () => {
   return { cleanUpAndRedirect }
 }
 
-const handleLogout = async ({ provider = 'local' }: logoutArgs) => {
+const handleLogout = async ({ provider = 'local' }: LogoutUserParams) => {
   if (provider === 'kakao') {
     return logoutFromKakao()
   }
