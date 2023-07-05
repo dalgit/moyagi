@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { useToast } from 'hooks/common'
 import client from 'utils/axios/client'
 
-interface RegisterUserArgs {
+interface RegisterUserParams {
   name: string
   email: string
   password: string
@@ -13,18 +13,13 @@ interface RegisterUserArgs {
 
 const useRegisterUser = (): UseMutationResult<
   AxiosResponse,
-  AxiosError<{ message: string }>,
-  RegisterUserArgs
+  AxiosError,
+  RegisterUserParams
 > => {
   const { push } = useRouter()
   const { onToast } = useToast()
 
   return useMutation(registerUser, {
-    onError: (error) => {
-      if (error.response?.status === 409) {
-        onToast({ content: error.response.data.message, type: 'error' })
-      }
-    },
     onSuccess: () => {
       onToast({ content: '회원가입이 완료되었습니다!', type: 'success' })
       push('/login')
@@ -39,7 +34,7 @@ const registerUser = async ({
   email,
   password,
   passwordConfirm,
-}: RegisterUserArgs) => {
+}: RegisterUserParams) => {
   return await client.post('/auth/signup', {
     name,
     email,
