@@ -1,3 +1,4 @@
+import { withAuth } from 'components/common'
 import {
   Layout,
   MainHeader,
@@ -13,4 +14,7 @@ const UserRegistrationsPage = () => {
   )
 }
 
-export default UserRegistrationsPage
+export default withAuth(UserRegistrationsPage, {
+  redirectType: 'unAuthenticated',
+  path: '/login',
+})

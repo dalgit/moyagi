@@ -1,3 +1,4 @@
+import { withAuth } from 'components/common'
 import { Layout, SignUpTemplate, SimpleHeader } from 'components/Template'
 
 const SignUpPage = () => {
@@ -9,4 +10,7 @@ const SignUpPage = () => {
   )
 }
 
-export default SignUpPage
+export default withAuth(SignUpPage, {
+  redirectType: 'authenticated',
+  path: '/',
+})

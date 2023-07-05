@@ -1,3 +1,4 @@
+import { withAuth } from 'components/common'
 import { CreateChannelTemplate, Layout, MainHeader } from 'components/Template'
 
 const CreateChannelPage = () => {
@@ -9,4 +10,7 @@ const CreateChannelPage = () => {
   )
 }
 
-export default CreateChannelPage
+export default withAuth(CreateChannelPage, {
+  redirectType: 'unAuthenticated',
+  path: '/login',
+})
