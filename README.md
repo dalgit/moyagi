@@ -39,7 +39,7 @@
 
 ## About The Project
 
-This is a social platform based on Next.js. It utilizes API routes and MongoDB for data management. Recoil is used to efficiently manage global state and domain data. Additionally, data caching is implemented using react-query, and page loading is optimized through Suspense and Dynamic Import to enhance user experience. Moreover, it employs appropriate SSR and CSR techniques to provide SEO and excellent performance.
+This is a social platform based on Next.js. It utilizes API routes and MongoDB for data management. It is managed through Recoil for client-side data and react-query for server-side data. Additionally, data caching is implemented using react-query, and page loading is optimized through Suspense and Dynamic Import to enhance user experience. For SEO, use next-seo and next-site maps to manage metadata for static and dynamic pages.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
