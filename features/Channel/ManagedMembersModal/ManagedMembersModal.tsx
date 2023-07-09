@@ -1,4 +1,5 @@
-import { Button, ListItem, NotificationBox } from 'components/common'
+import { Button, ListItem } from 'components/common'
+import { ViewBoundary } from 'components/common/Boundary/ViewBoundary'
 import UserItem from 'features/User/UserItem/UserItem'
 import { useChannel, useDeleteChannelMember } from 'hooks/channel'
 import { useManagedMembers } from 'hooks/channel/useChannelData'
@@ -7,18 +8,16 @@ import * as S from './style'
 const ManagedMembersModal = () => {
   const managedMembers = useManagedMembers()
 
-  if (!managedMembers.length) {
-    return <NotificationBox title="관리중인 멤버가 없습니다." type="empty" />
-  }
-
   return (
-    <S.ManagedMembersModalLayout>
-      {managedMembers?.map((member) => (
-        <ListItem key={member._id} Right={EventButton}>
-          <UserItem user={member} />
-        </ListItem>
-      ))}
-    </S.ManagedMembersModalLayout>
+    <ViewBoundary view="ManagedMembers" data={managedMembers}>
+      <S.ManagedMembersModalLayout>
+        {managedMembers?.map((member) => (
+          <ListItem key={member._id} Right={EventButton}>
+            <UserItem user={member} />
+          </ListItem>
+        ))}
+      </S.ManagedMembersModalLayout>
+    </ViewBoundary>
   )
 }
 

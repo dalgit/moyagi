@@ -1,8 +1,7 @@
-import { NotificationBox } from 'components/common'
+import { ViewBoundary } from 'components/common/Boundary/ViewBoundary'
 import { PostList } from 'features/Post'
 import { useShouldFetchPosts } from 'hooks/channel/useChannelData'
 import { useChannelPostsQuery } from 'hooks/post'
-import { config } from './config'
 
 const ChannelPostList = () => {
   const shouldFetchPosts = useShouldFetchPosts()
@@ -12,15 +11,11 @@ const ChannelPostList = () => {
     enabled: shouldFetchPosts,
   })
 
-  if (!shouldFetchPosts) {
-    return <NotificationBox {...config.noPublic} />
-  }
-
-  if (!posts.length) {
-    return <NotificationBox {...config.noPost} />
-  }
-
-  return <PostList posts={posts} />
+  return (
+    <ViewBoundary data={posts} enabled={shouldFetchPosts} view="channelPosts">
+      <PostList posts={posts} />
+    </ViewBoundary>
+  )
 }
 
 export default ChannelPostList
