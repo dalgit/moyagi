@@ -1,4 +1,6 @@
-import { withAuth } from 'components/common'
+import { Suspense } from 'react'
+import { Spinner, withAuth } from 'components/common'
+import ApiErrorBoundary from 'components/common/Boundary/ApiErrorBoundary/ApiErrorBoundary'
 import {
   Layout,
   MainHeader,
@@ -9,7 +11,11 @@ const UserRegistrationsPage = () => {
   return (
     <Layout>
       <MainHeader />
-      <UserRegistrationTemplate />
+      <ApiErrorBoundary>
+        <Suspense fallback={<Spinner />}>
+          <UserRegistrationTemplate />
+        </Suspense>
+      </ApiErrorBoundary>
     </Layout>
   )
 }

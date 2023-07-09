@@ -1,8 +1,10 @@
+import { Suspense } from 'react'
 import useModal from 'hooks/common/useModal'
 import useRouterEffect from 'hooks/common/useRouterEffect'
 import { ModalKeys } from 'recoil/modal/modalTypes'
 import Portal from './Portal'
 import * as S from './style'
+import Spinner from '../Spinner/Spinner'
 
 interface ModalFrameProps {
   children: React.ReactNode
@@ -24,8 +26,10 @@ const ModalFrame = ({ children, modalKey }: ModalFrameProps) => {
     <Portal>
       <S.Blur onClick={handleModalClose} />
       <S.ChildrenWrapper>
-        {children}
-        <S.ExitIcon onClick={handleModalClose} />
+        <Suspense fallback={<Spinner />}>
+          {children}
+          <S.ExitIcon onClick={handleModalClose} />
+        </Suspense>
       </S.ChildrenWrapper>
     </Portal>
   )

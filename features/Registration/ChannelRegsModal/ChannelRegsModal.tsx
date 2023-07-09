@@ -1,4 +1,3 @@
-import { Spinner } from 'components/common'
 import { ViewBoundary } from 'components/common/Boundary/ViewBoundary'
 import { useChannel } from 'hooks/channel'
 import { useChannelRegsQuery } from 'hooks/registration'
@@ -6,11 +5,9 @@ import * as S from './style'
 
 const ChannelRegsModal = () => {
   const { _id: channelId } = useChannel()
-  const { data: registrations = [], isLoading } = useChannelRegsQuery(channelId)
-
-  if (isLoading) {
-    return <Spinner />
-  }
+  const { data: registrations = [] } = useChannelRegsQuery(channelId, {
+    suspense: true,
+  })
 
   return (
     <ViewBoundary view="ChannelRegistrations" data={registrations}>

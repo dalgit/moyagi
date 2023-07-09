@@ -1,7 +1,9 @@
 import dynamic from 'next/dynamic'
 import { Suspense } from 'react'
 import { Spinner } from 'components/common'
-import { ChannelDetailCard, ChannelSideBar } from 'features/Channel'
+import ApiErrorBoundary from 'components/common/Boundary/ApiErrorBoundary/ApiErrorBoundary'
+import { ChannelDetailCard } from 'features/Channel'
+import { useChannelQueryBySlug } from 'hooks/channel'
 import * as S from './style'
 
 const ChannelPostList = dynamic(
@@ -9,13 +11,26 @@ const ChannelPostList = dynamic(
   { ssr: false },
 )
 
-const ChannelTemplate = () => {
+const ChannelSideBar = dynamic(
+  () => import('features/Channel').then((module) => module.ChannelSideBar),
+  { ssr: false },
+)
+
+const ChannelTemplate = ({ slug }: { slug: string }) => {
+  const { isSuccess } = useChannelQueryBySlug(slug)
+
+  if (!isSuccess) {
+    return <></>
+  }
+
   return (
     <S.ChannelTemplateLayout>
       <ChannelDetailCard />
-      <Suspense fallback={<Spinner />}>
-        <ChannelPostList />
-      </Suspense>
+      <ApiErrorBoundary>
+        <Suspense fallback={<Spinner />}>
+          <ChannelPostList />
+        </Suspense>
+      </ApiErrorBoundary>
       <ChannelSideBar />
     </S.ChannelTemplateLayout>
   )

@@ -1,10 +1,24 @@
-import { Layout, MainHeader, UserProfileTemplate } from 'components/Template'
+import dynamic from 'next/dynamic'
+import { Suspense } from 'react'
+import { Spinner } from 'components/common'
+import ApiErrorBoundary from 'components/common/Boundary/ApiErrorBoundary/ApiErrorBoundary'
+import { Layout, MainHeader } from 'components/Template'
+
+const UserProfileTemplate = dynamic(
+  () =>
+    import('components/Template').then((module) => module.UserProfileTemplate),
+  { ssr: false },
+)
 
 const UserDetailPage = () => {
   return (
     <Layout>
       <MainHeader />
-      <UserProfileTemplate />
+      <ApiErrorBoundary>
+        <Suspense fallback={<Spinner />}>
+          <UserProfileTemplate />
+        </Suspense>
+      </ApiErrorBoundary>
     </Layout>
   )
 }
