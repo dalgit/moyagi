@@ -1,4 +1,4 @@
-import { ViewBoundary } from 'components/common/Boundary/ViewBoundary'
+import { ViewBoundary } from 'components/common/Boundary'
 import { useChannel } from 'hooks/channel'
 import { useChannelRegsQuery } from 'hooks/registration'
 import * as S from './style'

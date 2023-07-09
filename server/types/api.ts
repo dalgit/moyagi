@@ -1,9 +1,10 @@
 import { Db } from 'mongodb'
 import { NextApiRequest, NextApiResponse } from 'next'
+import { JwtUser } from './jwt'
 
 export interface CustomNextApiRequest extends NextApiRequest {
   db: Db
-  user?: any
+  user?: JwtUser
 }
 
 export type CustomNextApiHandler = (

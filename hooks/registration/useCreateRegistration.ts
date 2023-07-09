@@ -1,4 +1,5 @@
 import {
+  QueryClient,
   UseMutationResult,
   useMutation,
   useQueryClient,
@@ -6,6 +7,7 @@ import {
 import { AxiosError } from 'axios'
 import { useRecoilValue } from 'recoil'
 import { useToast } from 'hooks/common'
+import { IToast } from 'recoil/toast/toastAtom'
 import userIdSelector from 'recoil/user/userIdSelector'
 import { IRegistration, EStatus } from 'types/registration'
 import client from 'utils/axios/client'
@@ -13,64 +15,82 @@ import { channelKeys } from 'utils/queryKeys/channel'
 import { registrationKeys } from 'utils/queryKeys/registration'
 import { cacheReg } from './useRegsData'
 
-interface createRegistrationArgs {
+interface ReturnedRegistration extends IRegistration {
+  status: EStatus.PENDING | EStatus.APPROVE
+}
+
+interface CreateRegistrationArgs {
   channelId: string
   message: string
   isPublic: boolean
 }
 
 const useCreateRegistration = (): UseMutationResult<
-  IRegistration,
+  ReturnedRegistration,
   AxiosError<{ message: string }>,
-  createRegistrationArgs
+  CreateRegistrationArgs
 > => {
   const queryClient = useQueryClient()
   const userId = useRecoilValue(userIdSelector)
   const { onToast } = useToast()
 
   return useMutation(createRegistration, {
-    onSuccess: (newRegistration: IRegistration) => {
+    onSuccess: (newRegistration: ReturnedRegistration) => {
       if (newRegistration.status === EStatus.APPROVE) {
-        const slug = newRegistration.channel.address
-
-        queryClient.invalidateQueries(channelKeys.detail(slug))
-        queryClient.invalidateQueries(channelKeys.users(userId))
-
-        onToast({ content: '가입이 완료되었습니다.', type: 'success' })
+        updateChannelCache(queryClient, newRegistration.channel.address, userId)
       }
 
-      if (newRegistration.status === EStatus.PENDING) {
-        onToast({ content: '가입 요청이 완료되었습니다.', type: 'success' })
-      }
-
-      queryClient.setQueryData<IRegistration[]>(
-        registrationKeys.users(userId),
-        (previousRegistrations = []) => [
-          newRegistration,
-          ...previousRegistrations,
-        ],
-      )
+      addUserRegCache(queryClient, newRegistration, userId)
 
       cacheReg(queryClient, newRegistration)
-    },
-    onError: (error) => {
-      if (error.response?.status === 409) {
-        onToast({
-          content: error.response.data.message,
-          type: 'error',
-        })
-      }
+
+      showToast(newRegistration.status, onToast)
     },
   })
 }
 
 export default useCreateRegistration
 
+const showToast = (
+  status: EStatus.PENDING | EStatus.APPROVE,
+  onToast: (toast: IToast) => void,
+) => {
+  const messageMap = {
+    [EStatus.APPROVE]: '가입이 완료되었습니다.',
+    [EStatus.PENDING]: '가입 요청이 완료되었습니다.',
+  }
+
+  onToast({
+    content: messageMap[status],
+    type: 'success',
+  })
+}
+
+const updateChannelCache = (
+  queryClient: QueryClient,
+  slug: string,
+  userId: string,
+) => {
+  queryClient.invalidateQueries(channelKeys.detail(slug))
+  queryClient.invalidateQueries(channelKeys.users(userId))
+}
+
+const addUserRegCache = (
+  queryClient: QueryClient,
+  newReg: IRegistration,
+  userId: string,
+) => {
+  queryClient.setQueryData<IRegistration[]>(
+    registrationKeys.users(userId),
+    (previousRegistrations = []) => [newReg, ...previousRegistrations],
+  )
+}
+
 const createRegistration = async ({
   channelId,
   message,
   isPublic,
-}: createRegistrationArgs): Promise<IRegistration> =>
+}: CreateRegistrationArgs): Promise<ReturnedRegistration> =>
   await client
     .post(`/channels/${channelId}/registrations`, {
       message,

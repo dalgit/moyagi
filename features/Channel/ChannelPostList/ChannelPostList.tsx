@@ -1,4 +1,4 @@
-import { ViewBoundary } from 'components/common/Boundary/ViewBoundary'
+import { ViewBoundary } from 'components/common/Boundary'
 import { PostList } from 'features/Post'
 import { useShouldFetchPosts } from 'hooks/channel/useChannelData'
 import { useChannelPostsQuery } from 'hooks/post'
@@ -12,7 +12,7 @@ const ChannelPostList = () => {
   })
 
   return (
-    <ViewBoundary data={posts} enabled={shouldFetchPosts} view="channelPosts">
+    <ViewBoundary view="channelPosts" data={posts} enabled={shouldFetchPosts}>
       <PostList posts={posts} />
     </ViewBoundary>
   )

@@ -35,10 +35,10 @@ const useCleanUp = () => {
   const queryClient = useQueryClient()
   const { push } = useRouter()
 
-  const cleanUpAndRedirect = async () => {
-    await push('/login')
+  const cleanUpAndRedirect = () => {
     resetUser()
     queryClient.clear()
+    push('/login')
   }
 
   return { cleanUpAndRedirect }

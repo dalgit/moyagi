@@ -1,16 +1,12 @@
-import {
-  Hydrate,
-  QueryClient,
-  QueryClientProvider,
-} from '@tanstack/react-query'
+import { Hydrate } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { AppProps } from 'next/app'
 import { useRouter } from 'next/router'
 import { DefaultSeo } from 'next-seo'
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { RecoilRoot } from 'recoil'
 import { ThemeProvider } from 'styled-components'
-import AxiosProvider from 'components/common/AxiosProvider/AxiosProvider'
+import CustomQueryProvider from 'components/common/CustomQueryProvider/CustomQueryProvider'
 import ModalContainer from 'components/common/ModalContainer/ModalContainer'
 import Toast from 'components/common/Toast/ToastList/ToastList'
 import { CURRENT_PATH, PREV_PATH } from 'constants/paths'
@@ -20,17 +16,6 @@ import theme from 'styles/theme'
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const router = useRouter()
-  const [queryClient] = useState(
-    () =>
-      new QueryClient({
-        defaultOptions: {
-          queries: {
-            refetchOnWindowFocus: false,
-            staleTime: 1000 * 30,
-          },
-        },
-      }),
-  )
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -42,20 +27,18 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 
   return (
     <RecoilRoot>
-      <QueryClientProvider client={queryClient}>
+      <CustomQueryProvider>
         <Hydrate state={pageProps.dehydratedProps}>
           <ThemeProvider theme={theme}>
-            <AxiosProvider>
-              <GlobalStyle />
-              <DefaultSeo {...SEO} />
-              <Component {...pageProps} />
-              <ModalContainer />
-              <Toast />
-            </AxiosProvider>
+            <GlobalStyle />
+            <DefaultSeo {...SEO} />
+            <Component {...pageProps} />
+            <ModalContainer />
+            <Toast />
           </ThemeProvider>
           <ReactQueryDevtools initialIsOpen={false} />
         </Hydrate>
-      </QueryClientProvider>
+      </CustomQueryProvider>
     </RecoilRoot>
   )
 }

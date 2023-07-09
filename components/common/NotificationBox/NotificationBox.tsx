@@ -1,13 +1,14 @@
 import * as S from './style'
 import { NotificationBoxProps } from './type'
+import type { PropsWithChildren } from 'react'
 
 const NotificationBox = ({
   title,
   description,
-  children,
   type,
+  children,
   ...rest
-}: NotificationBoxProps) => {
+}: PropsWithChildren<NotificationBoxProps>) => {
   return (
     <S.NotificationBoxLayout {...rest}>
       <S.NotificationImage type={type} />

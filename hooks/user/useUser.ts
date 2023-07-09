@@ -1,13 +1,16 @@
-import { useQuery, UseQueryResult } from '@tanstack/react-query'
+import { useQuery, UseQueryOptions } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 import { IUser } from 'types/user'
 import client from 'utils/axios/client'
 import { userKeys } from 'utils/queryKeys/user'
 
-const useUser = (id: string): UseQueryResult<IUser, AxiosError> => {
-  return useQuery(userKeys.detail(id), () => getUser(id), {
+const useUser = (id: string, options?: UseQueryOptions<IUser, AxiosError>) => {
+  return useQuery<IUser, AxiosError>({
+    queryKey: userKeys.detail(id),
+    queryFn: () => getUser(id),
     staleTime: 1000 * 60 * 30,
-    enabled: !!id,
+    retry: 0,
+    ...options,
   })
 }
 

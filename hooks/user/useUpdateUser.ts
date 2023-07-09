@@ -16,10 +16,15 @@ interface UpdateUserParams {
   userId: string
 }
 
+interface UpdateUserContext {
+  previousUser: IUser | undefined
+}
+
 const useUpdateUser = (): UseMutationResult<
   IUser,
   AxiosError,
-  UpdateUserParams
+  UpdateUserParams,
+  UpdateUserContext
 > => {
   const queryClient = useQueryClient()
   const setUser = useSetRecoilState(userAtom)

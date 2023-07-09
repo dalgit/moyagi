@@ -21,13 +21,19 @@ const UserProfileEditModal = () => {
   const userId = useRecoilValue(userIdSelector)
 
   const handleProfileUpdate = async () => {
-    updateUserMutate({
-      introduction: content,
-      imageUrl: await getFileUrl(fileKey),
-      userId,
-    })
-    removeFile(fileKey)
-    closeModal('UserProfileEditModal')
+    updateUserMutate(
+      {
+        introduction: content,
+        imageUrl: await getFileUrl(fileKey),
+        userId,
+      },
+      {
+        onSuccess: () => {
+          removeFile(fileKey)
+          closeModal('UserProfileEditModal')
+        },
+      },
+    )
   }
 
   return (

@@ -1,5 +1,5 @@
 import { useRecoilValue } from 'recoil'
-import { ViewBoundary } from 'components/common/Boundary/ViewBoundary'
+import { ViewBoundary } from 'components/common/Boundary'
 import { RegistrationList } from 'features/Registration'
 import { useUserRegsQuery } from 'hooks/registration'
 import userIdSelector from 'recoil/user/userIdSelector'

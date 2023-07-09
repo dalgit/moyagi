@@ -50,10 +50,6 @@ const useCreateChannel = (): UseMutationResult<
       onToast({ content: '채널이 개설되었습니다.', type: 'success' })
       push(`${CHANNEL_PATH}/${address}`)
     },
-    onError: (error) => {
-      const message = error.response?.data?.message || '알수없는 오류'
-      onToast({ content: message, type: 'error' })
-    },
   })
 }
 

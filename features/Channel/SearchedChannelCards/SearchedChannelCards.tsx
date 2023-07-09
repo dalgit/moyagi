@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { ViewBoundary } from 'components/common/Boundary/ViewBoundary'
+import { ViewBoundary } from 'components/common/Boundary'
 import useChannelsByKeword from 'hooks/channel/useChannelsByKeword'
 import ChannelCards from '../ChannelCards/ChannelCards'
 

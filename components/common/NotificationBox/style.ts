@@ -1,16 +1,19 @@
 import styled from 'styled-components'
 import { empty, sorry } from 'constants/icon'
-import { NotificationType, NotificationImageProps } from './type'
+import { NotificationType } from './type'
 import FImage from '../FImage/FImage'
 
+interface NotificationImageProps {
+  type: NotificationType
+}
+
 export const NotificationImage = styled(FImage).attrs(
-  ({ type, alt }: NotificationImageProps) => ({
+  ({ type }: NotificationImageProps) => ({
     src: NotificationImageTypes[type],
-    alt: alt || 'notification',
+    alt: 'notification',
   }),
 )<NotificationImageProps>`
-  width: 250px;
-  height: 250px;
+  aspect-ratio: 1/1;
 `
 
 const NotificationImageTypes: Record<NotificationType, string> = {
@@ -25,6 +28,11 @@ export const NotificationBoxLayout = styled.div`
   align-items: center;
   gap: 15px;
   margin: auto;
+  height: 100%;
+
+  & > * {
+    width: 250px;
+  }
 
   h2,
   h4,
@@ -38,5 +46,6 @@ export const NotificationBoxLayout = styled.div`
     word-break: keep-all;
     text-align: center;
     line-height: 1.3;
+    width: 100%;
   }
 `

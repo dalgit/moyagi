@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic'
 import { ReactNode, Suspense } from 'react'
 import { Spinner } from 'components/common'
-import ApiErrorBoundary from 'components/common/Boundary/ApiErrorBoundary/ApiErrorBoundary'
+import { ApiErrorBoundary } from 'components/common/Boundary'
 import * as S from './style'
 
 interface HomeTemplateProps {

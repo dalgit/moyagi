@@ -1,4 +1,8 @@
-import { useQuery, useQueryClient, UseQueryResult } from '@tanstack/react-query'
+import {
+  useQuery,
+  useQueryClient,
+  UseQueryOptions,
+} from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 import { IRegistration } from 'types/registration'
 import client from 'utils/axios/client'
@@ -7,9 +11,10 @@ import { cacheRegs } from './useRegsData'
 
 const useUserRegsQuery = (
   id: string,
-): UseQueryResult<IRegistration[], AxiosError> => {
+  options?: UseQueryOptions<IRegistration[], AxiosError>,
+) => {
   const queryClient = useQueryClient()
-  return useQuery({
+  return useQuery<IRegistration[], AxiosError>({
     queryKey: registrationKeys.users(id),
     queryFn: async () => {
       const regs = await getUserRegistrations(id)
@@ -17,6 +22,8 @@ const useUserRegsQuery = (
       return regs
     },
     staleTime: 1000 * 60 * 3,
+    enabled: !!id,
+    ...options,
   })
 }
 

@@ -1,5 +1,5 @@
 import { Button, ListItem } from 'components/common'
-import { ViewBoundary } from 'components/common/Boundary/ViewBoundary'
+import { ViewBoundary } from 'components/common/Boundary'
 import UserItem from 'features/User/UserItem/UserItem'
 import { useChannel, useDeleteChannelMember } from 'hooks/channel'
 import { useManagedMembers } from 'hooks/channel/useChannelData'

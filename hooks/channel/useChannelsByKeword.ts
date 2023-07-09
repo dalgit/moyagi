@@ -12,6 +12,7 @@ const useChannelsByKeword = (
     queryKey: channelKeys.search(keyword),
     queryFn: () => searchChannelsByKeword(keyword),
     staleTime: 1000 * 60 * 5,
+    retry: 0,
     ...options,
   })
 }

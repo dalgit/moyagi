@@ -8,7 +8,6 @@ export enum AuthError {
 
 export interface ErrorResponse {
   message?: string
-  status?: string
   errorType?: AuthError
 }
 

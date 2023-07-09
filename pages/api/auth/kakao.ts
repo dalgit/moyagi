@@ -1,8 +1,10 @@
 import axios from 'axios'
-import { NextApiRequest, NextApiResponse } from 'next'
-import connectToDatabase from 'server/utils/connectToDatabase'
+import { Db } from 'mongodb'
+import { NextApiResponse } from 'next'
+import { CustomNextApiRequest } from 'server/types/api'
 import generateJwt from 'server/utils/generateAccessToken '
 import setAuthCookies from 'server/utils/setAuthCookies'
+import withDB from 'server/utils/withDB'
 
 interface KakaoToken {
   access_token: string
@@ -41,15 +43,11 @@ const getUserFromKakao = async (access_token: string): Promise<KakaoUser> =>
     })
     .then((res) => res.data)
 
-const getUserFromDB = async (kakaoId: number) => {
-  const db = await connectToDatabase()
-
+const getUserFromDB = async (db: Db, kakaoId: number) => {
   return await db.collection('users').findOne({ oauthId: kakaoId })
 }
 
-const createUserToDB = async ({ id, properties }: KakaoUser) => {
-  const db = await connectToDatabase()
-
+const createUserToDB = async (db: Db, { id, properties }: KakaoUser) => {
   const newUser = {
     oauthId: id,
     name: properties?.nickname || `user${id}`,
@@ -62,17 +60,17 @@ const createUserToDB = async ({ id, properties }: KakaoUser) => {
   return { _id: result.insertedId, ...newUser }
 }
 
-const kakaoApi = async (req: NextApiRequest, res: NextApiResponse) => {
+const kakaoApi = async (req: CustomNextApiRequest, res: NextApiResponse) => {
   const { code } = req.body
 
   const token = await getTokenFromKakao(code)
 
   const kakaoUser = await getUserFromKakao(token.access_token)
 
-  let user = await getUserFromDB(kakaoUser.id)
+  let user = await getUserFromDB(req.db, kakaoUser.id)
 
   if (!user) {
-    user = await createUserToDB(kakaoUser)
+    user = await createUserToDB(req.db, kakaoUser)
   }
 
   const { accessToken, refreshToken } = generateJwt(user)
@@ -81,4 +79,4 @@ const kakaoApi = async (req: NextApiRequest, res: NextApiResponse) => {
   return res.status(200).json(user)
 }
 
-export default kakaoApi
+export default withDB(kakaoApi)

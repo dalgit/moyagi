@@ -1,16 +1,8 @@
 import { QueryClient, dehydrate } from '@tanstack/react-query'
 import { GetServerSideProps } from 'next/types'
-import {
-  ChannelTemplate,
-  Layout,
-  MainHeader,
-  NotFoundTemplate,
-} from 'components/Template'
+import { ChannelTemplate, Layout, MainHeader } from 'components/Template'
 import ChannelSEO from 'components/Template/ChannelTemplate/ChannelSEO'
-import {
-  getChannelBySlug,
-  useChannelQueryBySlug,
-} from 'hooks/channel/useChannelQueryBySlug'
+import { getChannelBySlug } from 'hooks/channel/useChannelQueryBySlug'
 import { channelKeys } from 'utils/queryKeys/channel'
 import { isClientRouting } from 'utils/server/checkRouting'
 
@@ -19,15 +11,12 @@ interface ChannelPageProps {
 }
 
 const ChannelPage = ({ slug }: ChannelPageProps) => {
-  const { isSuccess, isError } = useChannelQueryBySlug(slug)
-
   return (
     <>
       <ChannelSEO slug={slug} />
       <Layout>
         <MainHeader />
-        {isSuccess && <ChannelTemplate />}
-        {isError && <NotFoundTemplate />}
+        <ChannelTemplate slug={slug} />
       </Layout>
     </>
   )
